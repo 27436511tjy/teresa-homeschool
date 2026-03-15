@@ -1,0 +1,48 @@
+{
+    "system": {
+        "name": "Teresa 18周Homeschool系统",
+        "version": "3.2",
+        "adjustment": "动物为主，人文艺术体育均衡发展"
+    },
+    "pbl_structure": {
+        "animals": {
+            "weight": "60%",
+            "focus": "爬虫/蛇为核心，辐射全动物",
+            "description": "观察、分类、研究、创作"
+        },
+        "humanities": {
+            "weight": "15%",
+            "focus": "文化、历史、社会",
+            "description": "阅读、写作、演讲"
+        },
+        "arts": {
+            "weight": "15%",
+            "focus": "绘画、手工、音乐、戏剧",
+            "description": "创作、表达、展示"
+        },
+        "sports": {
+            "weight": "10%",
+            "focus": "网球、体能、运动科学",
+            "description": "训练、记录、分析"
+        }
+    },
+    "weekly_mix": {
+        "week1": {
+            "theme": "我的动物朋友",
+            "animals": "🐍 爬虫深度（蛇、蜥蜴）",
+            "humanities": "📝 日记写作",
+            "arts": "🎨 画爬虫手工",
+            "sports": "🎾 网球"
+        },
+        "sample_weeks": [
+            {"week": 1, "main": "动物", "secondary": "艺术", "teresa_interest": "爬虫/蛇"},
+            {"week": 2, "main": "动物", "secondary": "人文", "teresa_interest": "两栖动物"},
+            {"week": 3, "main": "动物", "secondary": "体育", "teresa_interest": "运动健将"},
+            {"week": 4, "main": "人文", "secondary": "动物", "teresa_interest": "世界各地"},
+            {"week": 5, "main": "动物", "secondary": "艺术", "teresa_interest": "昆虫"},
+            {"week": 6, "main": "动物", "secondary": "人文", "teresa_interest": "海洋生物"},
+            {"week": 7, "main": "艺术", "secondary": "动物", "teresa_interest": "创作"},
+            {"week": 8, "main": "体育", "secondary": "动物", "teresa_interest": "运动科学"}
+        ]
+    }
+}

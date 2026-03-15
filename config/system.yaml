@@ -1,0 +1,104 @@
+# Teresa's Homeschool AI Tutor System Configuration
+
+## 小主信息
+student:
+  name: "Teresa"
+  age: 8.5
+  grade: 3
+  education: "美式国际教育体系"
+  english:
+    ar_level: 6.0
+    daily_pages: [30, 50]
+    current_book: "Because of Winn-Dixie"
+  math:
+    mode: "课内为主 + 奥数思维"
+    olympiad_minutes: 10
+  learning_mode: "Homeschool + Worldschool + PBL"
+
+## API 配置
+apis:
+  # 主家教模型 - 讯飞星火 4.0
+  xfyun:
+    endpoint: "https://spark-api.xf-yun.com/v4.0/chat"
+    model: "spark-4.0"
+    app_id: "${XFYUN_APP_ID}"
+    api_key: "${XFYUN_API_KEY}"
+  
+  # 阅读/长文本模型 - Kimi K2.5
+  kimi:
+    endpoint: "https://api.moonshot.cn/v1/chat/completions"
+    model: "moonshot-v1-8k"
+    api_key: "${KIMI_API_KEY}"
+  
+  # 数学专项 - 学而思九章 MathGPT
+  mathgpt:
+    endpoint: "https://jiuzhang.istudy.net.cn/api/v1/chat/completions"
+    model: "mathgpt-pro"
+    api_key: "${MATHGPT_API_KEY}"
+  
+  # 系统调度与飞书同步 - MiniMax M2.5
+  minimax:
+    endpoint: "https://api.minimax.chat/v1/text/chatcompletion_v2"
+    model: "MiniMax-M2.5"
+    api_key: "${MINIMAX_API_KEY}"
+
+## 飞书同步配置
+feishu:
+  webhook_url: "${FEISHU_WEBHOOK_URL}"
+  notify_parent: true
+  sync_interval_minutes: 30
+
+## 学习模块配置
+modules:
+  daily_plan:
+    subjects: ["英语", "数学", "中文", "运动"]
+    structure: "有结构、不松散、不死板"
+  
+  english:
+    - 阅读跟踪
+    - 阅读理解对话
+    - 好词积累
+    - 阅读报告
+    - 口语陪练（美式表达）
+  
+  math:
+    - 课内知识点
+    - 练习
+    - 错题本
+    - 每日奥数（10分钟）
+  
+  chinese:
+    - 阅读
+    - 日记
+    - 写作点评
+  
+  interdisciplinary:
+    - 英语+科学
+    - 数学+生活
+    - 艺术+社会
+    - 阅读+实践
+  
+  world_study:
+    - 国家研究
+    - 文化探索
+    - 地理发现
+    - 历史故事
+    - 人文社科
+  
+  pbl:
+    weekly_projects: [3, 5]
+    project_types:
+      - World Study
+      - 跨学科融合
+      - 科学探究
+      - 自然观察
+      - 生活实践
+      - 手工创作
+      - 社会探索
+
+## AI 家教风格
+tutor_style:
+  tone: "耐心、鼓励、适合孩子"
+  language: "美式英语"
+  math_difficulty: "课内为主，不超难"
+  reinforcement: "正向反馈，符合8岁孩子喜好"

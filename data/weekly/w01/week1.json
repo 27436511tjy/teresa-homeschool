@@ -1,0 +1,295 @@
+{
+    "week": 1,
+    "phase": 1,
+    "theme": "习惯与能力打底",
+    "week_focus": "我的爱好（爬虫、网球、象棋）",
+    "days": {
+        "2026-03-16": {
+            "day": 1,
+            "topic": "我的爬虫朋友",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读《米小圈上学记》或《神奇校车》20分钟",
+                    "writing": "写日记：今天最开心的事（100字以上）",
+                    "expression": "口述今天学到的爬虫知识"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR 5.0-6.0 科普阅读：Snakes, Lizards 等爬虫主题，30页",
+                    "vocabulary": "学习5个爬虫英语词汇：reptile, scales, cold-blooded, habitat, species",
+                    "grammar": "复杂句入门：because/although 连接短句练习（3句）",
+                    "speaking": "用英语描述蛇的特点（3-5句）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "数感练习：100以内找规律填数（10题）",
+                    "logic": "简单分类规律题（5题）",
+                    "chess": "国际象棋：认识棋盘+王车易位了解，轻松下5步"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "My Favorite Reptile",
+                    "art": "画一条自己喜欢的爬虫，标注身体部位（中英双语）",
+                    "writing": "写3-5句英文介绍自己的爬虫",
+                    "chinese_note": "中文说明：我为什么喜欢它"
+                }
+            },
+            "tennis": "基础步伐 + 正反手击球练习（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "今天学到了什么？",
+                    "tomorrow": "明天想探索什么？"
+                }
+            }
+        },
+        "2026-03-17": {
+            "day": 2,
+            "topic": "网球与运动",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读中文桥梁书20分钟",
+                    "writing": "写日记：今天运动开心吗？（100字）",
+                    "expression": "描述网球动作"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR科普阅读：Tennis / Sports，25页",
+                    "vocabulary": "4个运动相关词汇：racket, court, serve, match",
+                    "grammar": "because/although 句子合并练习（5句）",
+                    "speaking": "用英语介绍网球运动（4句）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "两位数加减法混合练习（20题）",
+                    "logic": "找规律：数列填数（10题）",
+                    "chess": "棋子走法复习，轻松下8步"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "Animals Who Are Good at Sports",
+                    "art": "画一只擅长运动的动物（猎豹、袋鼠等）",
+                    "writing": "写4句英文描述它的运动特长",
+                    "activity": "户外观察：找找小区里的小动物"
+                }
+            },
+            "tennis": "发球稳定性练习（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "今天最有趣的发现是什么？",
+                    "tomorrow": "想了解更多什么动物？"
+                }
+            }
+        },
+        "2026-03-18": {
+            "day": 3,
+            "topic": "国际象棋入门",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读中文章节书20分钟",
+                    "writing": "写日记：我与国际象棋（100字）",
+                    "expression": "介绍象棋棋子"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR科普阅读：Chess，25页",
+                    "vocabulary": "4个象棋英语词汇：chess, king, queen, checkmate",
+                    "grammar": "because/although 综合练习（5句）",
+                    "speaking": "用英语介绍象棋规则（5句）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "三位数加减法练习（15题）",
+                    "logic": "图形规律题（5题）",
+                    "chess": "完整对局一局（15分钟，轻松玩）"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "Smart Animals",
+                    "art": "画一只聪明的动物（黑猩猩、章鱼等）",
+                    "writing": "写5句英文说明它为什么聪明",
+                    "craft": "手工：用纸片做象棋棋子"
+                }
+            },
+            "tennis": "正反手对打练习（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "今天下棋有什么新收获？",
+                    "tomorrow": "想探索什么新主题？"
+                }
+            }
+        },
+        "2026-03-19": {
+            "day": 4,
+            "topic": "爬虫 vs 哺乳动物",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读动物故事20分钟",
+                    "writing": "写日记：我见过的小动物（100字）",
+                    "expression": "描述见过的动物"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR科普阅读：Mammals vs Reptiles，30页",
+                    "vocabulary": "5个对比词汇：warm-blooded, cold-blooded, mammal, reptile, vertebrate",
+                    "grammar": "比较级练习：bigger, faster, more dangerous（5句）",
+                    "speaking": "口语辩论：爬虫适合当宠物吗？（准备3个理由）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "简单乘法入门：2/5/10乘法口诀（20题）",
+                    "logic": "分类统计：动物数量统计表",
+                    "chess": "残局讲解，轻松下7步"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "Pet vs Wild Animals",
+                    "art": "手工对比海报：宠物 vs 野生动物",
+                    "writing": "左边写宠物优点，右边写野生动物优点",
+                    "chinese_note": "中文说明：各写3点"
+                }
+            },
+            "tennis": "步伐灵活性训练（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "爬虫和猫狗有什么不同？",
+                    "tomorrow": "明天想做什么任务？"
+                }
+            }
+        },
+        "2026-03-20": {
+            "day": 5,
+            "topic": "动物的生活方式",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读《父与子》或漫画书20分钟",
+                    "writing": "写日记：今天学习了什么？（100字）",
+                    "expression": "复述今天学到的知识"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR科普阅读：Animal Homes，25页",
+                    "vocabulary": "4个栖息地词汇：nest, burrow, den, cave",
+                    "grammar": "where/when/why 从句入门（3句）",
+                    "speaking": "描述一种动物的家的作用（4句）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "表内除法练习（20题）",
+                    "logic": "简单应用题：动物分组（5题）",
+                    "chess": "轻松对局一局"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "Where Animals Live",
+                    "art": "画一个动物村庄，包含不同动物的家",
+                    "writing": "用英文标注5个动物的家",
+                    "outdoor": "户外：观察户外动物的家（蚂蚁窝、鸟巢等）"
+                }
+            },
+            "tennis": "综合技术练习（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "这周学习最喜欢什么？",
+                    "weekend": "周末想做什么特别的任务？"
+                }
+            }
+        },
+        "2026-03-21": {
+            "day": 6,
+            "topic": "爬虫科普深化",
+            "chinese": {
+                "30min": {
+                    "reading": "阅读爬虫科普书20分钟",
+                    "writing": "写日记：一周总结（120字）",
+                    "expression": "这周收获最大的是什么？"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR科普阅读：All About Snakes，30页",
+                    "vocabulary": "5个蛇类词汇：snake, fang, venom, coil, shed",
+                    "grammar": "复杂句复习：because/although/which（4句）",
+                    "speaking": "用英语讲一个蛇的小知识（5句）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "四则运算混合练习（20题）",
+                    "logic": "规律总结：数列找规律（8题）",
+                    "chess": "复盘本周棋局，讨论有趣局面"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "Snake Knowledge Card",
+                    "art": "制作蛇的知识卡片（正面画蛇，背面写知识）",
+                    "writing": "英文写5个关于蛇的事实",
+                    "chinese_note": "中文写3个你学到的知识"
+                }
+            },
+            "tennis": "放松对打（线下记录）",
+            "review": {
+                "10min": {
+                    "summary": "这周最满意的作品是哪个？",
+                    "next_week": "下周想探索什么动物？"
+                }
+            }
+        },
+        "2026-03-22": {
+            "day": 7,
+            "topic": "一周回顾与展示",
+            "chinese": {
+                "30min": {
+                    "reading": "轻松阅读中文书20分钟",
+                    "writing": "写周记：一周回顾（150字）",
+                    "expression": "这周学到了什么？"
+                }
+            },
+            "english": {
+                "60min": {
+                    "reading": "AR自由选择阅读30页",
+                    "vocabulary": "本周词汇复习：12个单词",
+                    "grammar": "本周语法复习：复杂句练习（5句）",
+                    "speaking": "用英语介绍自己最喜欢的爬虫（完整演讲2分钟）"
+                }
+            },
+            "math": {
+                "40min": {
+                    "number_sense": "本周数学复习：错题重做",
+                    "logic": "趣味数学挑战：3道思考题",
+                    "chess": "轻松下一局棋，享受思考乐趣"
+                }
+            },
+            "pbl": {
+                "50min": {
+                    "topic": "My Week 1 Portfolio",
+                    "art": "整理本周所有作品",
+                    "writing": "用英文写Week 1学习总结（8-10句）",
+                    "display": "选择最好的3件作品拍照存档"
+                }
+            },
+            "tennis": "休息或轻松活动（记录）",
+            "review": {
+                "10min": {
+                    "summary": "Week 1 完成情况总结",
+                    "celebration": "🎉 庆祝第一周完成！"
+                }
+            }
+        }
+    }
+}

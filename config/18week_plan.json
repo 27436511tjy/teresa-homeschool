@@ -1,0 +1,101 @@
+{
+    "system": {
+        "name": "Teresa 18周Homeschool系统",
+        "version": "2.0",
+        "student": {
+            "name": "Teresa",
+            "age": 8.5,
+            "grade": 3,
+            "route": "国际路线"
+        },
+        "daily_structure": {
+            "中文": {"minutes": 30, "type": "阅读+写作"},
+            "英语": {"minutes": 60, "type": "阅读+词汇+口语"},
+            "数学": {"minutes": 40, "type": "运算+思维+国际象棋"},
+            "PBL动物探究": {"minutes": 50, "type": "项目制学习"},
+            "复盘": {"minutes": 10, "type": "每日总结"},
+            "网球": {"minutes": "60-90", "type": "线下训练"}
+        },
+        "total_academic_minutes": "150-180"
+    },
+    "phases": [
+        {
+            "phase": 1,
+            "name": "自我与习惯",
+            "weeks": "第1-4周",
+            "theme": "认识自我，建立学习习惯",
+            "focus_areas": ["时间管理", "自主学习", "记录习惯"],
+            "pbl_theme": "我的动物朋友"
+        },
+        {
+            "phase": 2,
+            "name": "自然与观察",
+            "weeks": "第5-8周",
+            "theme": "走进自然，观察动物",
+            "focus_areas": ["户外观察", "记录描写", "分类整理"],
+            "pbl_theme": "爬虫世界探索"
+        },
+        {
+            "phase": 3,
+            "name": "世界动物探索",
+            "weeks": "第9-12周",
+            "theme": "探索世界各国的动物",
+            "focus_areas": ["地理分布", "动物习性", "研究报告"],
+            "pbl_theme": "动物星球"
+        },
+        {
+            "phase": 4,
+            "name": "创造与表达",
+            "weeks": "第13-16周",
+            "theme": "创意表达与项目制作",
+            "focus_areas": ["写作创作", "手工制作", "展示演讲"],
+            "pbl_theme": "我的动物园"
+        },
+        {
+            "phase": 5,
+            "name": "成果展示与复盘",
+            "weeks": "第17-18周",
+            "theme": "总结展示，展望未来",
+            "focus_areas": ["作品集整理", "成果展示", "经验总结"],
+            "pbl_theme": "成长发布会"
+        }
+    ],
+    "weekly_templates": {
+        "phase1_week1": {
+            "week": 1,
+            "phase": 1,
+            "theme": "认识新系统",
+            "english": {
+                "daily_focus": ["AR阅读30分钟", "新词汇5个", "口语对话10分钟"],
+                "book": "NATIONAL GEOGRAPHIC KIDS - Animals",
+                "writing": "介绍自己喜欢的动物"
+            },
+            "math": {
+                "daily_focus": ["两位数加减", "简单乘法概念", "测量基础"],
+                "chess": "认识棋盘，学习基本走法"
+            },
+            "chinese": {
+                "daily_focus": ["汉字阅读20分钟", "日记100字", "观察记录"],
+                "reading": "《米小圈上学记》"
+            },
+            "pbl": {
+                "project": "我的动物朋友",
+                "tasks": ["画出自己喜欢的动物", "用英语介绍", "观察家里或户外的动物"]
+            }
+        }
+    },
+    "current_status": {
+        "week": 1,
+        "phase": 1,
+        "start_date": "待定",
+        "day": 0,
+        "is_running": false,
+        "waiting_for_start": true
+    },
+    "feishu": {
+        "enabled": true,
+        "parent_open_id": "ou_4696b60c009c37025c8e747ca058048c",
+        "daily_report_time": "21:00",
+        "weekly_report_day": "sunday"
+    }
+}

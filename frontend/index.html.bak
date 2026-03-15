@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Teresa's Personal AI Learning Hub - Homeschool AI Tutor">
+    <title>Teresa's AI Learning Hub | 专属学习平台</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== CSS Variables ==================== */
+        :root {
+            /* Colors */
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --primary-light: #818CF8;
+            --accent: #EC4899;
+            --accent-warm: #F97316;
+            
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --info: #3B82F6;
+            
+            --english: #06B6D4;
+            --math: #8B5CF6;
+            --chinese: #EF4444;
+            --science: #22C55E;
+            --pbl: #F59E0B;
+            --world: #3B82F6;
+            
+            /* Backgrounds */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --bg-card: #1E293B;
+            --bg-card-hover: #334155;
+            
+            /* Text */
+            --text-primary: #F8FAFC;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            
+            /* Borders */
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(255, 255, 255, 0.12);
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.35);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.25);
+            
+            /* Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.25s ease;
+            --transition-slow: 0.4s ease;
+            
+            /* Z-index */
+            --z-dropdown: 100;
+            --z-sticky: 200;
+            --z-modal: 500;
+            --z-toast: 600;
+        }
+        
+        /* ==================== Reset & Base ==================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body {
+            font-family: 'Nunito', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Background Effects */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-effects::before {
+            content: '';
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+            top: -200px;
+            left: -200px;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .bg-effects::after {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 70%);
+            bottom: -100px;
+            right: -100px;
+            animation: float 15s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(50px, 30px); }
+        }
+        
+        /* ==================== Typography ==================== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.3;
+            color: var(--text-primary);
+        }
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+        
+        p { color: var(--text-secondary); }
+        
+        a {
+            color: var(--primary-light);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        a:hover { color: var(--accent); }
+        
+        /* ==================== Layout ==================== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+        
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        main {
+            flex: 1;
+            padding: var(--space-xl) 0;
+        }
+        
+        /* ==================== Navigation ==================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: var(--z-sticky);
+            padding: var(--space-md) 0;
+        }
+        
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-lg);
+        }
+        
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .navbar-brand .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: all var(--transition-fast);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .nav-link .icon {
+            font-size: 1.25rem;
+        }
+        
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-xs) var(--space-md);
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-nav, .navbar-actions {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mobile-menu {
+                display: flex;
+                flex-direction: column;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg-secondary);
+                padding: var(--space-xl);
+                transition: right var(--transition-slow);
+                z-index: var(--z-modal);
+                box-shadow: var(--shadow-lg);
+            }
+            
+            .mobile-menu.open {
+                right: 0;
+            }
+            
+            .mobile-menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.6);
+                z-index: calc(var(--z-modal) - 1);
+            }
+            
+            .mobile-menu-overlay.open {
+                display: block;
+            }
+            
+            .mobile-menu .nav-link {
+                padding: var(--space-md);
+                font-size: 1.1rem;
+            }
+            
+            .mobile-close {
+                align-self: flex-end;
+                background: none;
+                border: none;
+                color: var(--text-secondary);
+                font-size: 2rem;
+                cursor: pointer;
+                margin-bottom: var(--space-md);
+            }
+        }
+        
+        /* ==================== Hero Section ==================== */
+        .hero {
+            padding: var(--space-2xl) 0;
+        }
+        
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+        }
+        
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: var(--space-md);
+            background: linear-gradient(135deg, var(--text-primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-content p {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 900px) {
+            .hero-stats {
+                justify-content: center;
+            }
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md) var(--space-lg);
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-light);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-avatar-large {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            box-shadow: var(--shadow-glow);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(99, 102, 241, 0.4); }
+            50% { box-shadow: 0 0 60px rgba(236, 72, 153, 0.5); }
+        }
+        
+        .hero-level {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--warning), var(--accent-warm));
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        /* ==================== Progress Section ==================== */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+        
+        .progress-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .progress-percent {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--success);
+        }
+        
+        .progress-bar {
+            height: 16px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent));
+            border-radius: var(--radius-lg);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shine 2s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* ==================== Section Styles ==================== */
+        .section {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1.5rem;
+        }
+        
+        .section-title .icon {
+            font-size: 1.75rem;
+        }
+        
+        /* ==================== Subject Cards ==================== */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+        
+        @media (max-width: 1024px) {
+            .subjects-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 600px) {
+            .subjects-grid { grid-template-columns: 1fr; }
+        }
+        
+        .subject-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--subject-color, var(--primary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform var(--transition-normal);
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-light);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .subject-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .subject-card.english { --subject-color: var(--english); }
+        .subject-card.math { --subject-color: var(--math); }
+        .subject-card.chinese { --subject-color: var(--chinese); }
+        .subject-card.science { --subject-color: var(--science); }
+        
+        .subject-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .english .subject-icon { background: rgba(6, 182, 212, 0.15); }
+        .math .subject-icon { background: rgba(139, 92, 246, 0.15); }
+        .chinese .subject-icon { background: rgba(239, 68, 68, 0.15); }
+        .science .subject-icon { background: rgba(34, 197, 94, 0.15); }
+        
+        .subject-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .subject-card p {
+            font-size: 0.95rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .subject-tasks {
+            list-style: none;
+            margin-bottom: var(--space-md);
+        }
+        
+        .subject-tasks li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .subject-tasks li:last-child {
+            border-bottom: none;
+        }
+        
+        .task-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--text-muted);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .task-check:hover {
+            border-color: var(--primary);
+        }
+        
+        .task-check.done {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            border: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+        }
+        
+        .btn-full {
+            width: 100%;
+        }
+        
+        /* ==================== PBL Section ==================== */
+        .pbl-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+        
+        @media (max-width: 900px) {
+            .pbl-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 600px) {
+            .pbl-grid { grid-template-columns: 1fr; }
+        }
+        
+        .pbl-card {
+            background: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .pbl-card:hover {
+            border-style: solid;
+            border-color: var(--pbl);
+            background: rgba(245, 158, 11, 0.05);
+        }
+        
+        .pbl-card.selected {
+            border-style: solid;
+            border-color: var(--pbl);
+            background: rgba(245, 158, 11, 0.1);
+        }
+        
+        .pbl-tag {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--world);
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .pbl-emoji {
+            font-size: 3rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .pbl-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .pbl-card p {
+            font-size: 0.9rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .pbl-meta {
+            display: flex;
+            gap: var(--space-md);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        /* ==================== Quick Actions ==================== */
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+        }
+        
+        @media (max-width: 768px) {
+            .quick-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        .quick-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .quick-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .quick-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .quick-card h4 {
+            font-size: 1rem;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .quick-card p {
+            font-size: 0.85rem;
+        }
+        
+        /* ==================== Chat Modal ==================== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: var(--z-modal);
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            animation: modalIn 0.3s ease;
+        }
+        
+        @keyframes modalIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .modal-title h3 {
+            font-size: 1.25rem;
+        }
+        
+        .modal-title p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        
+        .modal-close {
+            margin-left: auto;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: var(--error);
+            color: white;
+        }
+        
+        .modal-body {
+            flex: 1;
+            padding: var(--space-lg);
+            overflow-y: auto;
+            min-height: 400px;
+        }
+        
+        .chat-message {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+            animation: messageIn 0.3s ease;
+        }
+        
+        @keyframes messageIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .chat-message.ai {
+            align-items: flex-start;
+        }
+        
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+        
+        .chat-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .chat-message.ai .chat-avatar {
+            background: var(--primary);
+        }
+        
+        .chat-message.user .chat-avatar {
+            background: var(--accent);
+        }
+        
+        .chat-bubble {
+            max-width: 75%;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .chat-message.ai .chat-bubble {
+            background: var(--bg-tertiary);
+            border-bottom-left-radius: var(--radius-sm);
+        }
+        
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border-bottom-right-radius: var(--radius-sm);
+        }
+        
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: var(--space-sm);
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            background: var(--text-muted);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        .modal-footer {
+            padding: var(--space-md) var(--space-lg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        .modal-footer input {
+            flex: 1;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color var(--transition-fast);
+        }
+        
+        .modal-footer input:focus {
+            border-color: var(--primary);
+        }
+        
+        .modal-footer input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .modal-footer button {
+            padding: var(--space-sm) var(--space-lg);
+        }
+        
+        /* ==================== Toast Notification ==================== */
+        .toast {
+            position: fixed;
+            top: var(--space-lg);
+            right: var(--space-lg);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md) var(--space-lg);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(120%);
+            transition: transform var(--transition-slow);
+            z-index: var(--z-toast);
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+        
+        .toast.error {
+            border-left: 4px solid var(--error);
+        }
+        
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        /* ==================== Celebration Modal ==================== */
+        .celebrate-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: calc(var(--z-modal) + 100);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .celebrate-overlay.active {
+            display: flex;
+        }
+        
+        .celebrate-modal {
+            background: linear-gradient(135deg, var(--warning), var(--accent));
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            color: white;
+            animation: celebrateIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 90%;
+        }
+        
+        @keyframes celebrateIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .celebrate-emoji {
+            font-size: 5rem;
+            margin-bottom: var(--space-md);
+        }
+        
+        .celebrate-modal h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* ==================== Footer ==================== */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border-color);
+            padding: var(--space-xl) 0;
+            margin-top: var(--space-2xl);
+        }
+        
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .footer-brand .logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-info {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        
+        @media (max-width: 600px) {
+            .footer-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-info {
+                text-align: center;
+            }
+        }
+        
+        /* ==================== Utility Classes ==================== */
+        .text-center { text-align: center; }
+        .text-primary { color: var(--primary-light); }
+        .text-success { color: var(--success); }
+        .text-warning { color: var(--warning); }
+        .text-muted { color: var(--text-muted); }
+        
+        .mb-0 { margin-bottom: 0; }
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="bg-effects"></div>
+    
+    <div class="page-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-inner">
+                    <a href="#" class="navbar-brand">
+                        <span class="logo">🦋</span>
+                        <span>Teresa's Hub</span>
+                    </a>
+                    
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <span class="icon">🏠</span>
+                                <span>首页</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#subjects" class="nav-link">
+                                <span class="icon">📚</span>
+                                <span>学习</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#pbl" class="nav-link">
+                                <span class="icon">🚀</span>
+                                <span>PBL项目</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="navbar-actions">
+                        <div class="user-info">
+                            <div class="user-avatar">T</div>
+                            <span class="user-name">Teresa</span>
+                        </div>
+                    </div>
+                    
+                    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu-overlay" onclick="toggleMobileMenu()"></div>
+        <div class="mobile-menu">
+            <button class="mobile-close" onclick="toggleMobileMenu()">×</button>
+            <a href="#" class="nav-link active" onclick="toggleMobileMenu()">
+                <span class="icon">🏠</span>
+                <span>首页</span>
+            </a>
+            <a href="#subjects" class="nav-link" onclick="toggleMobileMenu()">
+                <span class="icon">📚</span>
+                <span>学习</span>
+            </a>
+            <a href="#pbl" class="nav-link" onclick="toggleMobileMenu()">
+                <span class="icon">🚀</span>
+                <span>PBL项目</span>
+            </a>
+        </div>
+        
+        <!-- Main Content -->
+        <main>
+            <div class="container">
+                <!-- Hero Section -->
+                <section class="hero">
+                    <div class="hero-grid">
+                        <div class="hero-content">
+                            <h1>Hi, Teresa! ✨</h1>
+                            <p>欢迎来到你的专属 AI 学习乐园！每天进步一点点，成为更好的自己！</p>
+                            
+                            <div class="hero-stats">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="booksCount">0</div>
+                                    <div class="stat-label">阅读书籍</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="wordsCount">0</div>
+                                    <div class="stat-label">学习词汇</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value" id="streakCount">0</div>
+                                    <div class="stat-label">连续天数</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-visual">
+                            <div class="hero-avatar-large">🦋</div>
+                            <div class="hero-level">Level 12</div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Progress Section -->
+                <section class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-title">📊 今日学习进度</span>
+                        <span class="progress-percent" id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                </section>
+                
+                <!-- Subjects Section -->
+                <section class="section" id="subjects">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="icon">📖</span>
+                            学习科目
+                        </h2>
+                    </div>
+                    
+                    <div class="subjects-grid">
+                        <!-- English -->
+                        <div class="subject-card english" onclick="openChat('english')">
+                            <div class="subject-icon">📖</div>
+                            <h3>English 英语</h3>
+                            <p>阅读 · 词汇 · 口语</p>
+                            <ul class="subject-tasks">
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'english', 'reading')"></span>
+                                    <span>阅读 Because of Winn-Dixie</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'english', 'vocabulary')"></span>
+                                    <span>学习新单词</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'english', 'speaking')"></span>
+                                    <span>口语练习</span>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary btn-full" onclick="event.stopPropagation(); openChat('english')">
+                                🤖 开始学习
+                            </button>
+                        </div>
+                        
+                        <!-- Math -->
+                        <div class="subject-card math" onclick="openChat('math')">
+                            <div class="subject-icon">🔢</div>
+                            <h3>Math 数学</h3>
+                            <p>计算 · 思维 · 奥数</p>
+                            <ul class="subject-tasks">
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'math', 'practice')"></span>
+                                    <span>课内练习</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'math', 'olympiad')"></span>
+                                    <span>每日奥数</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'math', 'wrongnotes')"></span>
+                                    <span>错题复习</span>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary btn-full" onclick="event.stopPropagation(); openChat('math')">
+                                🤖 开始学习
+                            </button>
+                        </div>
+                        
+                        <!-- Chinese -->
+                        <div class="subject-card chinese" onclick="openChat('chinese')">
+                            <div class="subject-icon">📝</div>
+                            <h3>Chinese 中文</h3>
+                            <p>阅读 · 写作 · 日记</p>
+                            <ul class="subject-tasks">
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'chinese', 'reading')"></span>
+                                    <span>中文阅读</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'chinese', 'diary')"></span>
+                                    <span>写日记</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'chinese', 'writing')"></span>
+                                    <span>写作练习</span>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary btn-full" onclick="event.stopPropagation(); openChat('chinese')">
+                                🤖 开始学习
+                            </button>
+                        </div>
+                        
+                        <!-- Science -->
+                        <div class="subject-card science" onclick="openChat('science')">
+                            <div class="subject-icon">🔬</div>
+                            <h3>Science 科学</h3>
+                            <p>实验 · 观察 · 探索</p>
+                            <ul class="subject-tasks">
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'science', 'observation')"></span>
+                                    <span>自然观察</span>
+                                </li>
+                                <li>
+                                    <span class="task-check" onclick="toggleTask(event, 'science', 'experiment')"></span>
+                                    <span>小实验</span>
+                                </li>
+                            </ul>
+                            <button class="btn btn-primary btn-full" onclick="event.stopPropagation(); openChat('science')">
+                                🤖 开始探索
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- PBL Section -->
+                <section class="section" id="pbl">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="icon">🚀</span>
+                            本周 PBL 项目
+                        </h2>
+                    </div>
+                    
+                    <div class="pbl-grid">
+                        <div class="pbl-card" onclick="selectPBL(1)">
+                            <span class="pbl-tag">World Study</span>
+                            <div class="pbl-emoji">🗾</div>
+                            <h4>探索日本文化</h4>
+                            <p>了解日本的传统节日、美食、动漫文化</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 5天</span>
+                                <span>🎯 英语/研究</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pbl-card" onclick="selectPBL(2)">
+                            <span class="pbl-tag">跨学科</span>
+                            <div class="pbl-emoji">🍰</div>
+                            <h4>数学与烹饪</h4>
+                            <p>用食谱学习分数和测量</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 3天</span>
+                                <span>🎯 数学/实践</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pbl-card" onclick="selectPBL(3)">
+                            <span class="pbl-tag">科学探究</span>
+                            <div class="pbl-emoji">🌱</div>
+                            <h4>植物生长观察</h4>
+                            <p>种植豆芽，记录生长过程</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 7天</span>
+                                <span>🎯 科学/观察</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pbl-card" onclick="selectPBL(4)">
+                            <span class="pbl-tag">社会探索</span>
+                            <div class="pbl-emoji">🏘️</div>
+                            <h4>社区调研</h4>
+                            <p>访谈邻居，了解社区故事</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 4天</span>
+                                <span>🎯 社交/表达</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pbl-card" onclick="selectPBL(5)">
+                            <span class="pbl-tag">艺术创作</span>
+                            <div class="pbl-emoji">🎨</div>
+                            <h4>绘本创作</h4>
+                            <p>用英语创作自己的绘本故事</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 5天</span>
+                                <span>🎯 英语/创意</span>
+                            </div>
+                        </div>
+                        
+                        <div class="pbl-card" onclick="selectPBL(6)">
+                            <span class="pbl-tag">工程设计</span>
+                            <div class="pbl-emoji">🏗️</div>
+                            <h4>小桥建筑师</h4>
+                            <p>用积木搭建能承重的小桥</p>
+                            <div class="pbl-meta">
+                                <span>⏱️ 3天</span>
+                                <span>🎯 工程/数学</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Quick Actions -->
+                <section class="section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span class="icon">⚡</span>
+                            快速开始
+                        </h2>
+                    </div>
+                    
+                    <div class="quick-grid">
+                        <div class="quick-card" onclick="openChat('reading')">
+                            <div class="quick-icon">📚</div>
+                            <h4>阅读时间</h4>
+                            <p>Because of Winn-Dixie</p>
+                        </div>
+                        <div class="quick-card" onclick="openChat('world')">
+                            <div class="quick-icon">🌍</div>
+                            <h4>世界探索</h4>
+                            <p>本周：日本</p>
+                        </div>
+                        <div class="quick-card" onclick="openChat('pbl')">
+                            <div class="quick-icon">🎯</div>
+                            <h4>我的项目</h4>
+                            <p>查看PBL进度</p>
+                        </div>
+                        <div class="quick-card" onclick="showToast('💪', '加油！你是最棒的！')">
+                            <div class="quick-icon">⭐</div>
+                            <h4>自我鼓励</h4>
+                            <p>给自己打气</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-inner">
+                    <div class="footer-brand">
+                        <span class="logo">🦋</span>
+                        <span>Teresa's AI Learning Hub</span>
+                    </div>
+                    <div class="footer-info">
+                        <p>由 AI 助手提供服务</p>
+                        <p class="text-muted">🤖 讯飞星火 · Kimi · 学而思九章</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Chat Modal -->
+    <div class="modal-overlay" id="chatModal" onclick="closeModalOutside(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-avatar" id="modalAvatar">📖</div>
+                <div class="modal-title">
+                    <h3 id="modalTitle">英语老师</h3>
+                    <p id="modalStatus">在线 · 随时为你解答</p>
+                </div>
+                <button class="modal-close" onclick="closeChat()">×</button>
+            </div>
+            <div class="modal-body" id="chatBody">
+                <!-- Messages will be added here -->
+            </div>
+            <div class="modal-footer">
+                <input type="text" id="chatInput" placeholder="输入你的问题或回答..." onkeypress="handleEnter(event)">
+                <button class="btn btn-primary" onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Celebration Modal -->
+    <div class="celebrate-overlay" id="celebrateModal" onclick="closeCelebrate()">
+        <div class="celebrate-modal">
+            <div class="celebrate-emoji" id="celebrateEmoji">🎉</div>
+            <h2 id="celebrateTitle">太棒了！</h2>
+            <p id="celebrateText">你完成得很好！</p>
+        </div>
+    </div>
+    
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span id="toastIcon">✓</span>
+            <span id="toastMessage">操作成功</span>
+        </div>
+    </div>
+
+    <script>
+        // ==================== Data & State ====================
+        const TASKS = [
+            { id: 'english-reading', subject: 'english', key: 'reading', title: '阅读 Because of Winn-Dixie' },
+            { id: 'english-vocabulary', subject: 'english', key: 'vocabulary', title: '学习新单词' },
+            { id: 'english-speaking', subject: 'english', key: 'speaking', title: '口语练习' },
+            { id: 'math-practice', subject: 'math', key: 'practice', title: '课内练习' },
+            { id: 'math-olympiad', subject: 'math', key: 'olympiad', title: '每日奥数' },
+            { id: 'math-wrongnotes', subject: 'math', key: 'wrongnotes', title: '错题复习' },
+            { id: 'chinese-reading', subject: 'chinese', key: 'reading', title: '中文阅读' },
+            { id: 'chinese-diary', subject: 'chinese', key: 'diary', title: '写日记' },
+            { id: 'chinese-writing', subject: 'chinese', key: 'writing', title: '写作练习' },
+            { id: 'science-observation', subject: 'science', key: 'observation', title: '自然观察' },
+            { id: 'science-experiment', subject: 'science', key: 'experiment', title: '小实验' }
+        ];
+        
+        const SUBJECTS = {
+            english: { title: '英语老师', avatar: '📖', status: 'Ready to practice!' },
+            math: { title: '数学老师', avatar: '🔢', status: 'Let\'s solve problems!' },
+            chinese: { title: '中文老师', avatar: '📝', status: '我们来写作吧！' },
+            science: { title: '科学老师', avatar: '🔬', status: '探索科学世界！' },
+            reading: { title: '阅读老师', avatar: '📚', status: '一起读书吧！' },
+            world: { title: '世界探索', avatar: '🌍', status: '环游世界！' },
+            pbl: { title: 'PBL 导师', avatar: '🎯', status: '来做项目吧！' }
+        };
+        
+        let currentSubject = '';
+        let doneTasks = new Set();
+        
+        // ==================== Initialization ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress();
+            loadStats();
+            updateProgress();
+        });
+        
+        // ==================== Progress Management ====================
+        function loadProgress() {
+            const saved = localStorage.getItem('teresa_tasks');
+            if (saved) {
+                doneTasks = new Set(JSON.parse(saved));
+                updateTaskChecks();
+            }
+        }
+        
+        function saveProgress() {
+            localStorage.setItem('teresa_tasks', JSON.stringify([...doneTasks]));
+        }
+        
+        function toggleTask(event, subject, key) {
+            event.stopPropagation();
+            const id = `${subject}-${key}`;
+            
+            if (doneTasks.has(id)) {
+                doneTasks.delete(id);
+            } else {
+                doneTasks.add(id);
+                showCelebrate('🌟', '任务完成！', '你做得真好！');
+            }
+            
+            updateTaskChecks();
+            updateProgress();
+            saveProgress();
+        }
+        
+        function updateTaskChecks() {
+            document.querySelectorAll('.task-check').forEach(check => {
+                const onclick = check.getAttribute('onclick');
+                const match = onclick.match(/'([^']+)',\s*'([^']+)'/);
+                if (match) {
+                    const [, subject, key] = match;
+                    const id = `${subject}-${key}`;
+                    check.classList.toggle('done', doneTasks.has(id));
+                }
+            });
+        }
+        
+        function updateProgress() {
+            const total = TASKS.length;
+            const done = doneTasks.size;
+            const percent = total > 0 ? Math.round(done / total * 100) : 0;
+            
+            document.getElementById('progressPercent').textContent = percent + '%';
+            document.getElementById('progressFill').style.width = percent + '%';
+            
+            if (percent === 100) {
+                showCelebrate('🎉', '全部完成！', '你是最棒的学习小能手！');
+            }
+        }
+        
+        function loadStats() {
+            // Simulated stats - in production, fetch from API
+            const stats = JSON.parse(localStorage.getItem('teresa_stats') || '{}');
+            document.getElementById('booksCount').textContent = stats.books || 0;
+            document.getElementById('wordsCount').textContent = stats.words || 0;
+            document.getElementById('streakCount').textContent = stats.streak || 0;
+        }
+        
+        // ==================== PBL Selection ====================
+        function selectPBL(id) {
+            document.querySelectorAll('.pbl-card').forEach((card, index) => {
+                card.classList.toggle('selected', index === id - 1);
+            });
+            showCelebrate('🎉', '项目已选中！', '准备好开始探索了吗？');
+        }
+        
+        // ==================== Chat System ====================
+        function openChat(subject) {
+            currentSubject = subject;
+            const config = SUBJECTS[subject] || { title: 'AI 老师', avatar: '🤖', status: '在线' };
+            
+            document.getElementById('modalTitle').textContent = config.title;
+            document.getElementById('modalAvatar').textContent = config.avatar;
+            document.getElementById('modalStatus').textContent = config.status;
+            
+            // Welcome messages
+            const messages = {
+                english: "Hi! I'm your English teacher! 📖\n\nLet's practice! What did you read today?",
+                math: "Hi there! 🧮\n\nReady for some fun math? Let's solve some problems together!",
+                chinese: "你好！📝\n\n今天想写什么日记呢？告诉我今天最开心的事！",
+                science: "Welcome, little scientist! 🔬\n\nWhat do you want to explore today?",
+                reading: "Hello, little reader! 📚\n\nLet's talk about your book!",
+                world: "Hello, explorer! 🌍\n\nThis week we're learning about Japan!",
+                pbl: "Welcome to PBL time! 🎯\n\nLet's work on your project!"
+            };
+            
+            const body = document.getElementById('chatBody');
+            body.innerHTML = '';
+            addMessage(config.avatar, messages[subject] || "Hi Teresa! What would you like to learn?", 'ai');
+            
+            document.getElementById('chatModal').classList.add('active');
+            document.getElementById('chatInput').focus();
+        }
+        
+        function closeChat() {
+            document.getElementById('chatModal').classList.remove('active');
+            currentSubject = '';
+        }
+        
+        function closeModalOutside(event) {
+            if (event.target.id === 'chatModal') {
+                closeChat();
+            }
+        }
+        
+        function handleEnter(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function addMessage(avatar, text, sender) {
+            const body = document.getElementById('chatBody');
+            const div = document.createElement('div');
+            div.className = `chat-message ${sender}`;
+            div.innerHTML = `
+                <div class="chat-avatar">${avatar}</div>
+                <div class="chat-bubble">${text.replace(/\n/g, '<br>')}</div>
+            `;
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+        }
+        
+        function addTyping() {
+            const body = document.getElementById('chatBody');
+            const div = document.createElement('div');
+            div.className = 'chat-message ai';
+            div.id = 'typingIndicator';
+            div.innerHTML = `
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-bubble">
+                    <div class="typing-indicator">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+            `;
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+        }
+        
+        function removeTyping() {
+            document.getElementById('typingIndicator')?.remove();
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            const config = SUBJECTS[currentSubject] || { avatar: '👧' };
+            addMessage('👧', message, 'user');
+            input.value = '';
+            
+            // Show typing indicator
+            addTyping();
+            
+            // Simulate AI response
+            setTimeout(() => {
+                removeTyping();
+                const response = getAIResponse(currentSubject, message);
+                addMessage(config.avatar, response, 'ai');
+                
+                // Update progress when user interacts
+                updateProgress();
+            }, 1000);
+        }
+        
+        // ==================== AI Response Logic ====================
+        function getAIResponse(subject, message) {
+            const lower = message.toLowerCase();
+            
+            switch(subject) {
+                case 'english':
+                    if (lower.includes('book') || lower.includes('winn-dixie')) {
+                        return "📖 Winn-Dixie is such a sweet dog! 🐕\n\nWhat do you think about him? Is he friendly? Tell me about your favorite part!";
+                    }
+                    if (lower.includes('word') || lower.includes('vocabulary')) {
+                        return "📝 Great! Let's learn a new word!\n\nToday's word: <b>wonderful</b> (精彩的)\n\nExample: 'This is a wonderful day!'\n\nCan you use it in a sentence?";
+                    }
+                    if (lower.includes('speak') || lower.includes('say')) {
+                        return "🗣️ Perfect! Your pronunciation is getting better!\n\nTry: 'The sun is shining brightly today.'\n\nGreat job! Keep practicing! 🌟";
+                    }
+                    return "🌟 Excellent work!\n\nKeep up the great effort! You're making amazing progress!\n\nWhat else would you like to learn?";
+                
+                case 'math':
+                    if (lower.includes('规律') || lower.includes('pattern')) {
+                        return "🔢 Fun pattern puzzle!\n\nLook: 2, 4, 6, 8, __?\n\nAnswer: 10! Because we add 2 each time!\n\nYour turn: 1, 3, 5, 7, __? 🤔";
+                    }
+                    if (lower.includes('难') || lower.includes('hard') || lower.includes('help')) {
+                        return "💪 Don't worry! Let's figure it out together!\n\nTip: Break big problems into small steps.\n\nExample: 15 + 7 = ?\n→ 15 + 5 = 20\n→ 20 + 2 = 22\n\nSee? Easy! 🎉";
+                    }
+                    return "🧮 You're doing great!\n\nMath is like a puzzle - fun and exciting!\n\nReady for today's challenge? Let's go! 🚀";
+                
+                case 'chinese':
+                    return "📝 Great writing! ✨\n\nIdeas for your diary:\n- What made you happy today?\n- What did you learn new?\n- What are you excited about tomorrow?\n\nKeep writing! You're doing awesome! 💕";
+                
+                case 'science':
+                    return "🔬 Science is amazing! 🌟\n\nFun facts:\n- Plants need sun ☀️ and water 💧\n- Rainbows have 7 colors 🌈\n- Ice floats because it's less dense than water!\n\nWhat would you like to explore?";
+                
+                case 'world':
+                    return "🌍 Let's explore Japan! 🇯🇵\n\nFun things about Japan:\n- 🗻 Mt. Fuji - beautiful mountain\n- 🌸 Cherry blossoms in spring\n- 🍣 Sushi - delicious food!\n\nWhat interests you most?";
+                
+                case 'pbl':
+                    return "🎯 PBL is about learning by doing!\n\nSteps:\n1. Choose a topic\n2. Ask questions\n3. Find answers\n4. Create something\n5. Share with others\n\nWhat project are you working on?";
+                
+                default:
+                    return "🌟 You're doing great!\n\nKeep learning and having fun!\n\nWhat would you like to explore next?";
+            }
+        }
+        
+        // ==================== UI Helpers ====================
+        function showCelebrate(emoji, title, text) {
+            document.getElementById('celebrateEmoji').textContent = emoji;
+            document.getElementById('celebrateTitle').textContent = title;
+            document.getElementById('celebrateText').textContent = text;
+            document.getElementById('celebrateModal').classList.add('active');
+            
+            setTimeout(() => {
+                closeCelebrate();
+            }, 3000);
+        }
+        
+        function closeCelebrate() {
+            document.getElementById('celebrateModal').classList.remove('active');
+        }
+        
+        function showToast(icon, message) {
+            document.getElementById('toastIcon').textContent = icon;
+            document.getElementById('toastMessage').textContent = message;
+            document.getElementById('toast').classList.add('show');
+            
+            setTimeout(() => {
+                document.getElementById('toast').classList.remove('show');
+            }, 3000);
+        }
+        
+        function toggleMobileMenu() {
+            document.querySelector('.mobile-menu').classList.toggle('open');
+            document.querySelector('.mobile-menu-overlay').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

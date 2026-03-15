@@ -1,0 +1,62 @@
+{
+    "student": {
+        "name": "Teresa",
+        "age": 8.5,
+        "grade": 3,
+        "education": "美式国际教育体系",
+        "english": {
+            "ar_level": 6.0,
+            "daily_pages": [30, 50],
+            "current_book": "Because of Winn-Dixie",
+            "books_read": [],
+            "vocabulary": []
+        },
+        "math": {
+            "mode": "课内为主 + 奥数思维",
+            "olympiad_minutes": 10,
+            "weak_topics": [],
+            "wrong_notes": []
+        },
+        "chinese": {
+            "daily_reading_minutes": 20,
+            "diary_entries": []
+        },
+        "learning_mode": "Homeschool + Worldschool + PBL"
+    },
+    "daily_progress": {
+        "2026-03-14": {
+            "english": {
+                "reading_pages": 0,
+                "vocabulary_count": 0,
+                "speaking_done": false
+            },
+            "math": {
+                "practice_done": false,
+                "olympiad_done": false,
+                "wrong_notes_reviewed": false
+            },
+            "chinese": {
+                "reading_minutes": 0,
+                "diary_written": false
+            },
+            "exercise": {
+                "minutes": 0,
+                "eye_break_done": false
+            },
+            "pbl": {
+                "project_selected": null,
+                "daily_steps_completed": []
+            }
+        }
+    },
+    "pbl_projects": {
+        "active": null,
+        "completed": [],
+        "weekly_recommendations": []
+    },
+    "settings": {
+        "feishu_webhook": "",
+        "notify_parent": true,
+        "sync_interval_minutes": 30
+    }
+}

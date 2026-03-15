@@ -1,0 +1,64 @@
+{
+    "date": "2026-03-16",
+    "week": 1,
+    "day": 1,
+    "phase": 1,
+    "phase_name": "自我与习惯",
+    "theme": "认识新系统 - 开启动物探究之旅",
+    "day_theme": "🐍 认识爬虫朋友",
+    "daily_tasks": {
+        "中文": {
+            "duration": "30分钟",
+            "items": [
+                {"task": "纯汉字章节书阅读", "content": "阅读《米小圈上学记》或《神奇校车》20分钟", "status": "pending"},
+                {"task": "日记/短文", "content": "写日记：今天最开心的事（100字以上）", "status": "pending"},
+                {"task": "表达练习", "content": "口述今天学到的爬虫知识", "status": "pending"}
+            ]
+        },
+        "英语": {
+            "duration": "60分钟",
+            "items": [
+                {"task": "AR阅读", "content": "阅读 National Geographic Kids - Snakes (或同级别科普) 30页", "status": "pending"},
+                {"task": "词汇积累", "content": "学习5个爬虫相关英语词汇：reptile, scales, cold-blooded, habitat, species", "status": "pending"},
+                {"task": "口语练习", "content": "用英语描述蛇的特点（3-5句）", "status": "pending"},
+                {"task": "写作", "content": "写一段话介绍自己喜欢的动物", "status": "pending"}
+            ]
+        },
+        "数学": {
+            "duration": "40分钟",
+            "items": [
+                {"task": "四则运算", "content": "多位数加减法练习20题", "status": "pending"},
+                {"task": "逻辑思维", "content": "找规律填数游戏（10分钟）", "status": "pending"},
+                {"task": "国际象棋", "content": "轻松玩一局象棋（兴趣放松）", "status": "pending"}
+            ]
+        },
+        "PBL动物探究": {
+            "duration": "50分钟",
+            "items": [
+                {"task": "爬虫知识学习", "content": "观看爬虫科普视频或阅读资料", "status": "pending"},
+                {"task": "观察记录", "content": "画一条蛇并标注身体部位（中英双语）", "status": "pending"},
+                {"task": "手工创作", "content": "用彩纸或黏土制作爬虫手工", "status": "pending"},
+                {"task": "写作", "content": "写3句话描述爬虫的特征", "status": "pending"}
+            ]
+        },
+        "每日复盘": {
+            "duration": "10分钟",
+            "items": [
+                {"task": "今日总结", "content": "今天学到了什么？最喜欢哪个环节？", "status": "pending"},
+                {"task": "明日计划", "content": "明天想探索什么动物？", "status": "pending"}
+            ]
+        },
+        "网球": {
+            "duration": "60-90分钟",
+            "items": [
+                {"task": "网球训练", "content": "线下网球训练（系统仅记录）", "status": "pending"}
+            ]
+        }
+    },
+    "daily_summary": {
+        "completed": [],
+        "difficulties": [],
+        "highlights": [],
+        "tomorrow_focus": ""
+    }
+}

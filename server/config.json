@@ -1,0 +1,41 @@
+{
+    "student": {
+        "name": "Teresa",
+        "age": 8.5,
+        "grade": 3,
+        "education": "美式国际教育体系",
+        "english": {
+            "ar_level": 6.0,
+            "daily_pages": [30, 50],
+            "current_book": "Because of Winn-Dixie"
+        },
+        "math": {
+            "mode": "课内为主 + 奥数思维",
+            "olympiad_minutes": 10
+        },
+        "learning_mode": "Homeschool + Worldschool + PBL"
+    },
+    "apis": {
+        "xfyun": {
+            "endpoint": "https://spark-api.xf-yun.com/v4.0/chat",
+            "model": "spark-4.0"
+        },
+        "kimi": {
+            "endpoint": "https://api.moonshot.cn/v1/chat/completions", 
+            "model": "moonshot-v1-8k"
+        },
+        "mathgpt": {
+            "endpoint": "https://jiuzhang.istudy.net.cn/api/v1/chat/completions",
+            "model": "mathgpt-pro"
+        },
+        "minimax": {
+            "endpoint": "https://api.minimax.chat/v1/text/chatcompletion_v2",
+            "model": "MiniMax-M2.5"
+        }
+    },
+    "feishu": {
+        "webhook_url": "",
+        "notify_parent": true,
+        "sync_interval_minutes": 30
+    }
+}

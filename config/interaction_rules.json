@@ -1,0 +1,139 @@
+{
+    "interaction_rules": {
+        "name": "Teresa 实时学习交互规则",
+        "version": "1.0",
+        "purpose": "iPad端学习时的实时陪伴与帮助"
+    },
+    "monitoring": {
+        "idle_timeout": {
+            "description": "长时间停顿检测",
+            "mild_pause": 30,
+            "long_pause": 60,
+            "very_long_pause": 120,
+            "unit": "秒"
+        },
+        "error_tracking": {
+            "consecutive_errors_threshold": 3,
+            "error_types": ["语法错误", "计算错误", "拼写错误", "理解错误"]
+        },
+        "sentiment_tracking": {
+            "frustration_keywords": ["太难了", "不想做了", "好难", "我不会", "好累", "好无聊"],
+            "boredom_keywords": ["不想学了", "没意思", "好了吗", "还要多久"],
+            "success_keywords": ["对了", "我会了", "好简单", "完成了"]
+        }
+    },
+    "responses": {
+        "long_pause": {
+            "30s": {
+                "type": "gentle_prompt",
+                "message": "嗨，Teresa～ 你还好吗？需要帮助随时叫我哦！😊"
+            },
+            "60s": {
+                "type": "encouraging",
+                "message": "遇到困难了吗？没关系，我们可以一起想办法！💪"
+            },
+            "120s": {
+                "type": "offer_help",
+                "message": "看起来你可能卡住了要我帮你看看吗？可以点击上面的 🤖 按钮问我哦！"
+            }
+        },
+        "difficulty_signal": {
+            "action": "immediately_reduce_difficulty",
+            "response": {
+                "type": "empathetic",
+                "message": "哇，这题确实有点难！让我帮你拆成更小的步骤好不好？我们一起来！🦋"
+            },
+            "adjustments": [
+                "降低题目难度",
+                "提供更多提示",
+                "给出示例",
+                "允许查看答案后重做"
+            ]
+        },
+        "consecutive_errors": {
+            "threshold": 3,
+            "action": "pause_and_teach",
+            "response": {
+                "type": "patient_teacher",
+                "message": "让我看看你连续错了几题，我们来一起分析一下这个知识点好不好？📚"
+            },
+            "steps": [
+                "暂停当前任务",
+                "解释错误原因",
+                "用一个简单例子演示",
+                "让她复述理解",
+                "再试一次"
+            ]
+        },
+        "frustration": {
+            "action": "emotional_support",
+            "responses": [
+                "没关系，做错题是很正常的！我小时候也经常错～",
+                "休息一下吧！喝点水，站起来活动活动，我们等会儿再继续～",
+                "你已经做得很好了！来，深呼吸一下，我们慢慢来～"
+            ]
+        },
+        "boredom": {
+            "action": "add_interest",
+            "strategies": [
+                "换一个有趣的话题",
+                "加入游戏化元素",
+                "增加互动环节",
+                "允许先做感兴趣的部分"
+            ],
+            "response": {
+                "type": "fun_change",
+                "message": "看起来有点无聊了！要不要我们换个玩法？比如来个小比赛？🏆"
+            }
+        },
+        "success": {
+            "action": "celebrate",
+            "response": {
+                "type": "enthusiastic",
+                "message": "太棒了！！！🎉 你做对了！我就知道你行的！"
+            },
+            "methods": ["表情鼓励", "积分奖励", "成就解锁", "记录里程碑"]
+        },
+        "complete_task": {
+            "action": "acknowledge",
+            "response": {
+                "type": "proud",
+                "message": "优秀！今天的任务完成啦！🎯 让我记录一下你的成果～"
+            }
+        }
+    },
+    "session_flow": {
+        "start": {
+            "greeting": "嗨 Teresa！今天我们要学的是【{topic}】准备好了吗？",
+            "check_energy": "今天状态怎么样？能量满满还是需要休息一下？"
+        },
+        "during": {
+            "encourage": "加油！你可以的！💪",
+            "hint": "提示一下：{hint}",
+            "break_suggestion": "要不要休息5分钟？眼睛也需要休息哦～"
+        },
+        "end": {
+            "review": "今天学到了{count}个新知识点！",
+            "preview": "明天我们会学{next_topic}，会很精彩哦！",
+            "goodbye": "今天辛苦了！明天见～ 🦋"
+        }
+    },
+    "ipad_optimization": {
+        "touch_friendly": true,
+        "voice_input": true,
+        "large_buttons": true,
+        "auto_save": true,
+        "offline_cache": true,
+        "chunked_tasks": true
+    },
+    "worldschool_mode": {
+        "description": "户外学习模式优化",
+        "features": [
+            "语音交互优先（减少打字）",
+            "任务拆短（每次5-10分钟）",
+            "快速保存（防误触）",
+            "户外友好UI（高亮度可读）",
+            "环境感知提醒（天黑、吃饭、回家）"
+        ]
+    }
+}

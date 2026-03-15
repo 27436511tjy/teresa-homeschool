@@ -1,0 +1,47 @@
+{
+    "system": {
+        "name": "Teresa 18周Homeschool系统",
+        "version": "3.0龙虾机",
+        "student": {
+            "name": "Teresa",
+            "age": 8.5,
+            "grade": 3,
+            "route": "国际路线",
+            "abilities": {
+                "english": {
+                    "reading_level": "G5",
+                    "writing_level": "G11",
+                    "weak_points": ["复杂句", "逗号用法", "口语讨论规则", "词根词缀"]
+                },
+                "math": {
+                    "percentile": 98,
+                    "skills": ["加减乘除熟练", "逻辑思维"],
+                    "chess": "兴趣放松，不专业训练"
+                },
+                "chinese": {
+                    "level": "纯汉字章节书无障碍",
+                    "writing": "表达优秀"
+                },
+                "interests": ["爬虫/蛇", "其他动物", "国际象棋", "网球"],
+                "sports": {
+                    "tennis": "2.0~2.5",
+                    "fitness": "体力好，可户外/手工"
+                }
+            }
+        }
+    },
+    "daily_structure": {
+        "chinese": {"minutes": 30, "type": "阅读+写作"},
+        "english": {"minutes": 60, "type": "阅读+词汇+口语+写作（补强复杂句/逗号/词根）"},
+        "math": {"minutes": 40, "type": "运算+思维+国际象棋15分钟放松"},
+        "pbl": {"minutes": 50, "type": "动物探究-爬虫主线+手工/户外"},
+        "review": {"minutes": 10, "type": "每日复盘"},
+        "tennis": {"minutes": "60-90", "type": "线下执行，系统仅记录"}
+    },
+    "phase1_week1": {
+        "week": 1,
+        "phase": 1,
+        "theme": "习惯与能力打底",
+        "focus": "我的爱好（爬虫、网球、象棋）"
+    }
+}
