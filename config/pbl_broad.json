@@ -1,86 +1,78 @@
 {
     "system": {
         "name": "Teresa 18周Homeschool系统",
-        "version": "3.3",
-        "adjustment": "PBL广度拓展 - 动物为主，兼顾人文艺术体育"
+        "version": "3.4",
+        "adjustment": "PBL按原始18周计划配置 - 动物为主，拓宽人文艺术体育"
     },
     "pbl_structure": {
         "animals": {
-            "weight": "50%",
-            "description": "爬虫/蛇为核心，全动物探索"
+            "description": "爬虫/蛇为核心，辐射全动物（蛇、蜥蜴、两栖、哺乳、鸟类、海洋动物等）"
         },
         "humanities": {
-            "weight": "20%",
-            "description": "文化、历史、社会、阅读、写作"
+            "description": "日记、读后感、学习计划、演讲、写作"
         },
         "arts": {
-            "weight": "15%",
-            "description": "绘画、手工、音乐、戏剧"
+            "description": "绘画、手工、创作"
         },
         "sports": {
-            "weight": "10%",
-            "description": "网球、体能、运动科学"
-        },
-        "science": {
-            "weight": "5%",
-            "description": "自然观察、简单实验"
+            "description": "网球训练记录、运动分析"
         }
     },
-    "phases": [
-        {
-            "phase": 1,
+    "phase_themes": {
+        "phase1": {
             "name": "自我与习惯",
-            "weeks": "第1-4周",
-            "pbl_focus": "我的世界 - 兴趣探索",
-            "themes": ["我的爱好", "我的动物朋友", "我的家庭", "我的学校"]
+            "weeks": "1-4",
+            "pbl_themes": [
+                {"week": 1, "theme": "我的爱好（爬虫/网球/象棋）", "focus": "动物观察+绘画+写作"},
+                {"week": 2, "theme": "动物观察笔记", "focus": "记录小动物"},
+                {"week": 3, "theme": "动物故事", "focus": "读后感+手工"},
+                {"week": 4, "theme": "我的学习计划", "focus": "规划+时间线手工"}
+            ]
         },
-        {
-            "phase": 2,
-            "name": "自然与观察",
-            "weeks": "第5-8周",
-            "pbl_focus": "自然科学探究",
-            "themes": ["天气与气候", "植物生长", "动物行为", "季节变化"]
+        "phase2": {
+            "name": "自然与科学探究",
+            "weeks": "5-8",
+            "pbl_themes": [
+                {"week": 5, "theme": "后院动物", "focus": "户外观察+记录"},
+                {"week": 6, "theme": "爬虫vs两栖", "focus": "对比海报"},
+                {"week": 7, "theme": "森林动物", "focus": "模型手工"},
+                {"week": 8, "theme": "蛇的真相与传说", "focus": "研究+对比手工"}
+            ]
         },
-        {
-            "phase": 3,
-            "name": "世界探索",
-            "weeks": "第9-12周",
-            "pbl_focus": "人文地理",
-            "themes": ["世界各地", "不同文化", "传统节日", "美食地理"]
+        "phase3": {
+            "name": "世界动物大探索",
+            "weeks": "9-12",
+            "pbl_themes": [
+                {"week": 9, "theme": "沙漠动物", "focus": "栖息地手工"},
+                {"week": 10, "theme": "草原动物", "focus": "生态图"},
+                {"week": 11, "theme": "海洋动物", "focus": "海洋爬虫手工"},
+                {"week": 12, "theme": "雨林动物", "focus": "雨林模型"}
+            ]
         },
-        {
-            "phase": 4,
+        "phase4": {
             "name": "创造与表达",
-            "weeks": "第13-16周",
-            "pbl_focus": "创意项目",
-            "themes": ["故事创作", "手工设计", "演讲展示", "项目策划"]
+            "weeks": "13-16",
+            "pbl_themes": [
+                {"week": 13, "theme": "爬虫小说", "focus": "9页英文故事书"},
+                {"week": 14, "theme": "饲养箱设计", "focus": "设计图+材料清单"},
+                {"week": 15, "theme": "创造新动物", "focus": "想象动物+介绍"},
+                {"week": 16, "theme": "保护动物", "focus": "宣传海报"}
+            ]
         },
-        {
-            "phase": 5,
+        "phase5": {
             "name": "展示与复盘",
-            "weeks": "第17-18周",
-            "pbl_focus": "成果汇总",
-            "themes": ["作品集整理", "成长展示", "未来规划"]
+            "weeks": "17-18",
+            "pbl_themes": [
+                {"week": 17, "theme": "作品集", "focus": "整理+成长总结"},
+                {"week": 18, "theme": "成果展示", "focus": "3分钟演讲"}
+            ]
         }
-    ],
-    "weekly_pbl_themes": {
-        "week1": {"theme": "我的爬虫朋友", "category": "animals", "focus": "观察与绘画"},
-        "week2": {"theme": "我的运动爱好", "category": "sports", "focus": "运动与健康"},
-        "week3": {"theme": "我的象棋故事", "category": "humanities", "focus": "策略思维"},
-        "week4": {"theme": "我的动物对比", "category": "animals", "focus": "分类与比较"},
-        "week5": {"theme": "天气观察站", "category": "science", "focus": "自然记录"},
-        "week6": {"theme": "植物生长记", "category": "science", "focus": "种植实验"},
-        "week7": {"theme": "鸟类朋友", "category": "animals", "focus": "观察与研究"},
-        "week8": {"theme": "四季变化", "category": "science", "focus": "自然探索"},
-        "week9": {"theme": "世界各地的动物", "category": "animals", "focus": "地理分布"},
-        "week10": {"theme": "节日探索", "category": "humanities", "focus": "文化了解"},
-        "week11": {"theme": "美食地理", "category": "humanities", "focus": "饮食文化"},
-        "week12": {"theme": "国家小档案", "category": "humanities", "focus": "研究报告"},
-        "week13": {"theme": "创意故事书", "category": "arts", "focus": "写作与插画"},
-        "week14": {"theme": "手工设计", "category": "arts", "focus": "创作制作"},
-        "week15": {"theme": "演讲练习", "category": "humanities", "focus": "表达展示"},
-        "week16": {"theme": "项目策划", "category": "arts", "focus": "规划执行"},
-        "week17": {"theme": "作品整理", "category": "arts", "focus": "汇总展示"},
-        "week18": {"theme": "成长展示", "category": "humanities", "focus": "总结汇报"}
+    },
+    "pbl_mix_by_phase": {
+        "phase1": "动物60% + 艺术20% + 人文20%",
+        "phase2": "动物70% + 科学20% + 艺术10%",
+        "phase3": "动物80% + 人文20%",
+        "phase4": "艺术40% + 人文30% + 动物30%",
+        "phase5": "人文60% + 艺术40%"
     }
 }
