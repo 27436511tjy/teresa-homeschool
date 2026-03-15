@@ -1,0 +1,86 @@
+{
+    "system": {
+        "name": "Teresa 18周Homeschool系统",
+        "version": "3.3",
+        "adjustment": "PBL广度拓展 - 动物为主，兼顾人文艺术体育"
+    },
+    "pbl_structure": {
+        "animals": {
+            "weight": "50%",
+            "description": "爬虫/蛇为核心，全动物探索"
+        },
+        "humanities": {
+            "weight": "20%",
+            "description": "文化、历史、社会、阅读、写作"
+        },
+        "arts": {
+            "weight": "15%",
+            "description": "绘画、手工、音乐、戏剧"
+        },
+        "sports": {
+            "weight": "10%",
+            "description": "网球、体能、运动科学"
+        },
+        "science": {
+            "weight": "5%",
+            "description": "自然观察、简单实验"
+        }
+    },
+    "phases": [
+        {
+            "phase": 1,
+            "name": "自我与习惯",
+            "weeks": "第1-4周",
+            "pbl_focus": "我的世界 - 兴趣探索",
+            "themes": ["我的爱好", "我的动物朋友", "我的家庭", "我的学校"]
+        },
+        {
+            "phase": 2,
+            "name": "自然与观察",
+            "weeks": "第5-8周",
+            "pbl_focus": "自然科学探究",
+            "themes": ["天气与气候", "植物生长", "动物行为", "季节变化"]
+        },
+        {
+            "phase": 3,
+            "name": "世界探索",
+            "weeks": "第9-12周",
+            "pbl_focus": "人文地理",
+            "themes": ["世界各地", "不同文化", "传统节日", "美食地理"]
+        },
+        {
+            "phase": 4,
+            "name": "创造与表达",
+            "weeks": "第13-16周",
+            "pbl_focus": "创意项目",
+            "themes": ["故事创作", "手工设计", "演讲展示", "项目策划"]
+        },
+        {
+            "phase": 5,
+            "name": "展示与复盘",
+            "weeks": "第17-18周",
+            "pbl_focus": "成果汇总",
+            "themes": ["作品集整理", "成长展示", "未来规划"]
+        }
+    ],
+    "weekly_pbl_themes": {
+        "week1": {"theme": "我的爬虫朋友", "category": "animals", "focus": "观察与绘画"},
+        "week2": {"theme": "我的运动爱好", "category": "sports", "focus": "运动与健康"},
+        "week3": {"theme": "我的象棋故事", "category": "humanities", "focus": "策略思维"},
+        "week4": {"theme": "我的动物对比", "category": "animals", "focus": "分类与比较"},
+        "week5": {"theme": "天气观察站", "category": "science", "focus": "自然记录"},
+        "week6": {"theme": "植物生长记", "category": "science", "focus": "种植实验"},
+        "week7": {"theme": "鸟类朋友", "category": "animals", "focus": "观察与研究"},
+        "week8": {"theme": "四季变化", "category": "science", "focus": "自然探索"},
+        "week9": {"theme": "世界各地的动物", "category": "animals", "focus": "地理分布"},
+        "week10": {"theme": "节日探索", "category": "humanities", "focus": "文化了解"},
+        "week11": {"theme": "美食地理", "category": "humanities", "focus": "饮食文化"},
+        "week12": {"theme": "国家小档案", "category": "humanities", "focus": "研究报告"},
+        "week13": {"theme": "创意故事书", "category": "arts", "focus": "写作与插画"},
+        "week14": {"theme": "手工设计", "category": "arts", "focus": "创作制作"},
+        "week15": {"theme": "演讲练习", "category": "humanities", "focus": "表达展示"},
+        "week16": {"theme": "项目策划", "category": "arts", "focus": "规划执行"},
+        "week17": {"theme": "作品整理", "category": "arts", "focus": "汇总展示"},
+        "week18": {"theme": "成长展示", "category": "humanities", "focus": "总结汇报"}
+    }
+}
