@@ -505,10 +505,9 @@
             justify-content: center;
         }
         
-        /* Floating AI Button */
+        /* Floating AI Buttons */
         .ai-float-btn {
             position: fixed;
-            bottom: 24px;
             right: 24px;
             width: 60px;
             height: 60px;
@@ -527,6 +526,16 @@
         
         .ai-float-btn:hover {
             transform: scale(1.1);
+        }
+        
+        #ai-float-headmaster {
+            bottom: 100px;
+            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+        }
+        
+        #ai-float-tutor {
+            bottom: 24px;
+            background: linear-gradient(135deg, #06B6D4, #14B8A6);
         }
         
         /* Modal */
@@ -960,13 +969,13 @@
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('english')">
                             <span class="icon">🇺🇸</span>
-                            <span>英语</span>
+                            <span>English</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('math')">
                             <span class="icon">🔢</span>
-                            <span>数学</span>
+                            <span>Math</span>
                         </button>
                     </li>
                     <li class="nav-item">
@@ -978,25 +987,25 @@
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('pbl')">
                             <span class="icon">🦎</span>
-                            <span>PBL项目</span>
+                            <span>PBL</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('tennis')">
                             <span class="icon">🎾</span>
-                            <span>网球</span>
+                            <span>Tennis</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('review')">
                             <span class="icon">📝</span>
-                            <span>每日复盘</span>
+                            <span>Daily Review</span>
                         </button>
                     </li>
                     <li class="nav-item">
                         <button class="nav-link" onclick="showPage('stats')">
                             <span class="icon">📊</span>
-                            <span>学习报告</span>
+                            <span>Progress Report</span>
                         </button>
                     </li>
                 </ul>
@@ -1004,7 +1013,7 @@
             
             <div class="progress-card">
                 <div class="progress-header">
-                    <span class="progress-label">今日完成</span>
+                    <span class="progress-label">Today's Progress</span>
                     <span class="progress-value" id="todayPercent">0%</span>
                 </div>
                 <div class="progress-bar">
@@ -1038,47 +1047,47 @@
                         <span class="mode-badge mode-light">轻交互</span>
                         <div class="subject-header">
                             <div class="subject-icon">🇺🇸</div>
-                            <div class="subject-time">40分钟</div>
+                            <div class="subject-time">40 min</div>
                         </div>
-                        <h3 class="subject-title">英语</h3>
-                        <p class="subject-desc">Duolingo + Big Red 精读</p>
+                        <h3 class="subject-title">English</h3>
+                        <p class="subject-desc">Duolingo + Big Red Reading</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-reading" onclick="toggleTask(event, 'english', 'reading')"></span>
-                                <span>阅读与词汇 30分钟</span>
+                                <span>Reading & Vocabulary 30 min</span>
                             </li>
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-writing" onclick="toggleTask(event, 'english', 'writing')"></span>
-                                <span>写作练习 10分钟</span>
+                                <span>Writing Practice 10 min</span>
                             </li>
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-speaking" onclick="toggleTask(event, 'english', 'speaking')"></span>
-                                <span>口语对话（线下课另计）</span>
+                                <span>Speaking Practice (offline class extra)</span>
                             </li>
                         </ul>
                     </div>
                     
                     <!-- Math Card -->
                     <div class="subject-card math" onclick="showPage('math')">
-                        <span class="mode-badge mode-heavy">重交互</span>
+                        <span class="mode-badge mode-heavy">Heavy</span>
                         <div class="subject-header">
                             <div class="subject-icon">🔢</div>
-                            <div class="subject-time">40分钟</div>
+                            <div class="subject-time">40 min</div>
                         </div>
-                        <h3 class="subject-title">数学</h3>
-                        <p class="subject-desc">贝赛思 · 袋鼠数学 · AMC8</p>
+                        <h3 class="subject-title">Math</h3>
+                        <p class="subject-desc">Baskerville + Kangaroo Math + AMC8</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-math-practice" onclick="toggleTask(event, 'math', 'practice')"></span>
-                                <span>每日练习</span>
+                                <span>Daily Practice</span>
                             </li>
                             <li class="subject-task">
                                 <span class="task-check" id="task-math-review" onclick="toggleTask(event, 'math', 'review')"></span>
-                                <span>错题复习</span>
+                                <span>Review Mistakes</span>
                             </li>
                             <li class="subject-task">
                                 <span class="task-check" id="task-math-quiz" onclick="toggleTask(event, 'math', 'quiz')"></span>
-                                <span>小测验</span>
+                                <span>Mini Quiz</span>
                             </li>
                         </ul>
                     </div>
@@ -1106,13 +1115,13 @@
                     
                     <!-- PBL Card -->
                     <div class="subject-card pbl" onclick="showPage('pbl')">
-                        <span class="mode-badge mode-basic">基础参与</span>
+                        <span class="mode-badge mode-basic">Optional</span>
                         <div class="subject-header">
                             <div class="subject-icon">🦎</div>
-                            <div class="subject-time">自由</div>
+                            <div class="subject-time">Flexible</div>
                         </div>
-                        <h3 class="subject-title">PBL 项目</h3>
-                        <p class="subject-desc">第1-4周：自我与习惯</p>
+                        <h3 class="subject-title">PBL Projects</h3>
+                        <p class="subject-desc">Week 1-4: Self & Habits</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-pbl-project" onclick="toggleTask(event, 'pbl', 'project')"></span>
@@ -1155,49 +1164,49 @@
             <div id="page-english" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>🇺🇸 英语学习</h1>
-                        <p>Duolingo + Big Red 精读</p>
+                        <h1>🇺🇸 English Learning</h1>
+                        <p>Duolingo + Big Red Reading</p>
                     </div>
                 </header>
                 
                 <div class="english-dashboard">
                     <div class="stat-box">
                         <div class="stat-value" id="english-streak">0</div>
-                        <div class="stat-label">连续学习天数</div>
+                        <div class="stat-label">Day Streak</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-value" id="english-words">0</div>
-                        <div class="stat-label">本周新词汇</div>
+                        <div class="stat-label">New Words This Week</div>
                     </div>
                 </div>
                 
                 <div class="duolingo-section">
-                    <h3 class="section-title">📱 Duolingo 学习</h3>
+                    <h3 class="section-title">📱 Duolingo Practice</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        每日完成 Duolingo 课程任务，截图记录进度
+                        Complete your Duolingo lessons daily. Screenshot your progress!
                     </p>
                     <button class="btn btn-primary" onclick="openDuolingo()">
-                        🎯 开始 Duolingo
+                        🎯 Start Duolingo
                     </button>
                 </div>
                 
                 <div class="bigred-section">
-                    <h3 class="section-title">📖 Big Red 精读</h3>
+                    <h3 class="section-title">📖 Big Red Reading</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        精读 Big Red 配套内容，完成阅读理解
+                        Read Big Red books and complete reading comprehension
                     </p>
                     <button class="btn btn-primary" onclick="openBigRed()">
-                        📚 开始阅读
+                        📚 Start Reading
                     </button>
                 </div>
                 
                 <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
-                    <h3 class="section-title">🗣️ 口语练习</h3>
+                    <h3 class="section-title">🗣️ Speaking Practice</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        点击开始与 AI 进行简单英语对话（每日 5 分钟）
+                        Start a simple English conversation with AI (5 minutes daily)
                     </p>
                     <button class="btn btn-primary" onclick="startEnglishChat()">
-                        💬 开始对话
+                        💬 Start Conversation
                     </button>
                 </div>
             </div>
@@ -1206,27 +1215,27 @@
             <div id="page-math" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>🔢 数学学习</h1>
-                        <p>贝赛思 · 袋鼠数学 · AMC8</p>
+                        <h1>🔢 Math Learning</h1>
+                        <p>Baskerville + Kangaroo Math + AMC8</p>
                     </div>
                 </header>
                 
                 <div class="english-dashboard">
                     <div class="stat-box">
                         <div class="stat-value" style="color: var(--math);" id="math-correct">0%</div>
-                        <div class="stat-label">正确率</div>
+                        <div class="stat-label">Accuracy</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-value" style="color: var(--warning);" id="math-wrong">0</div>
-                        <div class="stat-label">本周错题</div>
+                        <div class="stat-label">Mistakes This Week</div>
                     </div>
                 </div>
                 
                 <div class="math-problem-card">
-                    <h3 class="section-title">📝 每日练习</h3>
+                    <h3 class="section-title">📝 Daily Practice</h3>
                     <div id="math-problem-container">
                         <div class="problem-text" id="problem-text">
-                            加载中...
+                            Loading...
                         </div>
                         <div class="problem-options" id="problem-options">
                         </div>
@@ -1295,45 +1304,45 @@
             <div id="page-pbl" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>🦎 PBL 项目学习</h1>
-                        <p>第1-4周：自我与习惯（动物/人文/艺术）</p>
+                        <h1>🦎 PBL Project Learning</h1>
+                        <p>Week 1-4: Self & Habits (Animal/Humanities/Art)</p>
                     </div>
                 </header>
                 
                 <div class="pbl-projects">
                     <div class="pbl-project-card active" onclick="selectPBLProject(this, 'animal')">
                         <div class="pbl-emoji">🐍</div>
-                        <div class="pbl-title">动物探究</div>
-                        <div class="pbl-desc">观察、记录、研究喜欢的动物</div>
+                        <div class="pbl-title">Animal Exploration</div>
+                        <div class="pbl-desc">Observe, record, research animals</div>
                     </div>
                     
                     <div class="pbl-project-card" onclick="selectPBLProject(this, 'humanities')">
                         <div class="pbl-emoji">📚</div>
-                        <div class="pbl-title">人文社科</div>
-                        <div class="pbl-desc">了解自我，培养习惯</div>
+                        <div class="pbl-title">Humanities & Social Studies</div>
+                        <div class="pbl-desc">Self-discovery, habit building</div>
                     </div>
                     
                     <div class="pbl-project-card" onclick="selectPBLProject(this, 'art')">
                         <div class="pbl-emoji">🎨</div>
-                        <div class="pbl-title">艺术创作</div>
-                        <div class="pbl-desc">绘画、手工、创意表达</div>
+                        <div class="pbl-title">Art & Creativity</div>
+                        <div class="pbl-desc">Drawing, crafts, creative expression</div>
                     </div>
                     
                     <div class="pbl-project-card" onclick="selectPBLProject(this, 'outdoor')">
                         <div class="pbl-emoji">🌳</div>
-                        <div class="pbl-title">户外探索</div>
-                        <div class="pbl-desc">自然观察、户外活动</div>
+                        <div class="pbl-title">Outdoor Exploration</div>
+                        <div class="pbl-desc">Nature observation, outdoor activities</div>
                     </div>
                 </div>
                 
                 <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
-                    <h3 class="section-title">📝 项目记录</h3>
+                    <h3 class="section-title">📝 Project Log</h3>
                     <div class="form-group">
-                        <label class="form-label">今日进展</label>
-                        <textarea class="form-textarea" id="pbl-progress" placeholder="记录今天的项目进展..."></textarea>
+                        <label class="form-label">Today's Progress</label>
+                        <textarea class="form-textarea" id="pbl-progress" placeholder="Record your project progress today..."></textarea>
                     </div>
                     <button class="btn btn-primary" onclick="savePBLProgress()">
-                        💾 保存记录
+                        💾 Save Log
                     </button>
                 </div>
             </div>
@@ -1342,47 +1351,47 @@
             <div id="page-tennis" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>🎾 网球训练</h1>
-                        <p>记录训练内容，分析进步趋势</p>
+                        <h1>🎾 Tennis Training</h1>
+                        <p>Log your training and track progress</p>
                     </div>
                 </header>
                 
                 <div class="tennis-log-form">
-                    <h3 class="section-title">📝 训练记录</h3>
+                    <h3 class="section-title">📝 Training Log</h3>
                     
                     <div class="form-group">
-                        <label class="form-label">训练日期</label>
+                        <label class="form-label">Training Date</label>
                         <input type="date" class="form-input" id="tennis-date">
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">训练时长（分钟）</label>
+                        <label class="form-label">Duration (minutes)</label>
                         <select class="form-select" id="tennis-duration">
-                            <option value="60">60分钟</option>
-                            <option value="90">90分钟</option>
-                            <option value="120">120分钟</option>
+                            <option value="60">60 min</option>
+                            <option value="90">90 min</option>
+                            <option value="120">120 min</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">训练内容</label>
-                        <textarea class="form-textarea" id="tennis-content" placeholder="记录今天的训练内容，如：正手挥拍、反手、发球等..."></textarea>
+                        <label class="form-label">Training Content</label>
+                        <textarea class="form-textarea" id="tennis-content" placeholder="Record today's training: forehand, backhand, serve, etc."></textarea>
                     </div>
                     
                     <div class="form-group">
-                        <label class="form-label">自我感受</label>
-                        <textarea class="form-textarea" id="tennis-feeling" placeholder="记录今天的感受，进步或需要改进的地方..."></textarea>
+                        <label class="form-label">How did it feel?</label>
+                        <textarea class="form-textarea" id="tennis-feeling" placeholder="Record your feelings, progress or areas to improve..."></textarea>
                     </div>
                     
                     <button class="btn btn-primary" onclick="saveTennisLog()">
-                        💾 保存记录
+                        💾 Save Log
                     </button>
                 </div>
                 
                 <div style="margin-top: 24px;">
-                    <h3 class="section-title">📊 近期训练记录</h3>
+                    <h3 class="section-title">📊 Recent Training</h3>
                     <div id="tennis-history">
-                        <p style="color: var(--text-muted);">暂无训练记录</p>
+                        <p style="color: var(--text-muted);">No training records yet</p>
                     </div>
                 </div>
             </div>
@@ -1391,29 +1400,29 @@
             <div id="page-review" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>📝 每日复盘</h1>
-                        <p>回顾今天的学习，总结与反思</p>
+                        <h1>📝 Daily Review</h1>
+                        <p>Reflect on today's learning</p>
                     </div>
                 </header>
                 
                 <div class="review-section">
-                    <h3 class="review-title">✅ 今日任务完成情况</h3>
+                    <h3 class="review-title">✅ Today's Tasks</h3>
                     <div class="review-items" id="review-tasks">
                     </div>
                 </div>
                 
                 <div class="review-section">
-                    <h3 class="review-title">💭 今日感悟</h3>
-                    <textarea class="form-textarea" id="review-thoughts" placeholder="写下今天的收获、困难、想法..." style="min-height: 120px;"></textarea>
+                    <h3 class="review-title">💭 Today's Reflections</h3>
+                    <textarea class="form-textarea" id="review-thoughts" placeholder="Write about what you learned today, challenges, thoughts..." style="min-height: 120px;"></textarea>
                 </div>
                 
                 <div class="review-section">
-                    <h3 class="review-title">🌟 明日计划</h3>
-                    <textarea class="form-textarea" id="review-tomorrow" placeholder="明天想要完成什么？" style="min-height: 80px;"></textarea>
+                    <h3 class="review-title">🌟 Tomorrow's Goals</h3>
+                    <textarea class="form-textarea" id="review-tomorrow" placeholder="What do you want to accomplish tomorrow?" style="min-height: 80px;"></textarea>
                 </div>
                 
                 <button class="btn btn-primary" onclick="saveReview()">
-                    💾 保存复盘
+                    💾 Save Review
                 </button>
             </div>
             
@@ -1421,8 +1430,8 @@
             <div id="page-stats" class="page hidden">
                 <header class="header">
                     <div class="greeting">
-                        <h1>📊 学习报告</h1>
-                        <p>查看学习数据与成长轨迹</p>
+                        <h1>📊 Progress Report</h1>
+                        <p>View your learning data and growth</p>
                     </div>
                 </header>
                 
@@ -1463,35 +1472,68 @@
         </main>
     </div>
     
-    <!-- AI Chat Floating Button -->
-    <button class="ai-float-btn" onclick="toggleAIChat()">🦋</button>
+    <!-- AI Chat Floating Buttons -->
+    <button class="ai-float-btn" id="ai-float-headmaster" onclick="toggleAIChat('headmaster')" title="Professor Dumbledore">🧙</button>
+    <button class="ai-float-btn" id="ai-float-tutor" onclick="toggleAIChat('tutor')" title="Professor Hermione">📚</button>
     
-    <!-- AI Chat Panel -->
-    <div class="ai-chat-panel" id="ai-chat-panel">
+    <!-- AI Headmaster Chat Panel (Dumbledore) -->
+    <div class="ai-chat-panel" id="ai-chat-headmaster">
         <div class="chat-header">
-            <div class="chat-avatar">🦋</div>
+            <div class="chat-avatar">🧙</div>
             <div class="chat-title">
-                <h3>AI 班主任</h3>
-                <span>● 在线</span>
+                <h3>Prof. Dumbledore</h3>
+                <span>● Online</span>
             </div>
-            <button class="chat-close" onclick="toggleAIChat()">×</button>
+            <button class="chat-close" onclick="toggleAIChat('headmaster')">×</button>
         </div>
-        <div class="chat-messages" id="chat-messages">
+        <div class="chat-messages" id="chat-messages-headmaster">
             <div class="chat-message ai">
-                <div class="msg-avatar">🦋</div>
+                <div class="msg-avatar">🧙</div>
                 <div class="msg-bubble">
-                    Hi Teresa! 我是你的 AI 班主任 🦋<br><br>
-                    有什么可以帮助你的吗？我可以：<br>
-                    • 解答学习问题<br>
-                    • 提醒今日任务<br>
-                    • 陪你聊天练习英语<br>
-                    • 给你鼓励和支持！
+                    Ah, hello Teresa! Welcome to your learning journey 🧙<br><br>
+                    I am Professor Dumbledore, your AI Headmaster.<br>
+                    I can help you with:<br>
+                    • Answering learning questions<br>
+                    • Reminding you of daily tasks<br>
+                    • Encouraging you along the way<br>
+                    • Sharing wisdom for your growth!<br><br>
+                    What would you like to explore today?
                 </div>
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="chat-input" placeholder="输入消息..." onkeypress="handleChatEnter(event)">
-            <button class="chat-send" onclick="sendChatMessage()">➤</button>
+            <input type="text" id="chat-input-headmaster" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'headmaster')">
+            <button class="chat-send" onclick="sendChatMessage('headmaster')">➤</button>
+        </div>
+    </div>
+    
+    <!-- AI Tutor Chat Panel (Hermione) -->
+    <div class="ai-chat-panel" id="ai-chat-tutor">
+        <div class="chat-header">
+            <div class="chat-avatar">📚</div>
+            <div class="chat-title">
+                <h3>Prof. Hermione</h3>
+                <span>● Online</span>
+            </div>
+            <button class="chat-close" onclick="toggleAIChat('tutor')">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages-tutor">
+            <div class="chat-message ai">
+                <div class="msg-avatar">📚</div>
+                <div class="msg-bubble">
+                    Hi Teresa! I'm Professor Hermione, your AI Subject Tutor 📚<br><br>
+                    I specialize in helping you with:<br>
+                    • English reading & vocabulary<br>
+                    • Math problems &逻辑 thinking<br>
+                    • Science exploration<br>
+                    • Project-based learning<br><br>
+                    Ask me anything about your subjects!
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input-tutor" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'tutor')">
+            <button class="chat-send" onclick="sendChatMessage('tutor')">➤</button>
         </div>
     </div>
     
@@ -1504,11 +1546,11 @@
     <script>
         // ==================== Data & State ====================
         const SUBJECTS = {
-            english: { title: '英语', icon: '🇺🇸', color: 'var(--english)' },
-            math: { title: '数学', icon: '🔢', color: 'var(--math)' },
+            english: { title: 'English', icon: '🇺🇸', color: 'var(--english)' },
+            math: { title: 'Math', icon: '🔢', color: 'var(--math)' },
             chinese: { title: '语文', icon: '🇨🇳', color: 'var(--chinese)' },
             pbl: { title: 'PBL', icon: '🦎', color: 'var(--pbl)' },
-            tennis: { title: '网球', icon: '🎾', color: 'var(--tennis)' }
+            tennis: { title: 'Tennis', icon: '🎾', color: 'var(--tennis)' }
         };
         
         // Math problems bank
@@ -1648,61 +1690,92 @@
         }
         
         // ==================== AI Chat ====================
-        function toggleAIChat() {
-            document.getElementById('ai-chat-panel').classList.toggle('open');
+        function toggleAIChat(chatType) {
+            if (chatType === 'headmaster') {
+                document.getElementById('ai-chat-headmaster').classList.toggle('open');
+            } else if (chatType === 'tutor') {
+                document.getElementById('ai-chat-tutor').classList.toggle('open');
+            }
         }
         
-        function handleChatEnter(event) {
-            if (event.key === 'Enter') sendChatMessage();
+        function handleChatEnter(event, chatType) {
+            if (event.key === 'Enter') sendChatMessage(chatType);
         }
         
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
+        function sendChatMessage(chatType) {
+            const input = document.getElementById(`chat-input-${chatType}`);
             const message = input.value.trim();
             if (!message) return;
             
-            addChatMessage(message, 'user');
+            addChatMessage(message, 'user', chatType);
             input.value = '';
             
-            // Simulate AI response
+            // Simulate AI response based on chat type
             setTimeout(() => {
-                const response = getAIResponse(message);
-                addChatMessage(response, 'ai');
+                const response = getAIResponse(message, chatType);
+                addChatMessage(response, 'ai', chatType);
             }, 500);
         }
         
-        function addChatMessage(text, sender) {
-            const container = document.getElementById('chat-messages');
+        function addChatMessage(text, sender, chatType) {
+            const container = document.getElementById(`chat-messages-${chatType}`);
+            const avatar = chatType === 'headmaster' ? '🧙' : '📚';
             const div = document.createElement('div');
             div.className = `chat-message ${sender}`;
             div.innerHTML = `
-                <div class="msg-avatar">${sender === 'ai' ? '🦋' : '👧'}</div>
+                <div class="msg-avatar">${sender === 'ai' ? avatar : '👧'}</div>
                 <div class="msg-bubble">${text}</div>
             `;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
         }
         
-        function getAIResponse(message) {
+        function getAIResponse(message, chatType) {
             const lower = message.toLowerCase();
             
-            if (lower.includes('help') || lower.includes('帮助') || lower.includes('不会')) {
-                return "别担心！告诉我哪里不会，我来帮你分析一下 🧠<br><br>可以截图给我看，或者描述一下具体是哪一步卡住了？";
+            // Headmaster (Dumbledore) - General guidance, motivation, life advice
+            if (chatType === 'headmaster') {
+                if (lower.includes('help') || lower.includes('stuck') || lower.includes('confused')) {
+                    return "Don't worry, dear Teresa! 🧙‍♂️<br><br>Tell me what you're struggling with, and we'll work through it together. Remember, even the greatest wizards started as beginners!<br><br>What specific question do you have?";
+                }
+                
+                if (lower.includes('tired') || lower.includes('exhausted') || lower.includes('break') || lower.includes('累')) {
+                    return "Ah, rest is equally important as work, dear child 💫<br><br>Take a break, stretch your legs, get some water. I'll be here when you're ready to continue. Your mind needs time to process what you've learned!<br><br>Shall I remind you of your tasks when you're rested?";
+                }
+                
+                if (lower.includes('task') || lower.includes('what to do') || lower.includes('任务') || lower.includes('today')) {
+                    return "Today's Learning Journey 📋<br><br>🇺🇸 English: 40 minutes<br>🔢 Math: 40 minutes<br>🇨🇳 Chinese: 40 minutes<br>🦎 PBL Project (optional)<br>🎾 Tennis (optional)<br>📝 Reflection: 10 minutes<br><br>Take one step at a time! 🌟";
+                }
+                
+                if (lower.includes('sad') || lower.includes('upset') || lower.includes('心情') || lower.includes('难过')) {
+                    return "Dear Teresa, 🧙‍♂️<br><br>It's okay to feel that way. Even in the darkest times, a single light can illuminate the path forward.<br><br>Would you like to talk about what's bothering you? Sometimes sharing helps lighten the heart.";
+                }
+                
+                return "I understand! Keep going, brave learner! 💪<br><br>Remember, it's not about being perfect—it's about progress. Every step forward counts!<br><br>Is there anything specific you'd like to discuss?";
             }
             
-            if (lower.includes('english') || lower.includes('英语') || lower.includes('speak')) {
-                return "Great! Let's practice English! 🌟<br><br>Tell me about your day in English, or what did you learn today?";
+            // Tutor (Hermione) - Subject-specific help
+            if (chatType === 'tutor') {
+                if (lower.includes('english') || lower.includes('vocabulary') || lower.includes('reading') || lower.includes('book')) {
+                    return "Great choice! Let's work on your English! 📖✨<br><br>For vocabulary, try making flashcards or using words in sentences.<br><br>For reading, try the PQRST method:<br>• Preview the text<br>• Question what you want to learn<br>• Read carefully<br>• Summarize what you learned<br>• Test yourself<br><br>What book are you reading now?";
+                }
+                
+                if (lower.includes('math') || lower.includes('数学') || lower.includes('problem') || lower.includes('计算')) {
+                    return "Let's tackle some Math! 🔢✨<br><br>For word problems, remember:<br>1. Read carefully<br>2. Identify what you know<br>3. Identify what you need to find<br>4. Choose the right operation<br>5. Solve and check<br><br>What specific topic are you working on? Addition, subtraction, multiplication, division, or maybe fractions?";
+                }
+                
+                if (lower.includes('science') || lower.includes('科学') || lower.includes('experiment')) {
+                    return "Science is so exciting! 🔬🌍<br><br>When doing experiments, remember the Scientific Method:<br>1. Ask a question<br>2. Do background research<br>3. Form a hypothesis<br>4. Test with an experiment<br>5. Analyze results<br>6. Conclusion!<br><br>What topic are you exploring?";
+                }
+                
+                if (lower.includes('homework') || lower.includes('作业') || lower.includes('practice')) {
+                    return "Practice makes perfect! 📝<br><br>For effective practice:<br>• Start with the hardest problems when you're fresh<br>• Check your answers and understand mistakes<br>• Review similar problems<br>• Teach what you learned to someone (or me!)<br><br>Which subject's homework do you need help with?";
+                }
+                
+                return "I'm here to help! 📚<br><br>Tell me what subject you'd like to work on:<br>• English - reading, writing, vocabulary<br>• Math - problems, concepts<br>• Science - experiments, concepts<br>• PBL - project ideas<br><br>What would you like to explore?";
             }
             
-            if (lower.includes('累') || lower.includes(' tired') || lower.includes('休息')) {
-                return "辛苦了！学习确实需要努力 💪<br><br>可以休息一下，起来活动活动，喝点水！我会在这里等你的～";
-            }
-            
-            if (lower.includes('task') || lower.includes('任务') || lower.includes('做什么')) {
-                return "今日任务清单 📋<br><br>🇺🇸 英语 40分钟<br>🔢 数学 40分钟<br>🇨🇳 语文 40分钟<br>🦎 PBL 项目（自由）<br>🎾 网球（自由）<br>📝 复盘 10分钟";
-            }
-            
-            return "我明白了！继续加油！💪<br><br>如果有任何问题，随时问我哦～ 我会帮助你的！";
+            return "I明白！继续加油！💪<br><br>如果有任何问题，随时问我哦～";
         }
         
         // ==================== Math Module ====================
