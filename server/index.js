@@ -182,7 +182,20 @@ app.get('/api/feishu/test', async (req, res) => {
     res.json({ success: result });
 });
 
-// 9. 提交阅读报告
+// 9. 发送学习报告到家长飞书
+app.post('/api/feishu/send', async (req, res) => {
+    const { open_id, message } = req.body;
+    
+    if (!open_id || !message) {
+        return res.json({ success: false, error: '缺少必要参数' });
+    }
+    
+    // 使用机器人发送私信消息
+    const result = await sendFeishuDM(open_id, message);
+    res.json({ success: result });
+});
+
+// 10. 提交阅读报告
 app.post('/api/reading/report', async (req, res) => {
     const { book, pages, summary, favoritePart, newWords } = req.body;
     
@@ -398,6 +411,91 @@ async function notifyFeishu(message) {
         return response.ok;
     } catch (e) {
         console.error('📱 飞书通知失败:', e);
+        return false;
+    }
+}
+
+// 发送飞书私信给家长
+async function sendFeishuDM(openId, message) {
+    const botToken = process.env.FEISHU_BOT_TOKEN;
+    const appId = process.env.FEISHU_APP_ID;
+    const appSecret = process.env.FEISHU_APP_SECRET;
+    
+    if (!botToken || !appId || !appSecret) {
+        console.log('📱 飞书机器人配置不完整，尝试使用 Webhook');
+        // 回退到 webhook
+        const webhookUrl = process.env.FEISHU_WEBHOOK_URL;
+        if (webhookUrl) {
+            try {
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        msg_type: 'text',
+                        content: { text: `🎓 Teresa's AI Tutor\n\n${message}` }
+                    })
+                });
+                return true;
+            } catch (e) {
+                console.error('📱 飞书通知失败:', e);
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    try {
+        // 1. 获取 tenant_access_token
+        const tokenRes = await fetch('https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ app_id: appId, app_secret: appSecret })
+        });
+        const tokenData = await tokenRes.json();
+        const tenantToken = tokenData.tenant_access_token;
+        
+        if (!tenantToken) {
+            console.error('📱 获取 tenant_token 失败');
+            return false;
+        }
+        
+        // 2. 创建或获取 chat_id (用户与机器人对话)
+        // 这里简化为发送群消息或使用 known chat_id
+        const chatId = process.env.FEISHU_CHAT_ID;
+        
+        if (chatId) {
+            // 发送到已知群组
+            const sendRes = await fetch(`https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=chat_id`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tenantToken}`
+                },
+                body: JSON.stringify({
+                    receive_id: chatId,
+                    msg_type: 'text',
+                    content: JSON.stringify({ text: `🎓 Teresa's AI Tutor\n\n${message}` })
+                })
+            });
+            return sendRes.ok;
+        } else {
+            // 尝试发送到用户 ID (需要 open_id 权限)
+            const sendRes = await fetch(`https://open.feishu.cn/open-apis/im/v1/messages?receive_id_type=open_id`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${tenantToken}`
+                },
+                body: JSON.stringify({
+                    receive_id: openId,
+                    msg_type: 'text',
+                    content: JSON.stringify({ text: `🎓 Teresa's AI Tutor\n\n${message}` })
+                })
+            });
+            return sendRes.ok;
+        }
+    } catch (e) {
+        console.error('📱 发送飞书消息失败:', e);
         return false;
     }
 }

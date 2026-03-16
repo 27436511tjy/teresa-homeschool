@@ -1,22 +1,55 @@
 {
     "system": {
         "name": "Teresa 18周Homeschool系统",
-        "version": "2.0",
+        "version": "3.0",
         "student": {
             "name": "Teresa",
             "age": 8.5,
             "grade": 3,
             "route": "国际路线"
         },
+        "plan_period": "18周（可根据实际情况调整）",
         "daily_structure": {
-            "中文": {"minutes": 30, "type": "阅读+写作"},
-            "英语": {"minutes": 60, "type": "阅读+词汇+口语"},
-            "数学": {"minutes": 40, "type": "运算+思维+国际象棋"},
-            "PBL": {"minutes": 50, "type": "项目制学习-多元化", "options": ["动物探究+手工", "人文写作+演讲", "艺术创作+设计", "户外观察+记录"]},
-            "复盘": {"minutes": 10, "type": "每日总结"},
-            "网球": {"minutes": "60-90", "type": "线下训练"}
+            "英语": {
+                "minutes": 40,
+                "type": "阅读与词汇+写作",
+                "tools": ["Duolingo", "Big Red"],
+                "breakdown": {
+                    "阅读与词汇": 30,
+                    "写作": 10
+                },
+                "note": "辩论课、演讲课等线下口语课不计入每日40分钟"
+            },
+            "数学": {
+                "minutes": 40,
+                "type": "知识点练习",
+                "mode": "每周2次线下课 + 每日线上练习",
+                "materials": ["贝赛思3-4年级衔接", "袋鼠数学", "怪兽学院", "AMC8"]
+            },
+            "中文": {
+                "minutes": 40,
+                "type": "大语文（语文+历史+地理）",
+                "breakdown": {
+                    "历史阅读": 20,
+                    "写作": 20
+                },
+                "note": "可结合北京本地资源做PBL融合"
+            },
+            "复盘": {
+                "minutes": 10,
+                "type": "每日总结"
+            },
+            "PBL": {
+                "minutes": "flexible",
+                "type": "项目制学习",
+                "note": "按实际项目量进行调整"
+            },
+            "网球": {
+                "minutes": "flexible",
+                "type": "自由安排"
+            }
         },
-        "total_academic_minutes": "150-180"
+        "total_academic_minutes": "130分钟（不含PBL和网球）"
     },
     "phases": [
         {
@@ -25,23 +58,23 @@
             "weeks": "第1-4周",
             "theme": "认识自我，建立学习习惯",
             "focus_areas": ["时间管理", "自主学习", "记录习惯"],
-            "pbl_theme": "我的动物朋友"
+            "pbl_theme": "动物/人文/艺术"
         },
         {
             "phase": 2,
-            "name": "自然与观察",
+            "name": "自然与科学",
             "weeks": "第5-8周",
-            "theme": "走进自然，观察动物",
-            "focus_areas": ["户外观察", "记录描写", "分类整理"],
-            "pbl_theme": "爬虫世界探索"
+            "theme": "走进自然，探索科学",
+            "focus_areas": ["户外观察", "科学实验", "记录描写"],
+            "pbl_theme": "动物/科学/户外"
         },
         {
             "phase": 3,
-            "name": "世界动物探索",
+            "name": "世界探索",
             "weeks": "第9-12周",
-            "theme": "探索世界各国的动物",
+            "theme": "探索世界各国的动物与地理",
             "focus_areas": ["地理分布", "动物习性", "研究报告"],
-            "pbl_theme": "动物星球"
+            "pbl_theme": "动物/地理"
         },
         {
             "phase": 4,
@@ -49,40 +82,53 @@
             "weeks": "第13-16周",
             "theme": "创意表达与项目制作",
             "focus_areas": ["写作创作", "手工制作", "展示演讲"],
-            "pbl_theme": "我的动物园"
+            "pbl_theme": "艺术/人文"
         },
         {
             "phase": 5,
-            "name": "成果展示与复盘",
+            "name": "展示与复盘",
             "weeks": "第17-18周",
             "theme": "总结展示，展望未来",
             "focus_areas": ["作品集整理", "成果展示", "经验总结"],
-            "pbl_theme": "成长发布会"
+            "pbl_theme": "人文/演讲"
         }
     ],
-    "weekly_templates": {
-        "phase1_week1": {
-            "week": 1,
-            "phase": 1,
-            "theme": "认识新系统",
-            "english": {
-                "daily_focus": ["AR阅读30分钟", "新词汇5个", "口语对话10分钟"],
-                "book": "NATIONAL GEOGRAPHIC KIDS - Animals",
-                "writing": "介绍自己喜欢的动物"
-            },
-            "math": {
-                "daily_focus": ["两位数加减", "简单乘法概念", "测量基础"],
-                "chess": "认识棋盘，学习基本走法"
-            },
-            "chinese": {
-                "daily_focus": ["汉字阅读20分钟", "日记100字", "观察记录"],
-                "reading": "《米小圈上学记》"
-            },
-            "pbl": {
-                "project": "我的动物朋友",
-                "tasks": ["画出自己喜欢的动物", "用英语介绍", "观察家里或户外的动物"]
-            }
-        }
+    "english": {
+        "tools": ["Duolingo", "Big Red"],
+        "daily_time": 40,
+        "breakdown": {
+            "阅读与词汇": 30,
+            "写作": 10
+        },
+        "writing_note": "精读课配套短篇写作",
+        "extra_courses": "辩论课、演讲课等线下口语课不计入每日40分钟"
+    },
+    "math": {
+        "materials": ["贝赛思3-4年级衔接", "袋鼠数学", "怪兽学院", "AMC8"],
+        "daily_time": 40,
+        "mode": "每周2次线下课 + 每日线上练习",
+        "content": "知识点练习"
+    },
+    "chinese": {
+        "direction": "大语文（语文+历史+地理）",
+        "daily_time": 40,
+        "breakdown": {
+            "历史阅读": 20,
+            "写作": 20
+        },
+        "note": "可结合北京本地资源做PBL融合"
+    },
+    "pbl": {
+        "time": "不限制，按主题自由安排",
+        "phases": 5,
+        "flexible": true
+    },
+    "tennis": {
+        "time": "不固定，自由安排"
+    },
+    "review": {
+        "daily_time": 10,
+        "type": "每日复盘"
     },
     "current_status": {
         "week": 1,
@@ -97,5 +143,7 @@
         "parent_open_id": "ou_4696b60c009c37025c8e747ca058048c",
         "daily_report_time": "21:00",
         "weekly_report_day": "sunday"
-    }
+    },
+    "last_updated": "2026-03-16",
+    "update_note": "v3.0 - 调整每日学习时间，优化PBL阶段主题"
 }
