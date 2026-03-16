@@ -1502,7 +1502,7 @@
     
     <!-- AI Chat Floating Buttons -->
     <button class="ai-float-btn" id="ai-float-headmaster" onclick="toggleAIChat('headmaster')" title="Professor Dumbledore"><img src="https://img.icons8.com/color/96/000000/albus-dumbledore.png" width="40" height="40" alt="Dumbledore"></button>
-    <button class="ai-float-btn" id="ai-float-tutor" onclick="toggleAIChat('tutor')" title="Professor Hermione"><img src="https://cdn.jsdelivr.net/gh/27436511tjy/teresa-homeschool@main/images/hermione.jpg" width="40" height="40" alt="Hermione"></button>
+    <button class="ai-float-btn" id="ai-float-tutor" onclick="toggleAIChat('tutor')" title="Professor Hermione"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="40" height="40" alt="Hermione"></button>
     
     <!-- AI Headmaster Chat Panel (Dumbledore) -->
     <div class="ai-chat-panel" id="ai-chat-headmaster">
@@ -1538,7 +1538,7 @@
     <!-- AI Tutor Chat Panel (Hermione) -->
     <div class="ai-chat-panel" id="ai-chat-tutor">
         <div class="chat-header">
-            <div class="chat-avatar"><img src="https://cdn.jsdelivr.net/gh/27436511tjy/teresa-homeschool@main/images/hermione.jpg" width="36" height="36" alt="Hermione"></div>
+            <div class="chat-avatar"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="36" height="36" alt="Hermione"></div>
             <div class="chat-title">
                 <h3>Prof. Hermione</h3>
                 <span>● Online</span>
@@ -1547,7 +1547,7 @@
         </div>
         <div class="chat-messages" id="chat-messages-tutor">
             <div class="chat-message ai">
-                <div class="msg-avatar"><img src="https://cdn.jsdelivr.net/gh/27436511tjy/teresa-homeschool@main/images/hermione.jpg" width="28" height="28" alt="Hermione"></div>
+                <div class="msg-avatar"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="28" height="28" alt="Hermione"></div>
                 <div class="msg-bubble">
                     Hi Teresa! I'm Professor Hermione, your AI Subject Tutor 📚<br><br>
                     I specialize in helping you with:<br>
@@ -1748,7 +1748,7 @@
         function addChatMessage(text, sender, chatType) {
             const container = document.getElementById(`chat-messages-${chatType}`);
             const dumbAvatar = '<img src="https://img.icons8.com/color/96/000000/albus-dumbledore.png" width="28" height="28" alt="Dumbledore">';
-            const hermAvatar = '<img src="https://cdn.jsdelivr.net/gh/27436511tjy/teresa-homeschool@main/images/hermione.jpg" width="28" height="28" alt="Hermione">';
+            const hermAvatar = '<img src="https://img.icons8.com/color/96/000000/user-female.png" width="28" height="28" alt="Hermione">';
             const avatar = chatType === 'headmaster' ? dumbAvatar : hermAvatar;
             const div = document.createElement('div');
             div.className = `chat-message ${sender}`;
