@@ -417,31 +417,10 @@ async function notifyFeishu(message) {
 
 // 发送飞书私信给家长
 async function sendFeishuDM(openId, message) {
-    const botToken = process.env.FEISHU_BOT_TOKEN;
-    const appId = process.env.FEISHU_APP_ID;
-    const appSecret = process.env.FEISHU_APP_SECRET;
-    
-    if (!botToken || !appId || !appSecret) {
-        console.log('📱 飞书机器人配置不完整，尝试使用 Webhook');
-        // 回退到 webhook
-        const webhookUrl = process.env.FEISHU_WEBHOOK_URL;
-        if (webhookUrl) {
-            try {
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        msg_type: 'text',
-                        content: { text: `🎓 Teresa's AI Tutor\n\n${message}` }
-                    })
-                });
-                return true;
-            } catch (e) {
-                console.error('📱 飞书通知失败:', e);
-                return false;
-            }
-        }
-        return false;
+    // 使用 OpenClaw 飞书应用配置
+    const appId = process.env.FEISHU_APP_ID || 'cli_a9389539ceb81bd8';
+    const appSecret = process.env.FEISHU_APP_SECRET || 'TEwNXahmqhSyTuetR4kYvetLptinIBgg';
+    const chatId = process.env.FEISHU_CHAT_ID;
     }
     
     try {
