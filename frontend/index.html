@@ -1033,10 +1033,7 @@
                     </div>
                     <div class="header-actions">
                         <button class="btn btn-secondary" onclick="openReview()">
-                            📝 每日复盘
-                        </button>
-                        <button class="btn btn-primary" onclick="sendFeishuReport()">
-                            📱 发送报告
+                            📝 Daily Review
                         </button>
                     </div>
                 </header>
@@ -1464,11 +1461,6 @@
                         <p style="color: var(--text-muted);">数据加载中...</p>
                     </div>
                 </div>
-                
-                <button class="btn btn-primary" style="margin-top: 24px;" onclick="sendFeishuReport()">
-                    📱 发送周报至飞书
-                </button>
-            </div>
         </main>
     </div>
     
@@ -2002,66 +1994,6 @@
                     </div>
                 </div>
             `;
-        }
-        
-        // ==================== Feishu Report ====================
-        const PARENT_OPEN_ID = "ou_4696b60c009c37025c8e747ca058048c"; // 陶静远
-        
-        function sendFeishuReport() {
-            const report = generateReport();
-            const reportText = formatReportText(report);
-            
-            showToast('📱', '正在发送报告到飞书...');
-            
-            // 调用飞书发送消息 API
-            fetch('/api/feishu/send', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    open_id: PARENT_OPEN_ID,
-                    message: reportText
-                })
-            }).then(() => {
-                showToast('✅', '报告已发送到飞书！');
-            }).catch(() => {
-                // 如果API不可用，显示报告内容供手动发送
-                showToast('📋', '报告已生成，请查收！');
-                console.log('Report:', reportText);
-            });
-        }
-        
-        function formatReportText(report) {
-            const date = new Date().toLocaleDateString('zh-CN', { 
-                year: 'numeric', month: 'long', day: 'numeric' 
-            });
-            
-            return `📊 Teresa 学习日报 (${date})
-            
-✅ 今日完成：${report.tasksDone}/${report.totalTasks} (${report.percentage}%)
-📚 英语：${doneTasks.has('task-english-reading') ? '✓' : '○'} 阅读 | ${doneTasks.has('task-english-writing') ? '✓' : '○'} 写作
-🔢 数学：${doneTasks.has('task-math-practice') ? '✓' : '○'} 练习 | ${doneTasks.has('task-math-quiz') ? '✓' : '○'} 测验
-🇨🇳 语文：${doneTasks.has('task-chinese-history') ? '✓' : '○'} 阅读 | ${doneTasks.has('task-chinese-writing') ? '✓' : '○'} 写作
-🦎 PBL：${doneTasks.has('task-pbl-project') ? '✓' : '○'} 项目
-
-📈 本周数据：
-• 错题：${report.wrongNotes} 道
-• 网球：${report.tennisLogs} 次
-• PBL：${report.pblRecords} 条记录
-
-🌟 继续加油！`;
-        }
-        
-        function generateReport() {
-            const tasksDone = [...doneTasks].filter(t => t.startsWith('task-')).length;
-            return {
-                date: new Date().toISOString(),
-                tasksDone,
-                totalTasks: 11,
-                percentage: Math.round(tasksDone / 11 * 100),
-                wrongNotes: wrongMathNotes.length,
-                tennisLogs: tennisLogs.length,
-                pblRecords: pblRecords.length
-            };
         }
         
         // ==================== External Links ====================
