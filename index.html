@@ -532,6 +532,42 @@
             justify-content: center;
         }
         
+        .voice-btn {
+            width: 36px;
+            height: 36px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all var(--transition);
+        }
+        
+        .voice-btn:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+        
+        .voice-btn.recording {
+            background: var(--error);
+            color: white;
+            animation: pulse 1s infinite;
+        }
+        
+        .voice-btn.speaking {
+            background: var(--success);
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
         /* Floating AI Buttons */
         .ai-float-btn {
             position: fixed;
@@ -1077,7 +1113,6 @@
                 <div class="subjects-grid">
                     <!-- English Card -->
                     <div class="subject-card english" onclick="showPage('english')">
-                        <span class="mode-badge mode-light">轻交互</span>
                         <div class="subject-header">
                             <div class="subject-icon">🇺🇸</div>
                             <div class="subject-time">40 min</div>
@@ -1102,7 +1137,6 @@
                     
                     <!-- Math Card -->
                     <div class="subject-card math" onclick="showPage('math')">
-                        <span class="mode-badge mode-heavy">Heavy</span>
                         <div class="subject-header">
                             <div class="subject-icon">🔢</div>
                             <div class="subject-time">40 min</div>
@@ -1127,7 +1161,6 @@
                     
                     <!-- Chinese Card -->
                     <div class="subject-card chinese" onclick="showPage('chinese')">
-                        <span class="mode-badge mode-heavy">重交互</span>
                         <div class="subject-header">
                             <div class="subject-icon">🇨🇳</div>
                             <div class="subject-time">40分钟</div>
@@ -1148,7 +1181,6 @@
                     
                     <!-- PBL Card -->
                     <div class="subject-card pbl" onclick="showPage('pbl')">
-                        <span class="mode-badge mode-basic">Optional</span>
                         <div class="subject-header">
                             <div class="subject-icon">🦎</div>
                             <div class="subject-time">Flexible</div>
@@ -1167,7 +1199,6 @@
                 <!-- Tennis & Review -->
                 <div class="subjects-grid" style="grid-template-columns: repeat(3, 1fr);">
                     <div class="subject-card tennis" onclick="showPage('tennis')">
-                        <span class="mode-badge mode-basic">基础参与</span>
                         <div class="subject-header">
                             <div class="subject-icon">🎾</div>
                         </div>
@@ -1530,7 +1561,9 @@
             </div>
         </div>
         <div class="chat-input-area">
+            <button class="voice-btn" id="voice-headmaster" onclick="toggleVoiceInput('headmaster')" title="Voice Input">🎤</button>
             <input type="text" id="chat-input-headmaster" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'headmaster')">
+            <button class="voice-btn" id="speak-headmaster" onclick="toggleSpeak('headmaster')" title="Text to Speech">🔊</button>
             <button class="chat-send" onclick="sendChatMessage('headmaster')">➤</button>
         </div>
     </div>
@@ -1560,7 +1593,9 @@
             </div>
         </div>
         <div class="chat-input-area">
+            <button class="voice-btn" id="voice-tutor" onclick="toggleVoiceInput('tutor')" title="Voice Input">🎤</button>
             <input type="text" id="chat-input-tutor" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'tutor')">
+            <button class="voice-btn" id="speak-tutor" onclick="toggleSpeak('tutor')" title="Text to Speech">🔊</button>
             <button class="chat-send" onclick="sendChatMessage('tutor')">➤</button>
         </div>
     </div>
@@ -1728,6 +1763,121 @@
         
         function handleChatEnter(event, chatType) {
             if (event.key === 'Enter') sendChatMessage(chatType);
+        }
+        
+        // ==================== Voice Functions ====================
+        let recognition = null;
+        let currentVoiceChatType = null;
+        let isSpeaking = false;
+        
+        // 语音输入功能
+        function toggleVoiceInput(chatType) {
+            const voiceBtn = document.getElementById(`voice-${chatType}`);
+            
+            if (voiceBtn.classList.contains('recording')) {
+                // 停止录音
+                if (recognition) {
+                    recognition.stop();
+                }
+                voiceBtn.classList.remove('recording');
+                return;
+            }
+            
+            // 检查浏览器是否支持语音识别
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showToast('⚠️', '您的浏览器不支持语音输入');
+                return;
+            }
+            
+            currentVoiceChatType = chatType;
+            
+            // 创建语音识别实例
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US'; // 设置为英文
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+            
+            recognition.onstart = function() {
+                voiceBtn.classList.add('recording');
+                showToast('🎤', '正在录音...');
+            };
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                const input = document.getElementById(`chat-input-${chatType}`);
+                input.value = transcript;
+                voiceBtn.classList.remove('recording');
+                showToast('✅', '语音识别完成');
+            };
+            
+            recognition.onerror = function(event) {
+                voiceBtn.classList.remove('recording');
+                showToast('❌', '语音识别失败: ' + event.error);
+            };
+            
+            recognition.onend = function() {
+                voiceBtn.classList.remove('recording');
+            };
+            
+            recognition.start();
+        }
+        
+        // 语音输出功能（文字转语音）
+        function toggleSpeak(chatType) {
+            const speakBtn = document.getElementById(`speak-${chatType}`);
+            const container = document.getElementById(`chat-messages-${chatType}`);
+            
+            if (isSpeaking) {
+                // 停止语音
+                speechSynthesis.cancel();
+                isSpeaking = false;
+                speakBtn.classList.remove('speaking');
+                return;
+            }
+            
+            // 获取最后一条AI消息
+            const messages = container.querySelectorAll('.chat-message.ai');
+            if (messages.length === 0) {
+                showToast('⚠️', '没有可朗读的消息');
+                return;
+            }
+            
+            const lastMessage = messages[messages.length - 1];
+            const text = lastMessage.querySelector('.msg-bubble').innerText;
+            
+            // 检查浏览器是否支持语音合成
+            if (!speechSynthesis) {
+                showToast('⚠️', '您的浏览器不支持语音输出');
+                return;
+            }
+            
+            // 停止之前的语音
+            speechSynthesis.cancel();
+            
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9; // 语速
+            utterance.pitch = 1.0; // 音调
+            
+            utterance.onstart = function() {
+                isSpeaking = true;
+                speakBtn.classList.add('speaking');
+                showToast('🔊', '正在朗读...');
+            };
+            
+            utterance.onend = function() {
+                isSpeaking = false;
+                speakBtn.classList.remove('speaking');
+            };
+            
+            utterance.onerror = function() {
+                isSpeaking = false;
+                speakBtn.classList.remove('speaking');
+                showToast('❌', '语音输出失败');
+            };
+            
+            speechSynthesis.speak(utterance);
         }
         
         function sendChatMessage(chatType) {
