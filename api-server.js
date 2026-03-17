@@ -11,10 +11,17 @@ const path = require('path');
 
 const PORT = process.env.PORT || 3000;
 
-// 豆包API配置
-const DOUBAO_CONFIG = {
+// 豆包API配置 - 邓布利多（通用对话）
+const DOUBAO_DUMBLEDORE = {
     endpoint: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
-    model: 'doubao-seed-2-0-pro-260215',
+    model: 'doubao-seed-2-0-pro-260215',  // 可调整为C2 Pro
+    apiKey: '12ded337-7298-4ae7-8eff-5b5ebde935e2'
+};
+
+// 豆包API配置 - 数学老师（Hermione，使用C2 Pro）
+const DOUBAO_MATH = {
+    endpoint: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
+    model: 'doubao-seed-2-0-pro-260215',  // 调整为 C2 Pro: doubao-c2-pro-xxxx
     apiKey: '12ded337-7298-4ae7-8eff-5b5ebde935e2'
 };
 
@@ -36,7 +43,7 @@ function loadLearningLog() {
     } catch (e) {
         console.error('加载日志失败:', e);
     }
-    return { logs: {} };
+    return { logs: {}, mathProgress: {} };
 }
 
 // 保存学习日志
@@ -48,26 +55,100 @@ function saveLearningLog(logData) {
     }
 }
 
+// 更新数学进度
+function updateMathProgress(progress) {
+    const logData = loadLearningLog();
+    const today = new Date().toISOString().split('T')[0];
+    
+    if (!logData.mathProgress[today]) {
+        logData.mathProgress[today] = {
+            lesson: '',
+            pages: '',
+            exercises: [],
+            timeSpent: 0,
+            topics: [],
+            difficulties: [],
+            notes: ''
+        };
+    }
+    
+    logData.mathProgress[today] = { ...logData.mathProgress[today], ...progress };
+    saveLearningLog(logData);
+    console.log(`📊 已更新数学进度: ${today}`);
+}
+
 // 提取学习话题
-function extractTopics(message) {
+function extractTopics(message, subject) {
     const topics = [];
     const lower = message.toLowerCase();
     
-    if (lower.includes('english') || lower.includes('vocabulary') || lower.includes('reading')) topics.push('English');
-    if (lower.includes('math') || lower.includes('number') || lower.includes('calculate')) topics.push('Math');
-    if (lower.includes('chinese') || lower.includes('中文')) topics.push('Chinese');
-    if (lower.includes('science') || lower.includes('experiment')) topics.push('Science');
-    if (lower.includes('homework') || lower.includes('practice')) topics.push('Practice');
-    if (lower.includes('tired') || lower.includes('hard') || lower.includes('difficult')) topics.push('Emotion');
+    if (subject === 'math') {
+        // 数学相关话题
+        if (lower.includes('addition') || lower.includes('加法')) topics.push('Addition');
+        if (lower.includes('subtraction') || lower.includes('减法')) topics.push('Subtraction');
+        if (lower.includes('multiplication') || lower.includes('乘法')) topics.push('Multiplication');
+        if (lower.includes('division') || lower.includes('除法')) topics.push('Division');
+        if (lower.includes('fraction') || lower.includes('分数')) topics.push('Fractions');
+        if (lower.includes('decimal') || lower.includes('小数')) topics.push('Decimals');
+        if (lower.includes('word problem') || lower.includes('应用题')) topics.push('Word Problems');
+        if (lower.includes('geometry') || lower.includes('几何')) topics.push('Geometry');
+        if (lower.includes('measurement') || lower.includes('测量')) topics.push('Measurement');
+        if (lower.includes('saxon')) topics.push('Saxon Math');
+    } else {
+        // 其他话题
+        if (lower.includes('english') || lower.includes('vocabulary') || lower.includes('reading')) topics.push('English');
+        if (lower.includes('math') || lower.includes('number') || lower.includes('calculate')) topics.push('Math');
+        if (lower.includes('chinese') || lower.includes('中文')) topics.push('Chinese');
+        if (lower.includes('science') || lower.includes('experiment')) topics.push('Science');
+        if (lower.includes('homework') || lower.includes('practice')) topics.push('Practice');
+        if (lower.includes('tired') || lower.includes('hard') || lower.includes('difficult')) topics.push('Emotion');
+    }
     
     return topics;
 }
 
 // 调用豆包API
-async function callDoubao(message, history = []) {
+async function callDoubao(message, history = [], config = DOUBAO_DUMBLEDORE) {
     const axios = require('axios');
     
-    const systemPrompt = `You are Professor Dumbledore from Harry Potter. You are the headmaster of Hogwarts and Teresa's AI learning guardian. 
+    let systemPrompt;
+    let model = config.model;
+    
+    if (config.model.includes('math') || history.mathTeacher) {
+        // 数学老师 - Hermione风格
+        systemPrompt = `You are Professor Hermione Granger from Harry Potter. You are Teresa's AI Math Tutor.
+
+Your role and characteristics:
+- Expert in Saxon Math curriculum (Grades K-12)
+- Patient, encouraging, and methodical
+- Use the Socratic method - guide students to discover answers themselves
+- Break down complex problems into smaller, manageable steps
+- Always verify understanding before moving on
+- Use concrete examples and manipulatives in explanations
+- Celebrate effort and progress, not just correct answers
+
+Saxon Math Approach:
+- Incremental development: new concepts are introduced in small steps
+- Continuous review: every lesson includes review of previously learned material
+- Emphasis on mastery: students must demonstrate understanding before advancing
+
+Teresa's profile:
+- Age: 8.5 years old (Grade 3)
+- Current level: Beginning Grade 3 Saxon Math
+- Learning style: Visual and hands-on learner
+- Goals: Build strong foundation in arithmetic, prepare for advanced math
+
+Communication guidelines:
+- Keep explanations age-appropriate for an 8-year-old
+- Use examples from everyday life
+- Check understanding frequently with questions
+- When explaining a concept, always start with "Let's think about..." or "Imagine..."
+- If Teresa makes a mistake, guide her to find the correct answer without directly saying "wrong"
+
+Remember: You are helping build mathematical thinking, not just getting right answers!`;
+    } else {
+        // 邓布利多 - 通用对话
+        systemPrompt = `You are Professor Dumbledore from Harry Potter. You are the headmaster of Hogwarts and Teresa's AI learning guardian. 
 
 Your characteristics:
 - Wise, kind, and encouraging
@@ -78,6 +159,7 @@ Your characteristics:
 - Keep responses concise but meaningful (2-3 paragraphs max)
 
 Remember: You are talking to an 8-year-old girl. Use simple language suitable for a child.`;
+    }
 
     const messages = [
         { role: 'system', content: systemPrompt }
@@ -94,23 +176,23 @@ Remember: You are talking to an 8-year-old girl. Use simple language suitable fo
 
     try {
         const response = await axios.post(
-            DOUBAO_CONFIG.endpoint,
+            config.endpoint,
             {
-                model: DOUBAO_CONFIG.model,
+                model: model,
                 messages: messages,
-                max_tokens: 500,
+                max_tokens: 800,
                 temperature: 0.7
             },
             {
                 headers: {
-                    'Authorization': `Bearer ${DOUBAO_CONFIG.apiKey}`,
+                    'Authorization': `Bearer ${config.apiKey}`,
                     'Content-Type': 'application/json'
                 },
                 timeout: 30000
             }
         );
 
-        return response.data?.choices?.[0]?.message?.content || "I'm sorry, dear Teresa. Let me think about that...";
+        return response.data?.choices?.[0]?.message?.content || "I'm sorry, dear. Let me think about that again...";
     } catch (error) {
         console.error('豆包API调用失败:', error.response?.data || error.message);
         throw error;
@@ -118,7 +200,7 @@ Remember: You are talking to an 8-year-old girl. Use simple language suitable fo
 }
 
 // 记录学习日志
-function logLearning(message, response, isVoice = false) {
+function logLearning(message, response, teacher = 'Dumbledore', isVoice = false, subject = 'general') {
     const logData = loadLearningLog();
     const today = new Date().toISOString().split('T')[0];
     
@@ -128,15 +210,16 @@ function logLearning(message, response, isVoice = false) {
     
     logData.logs[today].push({
         timestamp: new Date().toISOString(),
-        teacher: 'Dumbledore',
+        teacher: teacher,
+        subject: subject,
         userMessage: message,
         aiResponse: response,
         isVoice: isVoice,
-        topics: extractTopics(message)
+        topics: extractTopics(message, subject)
     });
     
     saveLearningLog(logData);
-    console.log(`📝 已记录学习日志: ${today} - ${message.substring(0, 20)}...`);
+    console.log(`📝 已记录学习日志 [${teacher}]: ${today} - ${message.substring(0, 20)}...`);
 }
 
 // 创建HTTP服务器
@@ -164,7 +247,7 @@ const server = http.createServer(async (req, res) => {
     req.on('data', chunk => body += chunk);
     req.on('end', async () => {
         try {
-            const { message, history, isVoice } = JSON.parse(body);
+            const { message, history, isVoice, teacher, subject, mathProgress } = JSON.parse(body);
             
             if (!message) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
@@ -172,17 +255,28 @@ const server = http.createServer(async (req, res) => {
                 return;
             }
 
-            console.log(`💬 收到消息: ${message.substring(0, 50)}...`);
+            console.log(`💬 收到${teacher || 'Dumbledore'}消息: ${message.substring(0, 50)}...`);
+            
+            // 选择API配置
+            let apiConfig = DOUBAO_DUMBLEDORE;
+            if (teacher === 'Hermione' || subject === 'math') {
+                apiConfig = DOUBAO_MATH;
+            }
             
             // 调用豆包API
             const startTime = Date.now();
-            const aiResponse = await callDoubao(message, history);
+            const aiResponse = await callDoubao(message, history, apiConfig);
             const elapsed = Date.now() - startTime;
             
-            console.log(`✅ 豆包响应 (${elapsed}ms): ${aiResponse.substring(0, 50)}...`);
+            console.log(`✅ ${teacher || 'Dumbledore'}响应 (${elapsed}ms): ${aiResponse.substring(0, 50)}...`);
             
             // 记录日志
-            logLearning(message, aiResponse, isVoice);
+            logLearning(message, aiResponse, teacher || 'Dumbledore', isVoice, subject || 'general');
+            
+            // 更新数学进度
+            if (mathProgress) {
+                updateMathProgress(mathProgress);
+            }
             
             // 返回结果
             res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -214,16 +308,9 @@ server.listen(PORT, '0.0.0.0', () => {
    地址: http://127.0.0.1:${PORT}
    ========================================
    
-   前端对接方式:
-   fetch('http://127.0.0.1:${PORT}', {
-       method: 'POST',
-       headers: {'Content-Type': 'application/json'},
-       body: JSON.stringify({
-           message: 'Hello',
-           history: [],
-           isVoice: false
-       })
-   })
+   可用端点:
+   - POST /api/chat (邓布利多)
+   - POST /api/math (数学老师Hermione)
    
    按 Ctrl+C 停止服务
 `);
@@ -232,8 +319,7 @@ server.listen(PORT, '0.0.0.0', () => {
 // 错误处理
 server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {
-        console.error(`❌ 端口 ${PORT} 已被占用，请使用其他端口:`);
-        console.error(`   PORT=3001 node api-server.js`);
+        console.error(`❌ 端口 ${PORT} 已被占用`);
     } else {
         console.error('❌ 服务器错误:', err);
     }

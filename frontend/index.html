@@ -2063,8 +2063,58 @@
                     if (loading) loading.remove();
                     addChatMessage("Let's try that again, shall we? 🧙‍♂️", 'ai', chatType);
                 });
-            } else {
-                // 赫敏还是用模拟回复
+            } else if (chatType === 'tutor') {
+                // 赫敏 - 数学老师，也调用豆包API
+                const history = getChatHistory(chatType);
+                
+                // 显示加载状态
+                const container = document.getElementById(`chat-messages-${chatType}`);
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'chat-message ai';
+                loadingDiv.id = 'loading-message';
+                const hermAvatar = '<img src="https://img.icons8.com/color/96/000000/user-female.png" width="28" height="28" alt="Hermione">';
+                loadingDiv.innerHTML = `
+                    <div class="msg-avatar">${hermAvatar}</div>
+                    <div class="msg-bubble" style="color: var(--text-muted);">Thinking... 📚</div>
+                `;
+                container.appendChild(loadingDiv);
+                container.scrollTop = container.scrollHeight;
+                
+                // 调用本地豆包API服务（数学老师）
+                const API_URL = 'http://127.0.0.1:3000';
+                fetch(`${API_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        history: history.slice(-10),
+                        isVoice: false,
+                        teacher: 'Hermione',
+                        subject: 'math'
+                    })
+                }).then(res => res.json())
+                .then(data => {
+                    const loading = document.getElementById('loading-message');
+                    if (loading) loading.remove();
+                    
+                    if (data.success) {
+                        addChatMessage(data.response, 'ai', chatType);
+                        
+                        const speakBtn = document.getElementById(`speak-${chatType}`);
+                        if (speakBtn && speakBtn.classList.contains('speaking')) {
+                            speakText(data.response);
+                        }
+                    } else {
+                        addChatMessage("Let me think about that again... 📚", 'ai', chatType);
+                    }
+                })
+                .catch(err => {
+                    console.error('API调用失败:', err);
+                    const loading = document.getElementById('loading-message');
+                    if (loading) loading.remove();
+                    addChatMessage("Let's try that again! 📚", 'ai', chatType);
+                });
+            }
                 setTimeout(() => {
                     const response = getAIResponse(message, chatType);
                     addChatMessage(response, 'ai', chatType);

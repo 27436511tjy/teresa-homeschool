@@ -8,6 +8,31 @@
         "aiResponse": "Hello there, Teresa! I’m Albus Dumbledore, headmaster of Hogwarts School of Witchcraft and Wizardry—you know, the castle with wiggly moving staircases, feasts that pop right onto the table whenever you’re hungry, and a jar of tangy lemon drops hidden in every one of my desks (I’m very, very partial to lemon drops, you see). I’m also your special AI learning guardian, here to help you with all your learning adventures, big or small.\n\nThink of me like a friendly, chatty portrait hanging in the Hogwarts corridors—always happy to answer your questions, cheer you on when you’re trying something tricky, and even help you laugh off little mistakes. We’ve all had those oops moments, after all: I still remember when I was a first-year, I accidentally turned my best friend’s homework into a hopping toad! Whenever you need a hand, or even just want to hear a silly Hogwarts story, I’m right here.",
         "isVoice": false,
         "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T05:15:09.147Z",
+        "teacher": "Dumbledore",
+        "userMessage": "Hi",
+        "aiResponse": "Hello there, Teresa! It’s so lovely to see you today—would you like a lemon drop? I’ve got a jar right here on my desk, these ones are enchanted to fizz like tiny fairy fireworks on your tongue, no sour aftertaste at all, I promise.\n\nWhether you’re here to ask about a tricky homework question, share a fun fact you learned lately, or even talk about a little mistake you made that felt scary, we can sort it out together. Remember, even the most powerful wizards started out fumbling with their first wand-lighting charm—curiosity and trying your best are the most magical skills you could ever have.",
+        "isVoice": false,
+        "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T05:23:22.920Z",
+        "teacher": "Dumbledore",
+        "userMessage": "Hello, who are you?",
+        "aiResponse": "*adjusts my half-moon spectacles and offers you a crinkly, lemon-flavored sweet from my velvet pocket* Hello there, Teresa! I’m Albus Dumbledore, the headmaster of Hogwarts School of Witchcraft and Wizardry, and I’m also your special AI learning guardian. I’ve got a phoenix feather quill tucked behind my ear right now, and my old friend Fawkes the phoenix is napping on the windowsill behind me, if you’d like to say hi to him later.\n\nI’m here to help you with all your learning adventures, whatever they might be today. Whether you’re figuring out tricky math sums, learning new stories about far-off places, or even practicing drawing unicorns or dragons if that’s what you’re excited about, we can do it together. Remember, even the best wizards and witches couldn’t make their wands work right on their first try—messing up is just how we learn all the most wonderful, fun things. What would you like to explore first?",
+        "isVoice": false,
+        "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T05:33:35.384Z",
+        "teacher": "Hermione",
+        "subject": "math",
+        "userMessage": "What is 15 + 27?",
+        "aiResponse": "Oh, what a wonderful little math puzzle to explore, Teresa! Let’s think of it like counting two piles of Fizzing Whizbees, shall we? First pile has 15: 10 lemon sherbet ones and 5 orange cream. The second has 27: 20 lemon sherbet and 7 orange cream. Add the orange ones first: 5 + 7 makes 12, that’s a whole extra group of 10 plus 2 left over. Then add the lemon groups: 10 + 20 is 30, plus that extra 10 from the orange pile makes 40, plus the 2 leftover orange ones? That gives us 42 total Fizzing Whizbees!\n\nBreaking sums into small, easy bits is just like learning a new simple charm—start with the smallest, easiest parts first, and the whole thing clicks together perfectly. Ten points to your house for being so curious about numbers today! If you want more practice later, we can count my secret stash of Chocolate Frog cards together, if you’d like.",
+        "isVoice": false,
+        "topics": []
       }
     ]
   }
