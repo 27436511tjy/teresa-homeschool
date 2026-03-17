@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 
 // 豆包API配置
 const DOUBAO_CONFIG = {
-    endpoint: 'https://ark.cn-beijing.volces.com/api/v3/responses',
+    endpoint: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
     model: 'doubao-seed-2-0-pro-260215',
     apiKey: '12ded337-7298-4ae7-8eff-5b5ebde935e2'
 };

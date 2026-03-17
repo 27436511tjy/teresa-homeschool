@@ -1,0 +1,14 @@
+{
+  "logs": {
+    "2026-03-17": [
+      {
+        "timestamp": "2026-03-17T05:13:53.588Z",
+        "teacher": "Dumbledore",
+        "userMessage": "Hello, who are you?",
+        "aiResponse": "Hello there, Teresa! I’m Albus Dumbledore, headmaster of Hogwarts School of Witchcraft and Wizardry—you know, the castle with wiggly moving staircases, feasts that pop right onto the table whenever you’re hungry, and a jar of tangy lemon drops hidden in every one of my desks (I’m very, very partial to lemon drops, you see). I’m also your special AI learning guardian, here to help you with all your learning adventures, big or small.\n\nThink of me like a friendly, chatty portrait hanging in the Hogwarts corridors—always happy to answer your questions, cheer you on when you’re trying something tricky, and even help you laugh off little mistakes. We’ve all had those oops moments, after all: I still remember when I was a first-year, I accidentally turned my best friend’s homework into a hopping toad! Whenever you need a hand, or even just want to hear a silly Hogwarts story, I’m right here.",
+        "isVoice": false,
+        "topics": []
+      }
+    ]
+  }
+}
