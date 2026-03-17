@@ -1958,6 +1958,11 @@
                 input.value = transcript;
                 voiceBtn.classList.remove('recording');
                 showToast('✅', '语音识别完成');
+                
+                // 如果是邓布利多，自动发送消息
+                if (chatType === 'headmaster' && transcript.trim()) {
+                    sendChatMessage(chatType);
+                }
             };
             
             recognition.onerror = function(event) {
@@ -1995,38 +2000,8 @@
             const lastMessage = messages[messages.length - 1];
             const text = lastMessage.querySelector('.msg-bubble').innerText;
             
-            // 检查浏览器是否支持语音合成
-            if (!speechSynthesis) {
-                showToast('⚠️', '您的浏览器不支持语音输出');
-                return;
-            }
-            
-            // 停止之前的语音
-            speechSynthesis.cancel();
-            
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.9; // 语速
-            utterance.pitch = 1.0; // 音调
-            
-            utterance.onstart = function() {
-                isSpeaking = true;
-                speakBtn.classList.add('speaking');
-                showToast('🔊', '正在朗读...');
-            };
-            
-            utterance.onend = function() {
-                isSpeaking = false;
-                speakBtn.classList.remove('speaking');
-            };
-            
-            utterance.onerror = function() {
-                isSpeaking = false;
-                speakBtn.classList.remove('speaking');
-                showToast('❌', '语音输出失败');
-            };
-            
-            speechSynthesis.speak(utterance);
+            speakText(text);
+            speakBtn.classList.add('speaking');
         }
         
         function sendChatMessage(chatType) {
@@ -2037,11 +2012,97 @@
             addChatMessage(message, 'user', chatType);
             input.value = '';
             
-            // Simulate AI response based on chat type
-            setTimeout(() => {
-                const response = getAIResponse(message, chatType);
-                addChatMessage(response, 'ai', chatType);
-            }, 500);
+            // 如果是邓布利多，调用真实的豆包API
+            if (chatType === 'headmaster') {
+                // 获取聊天历史
+                const history = getChatHistory(chatType);
+                
+                // 显示加载状态
+                const container = document.getElementById(`chat-messages-${chatType}`);
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'chat-message ai';
+                loadingDiv.id = 'loading-message';
+                loadingDiv.innerHTML = `
+                    <div class="msg-avatar"><img src="https://img.icons8.com/color/96/000000/albus-dumbledore.png" width="28" height="28" alt="Dumbledore"></div>
+                    <div class="msg-bubble" style="color: var(--text-muted);">Thinking... 🧙‍♂️</div>
+                `;
+                container.appendChild(loadingDiv);
+                container.scrollTop = container.scrollHeight;
+                
+                // 调用豆包API
+                fetch('/api/chat/dumbledore', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: message,
+                        history: history.slice(-10), // 只传最近10条对话
+                        isVoice: false
+                    })
+                }).then(res => res.json())
+                .then(data => {
+                    // 移除加载消息
+                    const loading = document.getElementById('loading-message');
+                    if (loading) loading.remove();
+                    
+                    if (data.success) {
+                        addChatMessage(data.response, 'ai', chatType);
+                        
+                        // 如果语音按钮开启，自动朗读
+                        const speakBtn = document.getElementById('speak-headmaster');
+                        if (speakBtn && speakBtn.classList.contains('speaking')) {
+                            speakText(data.response);
+                        }
+                    } else {
+                        addChatMessage("I'm having trouble thinking right now, dear. Let's try again! 🧙‍♂️", 'ai', chatType);
+                    }
+                })
+                .catch(err => {
+                    console.error('API调用失败:', err);
+                    const loading = document.getElementById('loading-message');
+                    if (loading) loading.remove();
+                    addChatMessage("Let's try that again, shall we? 🧙‍♂️", 'ai', chatType);
+                });
+            } else {
+                // 赫敏还是用模拟回复
+                setTimeout(() => {
+                    const response = getAIResponse(message, chatType);
+                    addChatMessage(response, 'ai', chatType);
+                }, 500);
+            }
+        }
+        
+        // 获取聊天历史
+        function getChatHistory(chatType) {
+            const container = document.getElementById(`chat-messages-${chatType}`);
+            const messages = container.querySelectorAll('.chat-message');
+            const history = [];
+            
+            messages.forEach(msg => {
+                const isUser = msg.classList.contains('user');
+                const text = msg.querySelector('.msg-bubble').innerText;
+                history.push({
+                    sender: isUser ? 'user' : 'ai',
+                    text: text
+                });
+            });
+            
+            return history;
+        }
+        
+        // 语音朗读
+        function speakText(text) {
+            if (!speechSynthesis) return;
+            
+            speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.onend = () => {
+                const speakBtn = document.getElementById('speak-headmaster');
+                if (speakBtn) speakBtn.classList.remove('speaking');
+            };
+            speechSynthesis.speak(utterance);
         }
         
         function addChatMessage(text, sender, chatType) {

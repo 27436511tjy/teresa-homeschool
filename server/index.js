@@ -37,8 +37,230 @@ const API_CONFIG = {
     minimax: {
         endpoint: 'https://api.minimax.chat/v1/text/chatcompletion_v2',
         model: 'MiniMax-M2.5'
+    },
+    // 豆包大模型配置
+    doubao: {
+        endpoint: 'https://ark.cn-beijing.volces.com/api/v3/responses',
+        model: 'doubao-seed-2-0-pro-260215',
+        apiKey: process.env.DOUBAO_API_KEY || '12ded337-7298-4ae7-8eff-5b5ebde935e2'
     }
 };
+
+// 学习日志存储路径
+const LOG_DIR = path.join(__dirname, '../data');
+const LEARNING_LOG_FILE = path.join(LOG_DIR, 'learning_log.json');
+
+// 加载学习日志
+function loadLearningLog() {
+    try {
+        if (fs.existsSync(LEARNING_LOG_FILE)) {
+            return JSON.parse(fs.readFileSync(LEARNING_LOG_FILE, 'utf-8'));
+        }
+    } catch (e) {
+        console.error('加载学习日志失败:', e);
+    }
+    return { logs: [], dateAnalysis: {} };
+}
+
+// 保存学习日志
+function saveLearningLog(logData) {
+    try {
+        fs.writeFileSync(LEARNING_LOG_FILE, JSON.stringify(logData, null, 2));
+    } catch (e) {
+        console.error('保存学习日志失败:', e);
+    }
+}
+
+// 豆包 AI 对话接口 (邓布利多)
+app.post('/api/chat/dumbledore', async (req, res) => {
+    const { message, history, isVoice } = req.body;
+    
+    console.log(`💬 Dumbledore AI Chat: ${message.substring(0, 50)}...`);
+    
+    try {
+        // 构建对话上下文
+        const systemPrompt = `You are Professor Dumbledore from Harry Potter. You are the headmaster of Hogwarts and Teresa's AI learning guardian. 
+
+Your characteristics:
+- Wise, kind, and encouraging
+- Use metaphors and wisdom from the wizarding world
+- Speak in a warm, mentoring tone
+- Help Teresa with her learning journey
+- Always encourage her to try her best
+- Keep responses concise but meaningful (2-3 paragraphs max)
+
+Remember: You are talking to an 8-year-old girl. Use simple language suitable for a child.`;
+
+        const messages = [
+            { role: 'system', content: systemPrompt }
+        ];
+        
+        // 添加历史对话
+        if (history && history.length > 0) {
+            history.forEach(msg => {
+                messages.push({ role: msg.sender === 'user' ? 'user' : 'assistant', content: msg.text });
+            });
+        }
+        
+        // 添加当前消息
+        messages.push({ role: 'user', content: message });
+        
+        // 调用豆包 API
+        const response = await fetch(API_CONFIG.doubao.endpoint, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${API_CONFIG.doubao.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: API_CONFIG.doubao.model,
+                messages: messages,
+                max_tokens: 500,
+                temperature: 0.7
+            })
+        });
+        
+        const data = await response.json();
+        const aiResponse = data.choices?.[0]?.message?.content || "I'm sorry, dear Teresa. Let me think about that... Could you ask me again?";
+        
+        // 记录学习日志
+        const logData = loadLearningLog();
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (!logData.logs[today]) {
+            logData.logs[today] = [];
+        }
+        
+        logData.logs[today].push({
+            timestamp: new Date().toISOString(),
+            teacher: 'Dumbledore',
+            userMessage: message,
+            aiResponse: aiResponse,
+            isVoice: isVoice || false,
+            topics: extractTopics(message) // 简单提取话题
+        });
+        
+        saveLearningLog(logData);
+        
+        res.json({ 
+            response: aiResponse,
+            success: true
+        });
+        
+    } catch (e) {
+        console.error('豆包 API 调用失败:', e);
+        res.json({ 
+            response: "I'm having trouble thinking right now, dear. Let's try again in a moment! 🧙‍♂️",
+            success: false,
+            error: e.message
+        });
+    }
+});
+
+// 提取消息中的学习话题（简单关键词匹配）
+function extractTopics(message) {
+    const topics = [];
+    const lower = message.toLowerCase();
+    
+    if (lower.includes('english') || lower.includes('vocabulary') || lower.includes('reading')) topics.push('English');
+    if (lower.includes('math') || lower.includes('number') || lower.includes('calculate')) topics.push('Math');
+    if (lower.includes('chinese') || lower.includes('中文')) topics.push('Chinese');
+    if (lower.includes('science') || lower.includes('experiment')) topics.push('Science');
+    if (lower.includes('homework') || lower.includes('practice')) topics.push('Practice');
+    if (lower.includes('tired') || lower.includes('hard') || lower.includes('difficult')) topics.push('Emotion');
+    
+    return topics;
+}
+
+// 获取学习日志
+app.get('/api/learning-log', (req, res) => {
+    const { startDate, endDate } = req.query;
+    const logData = loadLearningLog();
+    
+    let filteredLogs = {};
+    const start = startDate || new Date().toISOString().split('T')[0];
+    const end = endDate || start;
+    
+    for (const [date, logs] of Object.entries(logData.logs)) {
+        if (date >= start && date <= end) {
+            filteredLogs[date] = logs;
+        }
+    }
+    
+    res.json({ logs: filteredLogs, analysis: logData.dateAnalysis });
+});
+
+// 分析学习数据并生成开场白
+app.post('/api/learning/analyze', async (req, res) => {
+    const { period } = req.body; // daily, weekly, monthly
+    const logData = loadLearningLog();
+    
+    const now = new Date();
+    let startDate, endDate;
+    
+    if (period === 'weekly') {
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - now.getDay() - 6);
+        startDate = weekStart.toISOString().split('T')[0];
+        endDate = now.toISOString().split('T')[0];
+    } else if (period === 'monthly') {
+        startDate = now.toISOString().slice(0, 7) + '-01';
+        endDate = now.toISOString().split('T')[0];
+    } else {
+        startDate = endDate = now.toISOString().split('T')[0];
+    }
+    
+    // 统计学习情况
+    const stats = {
+        totalChats: 0,
+        topics: {},
+        voiceChats: 0,
+        dates: new Set()
+    };
+    
+    for (const [date, logs] of Object.entries(logData.logs)) {
+        if (date >= startDate && date <= endDate) {
+            logs.forEach(log => {
+                stats.totalChats++;
+                stats.dates.add(date);
+                if (log.isVoice) stats.voiceChats++;
+                if (log.topics) {
+                    log.topics.forEach(t => {
+                        stats.topics[t] = (stats.topics[t] || 0) + 1;
+                    });
+                }
+            });
+        }
+    }
+    
+    // 生成开场白
+    const greeting = generateDumbledoreGreeting(stats, period);
+    
+    res.json({
+        stats: {
+            ...stats,
+            dates: stats.dates.size
+        },
+        greeting: greeting
+    });
+});
+
+// 生成邓布利多风格的开场白
+function generateDumbledoreGreeting(stats, period) {
+    const topicList = Object.keys(stats.topics).join(', ') || 'learning';
+    const chatCount = stats.totalChats;
+    
+    if (period === 'daily') {
+        if (chatCount === 0) {
+            return "Good morning, dear Teresa! 🧙‍♂️ The sun is shining, and the books are waiting. What adventure shall we explore today?";
+        }
+        return `Wonderful day, Teresa! I see you've been working hard on ${topicList}. Keep going, my dear! Remember, magic lies in persistence. ✨`;
+    } else if (period === 'weekly') {
+        return `What a week it's been! You've had ${chatCount} learning conversations. ${stats.voiceChats > 0 ? 'I enjoyed hearing your voice!' : ''} Your dedication to ${topicList} makes me proud. Let's make next week even more magical! 🌟`;
+    } else {
+        return `Dear Teresa, this month you've shown great growth! ${chatCount} conversations about ${topicList}. You've learned so much! The best magic comes from a curious heart, and yours is truly magical. 🪄`;
+    }
+}
 
 // ==================== API 路由 ====================
 
