@@ -2029,8 +2029,8 @@
                 container.appendChild(loadingDiv);
                 container.scrollTop = container.scrollHeight;
                 
-                // 调用豆包API
-                fetch('/api/chat/dumbledore', {
+                // 调用豆包API (Vercel部署)
+                fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
