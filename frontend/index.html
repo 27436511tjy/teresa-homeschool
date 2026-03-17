@@ -2029,8 +2029,9 @@
                 container.appendChild(loadingDiv);
                 container.scrollTop = container.scrollHeight;
                 
-                // 调用豆包API (Vercel部署)
-                fetch('/api/chat', {
+                // 调用本地豆包API服务
+                const API_URL = 'http://127.0.0.1:3000';
+                fetch(`${API_URL}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
