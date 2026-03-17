@@ -1118,7 +1118,7 @@
                             <div class="subject-time">40 min</div>
                         </div>
                         <h3 class="subject-title">English</h3>
-                        <p class="subject-desc">Duolingo + Big Read</p>
+                        <p class="subject-desc">Duolingo + Big Red Reading</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-reading" onclick="toggleTask(event, 'english', 'reading')"></span>
@@ -1127,6 +1127,10 @@
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-writing" onclick="toggleTask(event, 'english', 'writing')"></span>
                                 <span>Writing Practice 10 min</span>
+                            </li>
+                            <li class="subject-task">
+                                <span class="task-check" id="task-english-speaking" onclick="toggleTask(event, 'english', 'speaking')"></span>
+                                <span>Speaking Practice (offline class extra)</span>
                             </li>
                         </ul>
                     </div>
@@ -1225,7 +1229,7 @@
                 <header class="header">
                     <div class="greeting">
                         <h1>🇺🇸 English Learning</h1>
-                        <p>Duolingo + Big Read</p>
+                        <p>Duolingo + Big Red Reading</p>
                     </div>
                 </header>
                 
@@ -1251,53 +1255,23 @@
                 </div>
                 
                 <div class="bigred-section">
-                    <h3 class="section-title">📖 Big Read</h3>
+                    <h3 class="section-title">📖 Big Red Reading</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        Read Big Read books and complete reading comprehension
+                        Read Big Red books and complete reading comprehension
                     </p>
                     <button class="btn btn-primary" onclick="openBigRed()">
                         📚 Start Reading
                     </button>
                 </div>
                 
-                <!-- English Time Tracker -->
                 <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
-                    <h3 class="section-title">⏱️ English Study Time Tracker</h3>
+                    <h3 class="section-title">🗣️ Speaking Practice</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        Record your English study time
+                        Start a simple English conversation with AI (5 minutes daily)
                     </p>
-                    
-                    <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 140px;">
-                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9rem;">Start Time</label>
-                            <select id="english-start-hour" style="padding: 10px; background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 1rem; width: 70px;">
-                                <option value="">Hour</option>
-                            </select>
-                            <select id="english-start-minute" style="padding: 10px; background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 1rem; width: 70px; margin-left: 8px;">
-                                <option value="">Min</option>
-                            </select>
-                        </div>
-                        <div style="flex: 1; min-width: 140px;">
-                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9rem;">End Time</label>
-                            <select id="english-end-hour" style="padding: 10px; background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 1rem; width: 70px;">
-                                <option value="">Hour</option>
-                            </select>
-                            <select id="english-end-minute" style="padding: 10px; background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-size: 1rem; width: 70px; margin-left: 8px;">
-                                <option value="">Min</option>
-                            </select>
-                        </div>
-                        <div style="flex: 1; min-width: 100px;">
-                            <label style="display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9rem;">Duration</label>
-                            <div id="english-duration" style="padding: 10px; background: var(--bg-card); border-radius: 8px; color: var(--success); font-size: 1.2rem; font-weight: bold; text-align: center; min-width: 80px;">0 min</div>
-                        </div>
-                        <button class="btn btn-primary" onclick="saveEnglishTime()" style="margin-top: 20px;">
-                            💾 Save
-                        </button>
-                    </div>
-                    
-                    <div id="english-time-records" style="margin-top: 16px;">
-                        <p style="color: var(--text-muted);">No records yet</p>
-                    </div>
+                    <button class="btn btn-primary" onclick="startEnglishChat()">
+                        💬 Start Conversation
+                    </button>
                 </div>
             </div>
             
@@ -1684,130 +1658,7 @@
             updateProgress();
             setCurrentDate();
             initMathProblem();
-            initEnglishTimeTracker();
         });
-        
-        // ==================== English Time Tracker ====================
-        let englishTimeRecords = [];
-        
-        function initEnglishTimeTracker() {
-            // 初始化小时选择器 (0-23)
-            const startHour = document.getElementById('english-start-hour');
-            const endHour = document.getElementById('english-end-hour');
-            for (let i = 0; i < 24; i++) {
-                const h = i.toString().padStart(2, '0');
-                startHour.innerHTML += `<option value="${i}">${h}</option>`;
-                endHour.innerHTML += `<option value="${i}">${h}</option>`;
-            }
-            
-            // 初始化分钟选择器 (0-59，每5分钟)
-            const startMin = document.getElementById('english-start-minute');
-            const endMin = document.getElementById('english-end-minute');
-            for (let i = 0; i < 60; i += 5) {
-                const m = i.toString().padStart(2, '0');
-                startMin.innerHTML += `<option value="${i}">${m}</option>`;
-                endMin.innerHTML += `<option value="${i}">${m}</option>`;
-            }
-            
-            // 添加变化监听器
-            document.getElementById('english-start-hour').addEventListener('change', calculateEnglishDuration);
-            document.getElementById('english-start-minute').addEventListener('change', calculateEnglishDuration);
-            document.getElementById('english-end-hour').addEventListener('change', calculateEnglishDuration);
-            document.getElementById('english-end-minute').addEventListener('change', calculateEnglishDuration);
-            
-            // 加载保存的记录
-            const saved = localStorage.getItem('teresa_english_time');
-            if (saved) {
-                englishTimeRecords = JSON.parse(saved);
-                renderEnglishTimeRecords();
-            }
-        }
-        
-        function calculateEnglishDuration() {
-            const startHour = parseInt(document.getElementById('english-start-hour').value) || 0;
-            const startMin = parseInt(document.getElementById('english-start-minute').value) || 0;
-            const endHour = parseInt(document.getElementById('english-end-hour').value) || 0;
-            const endMin = parseInt(document.getElementById('english-end-minute').value) || 0;
-            
-            const startTotal = startHour * 60 + startMin;
-            const endTotal = endHour * 60 + endMin;
-            const duration = endTotal - startTotal;
-            
-            const durationEl = document.getElementById('english-duration');
-            if (duration > 0) {
-                const hours = Math.floor(duration / 60);
-                const mins = duration % 60;
-                if (hours > 0) {
-                    durationEl.textContent = `${hours}h ${mins}m`;
-                } else {
-                    durationEl.textContent = `${mins} min`;
-                }
-                durationEl.style.color = 'var(--success)';
-            } else if (duration < 0) {
-                durationEl.textContent = 'Invalid';
-                durationEl.style.color = 'var(--error)';
-            } else {
-                durationEl.textContent = '0 min';
-                durationEl.style.color = 'var(--text-muted)';
-            }
-        }
-        
-        function saveEnglishTime() {
-            const startHour = document.getElementById('english-start-hour').value;
-            const startMin = document.getElementById('english-start-minute').value;
-            const endHour = document.getElementById('english-end-hour').value;
-            const endMin = document.getElementById('english-end-minute').value;
-            
-            if (startHour === '' || startMin === '' || endHour === '' || endMin === '') {
-                showToast('⚠️', 'Please select start and end time');
-                return;
-            }
-            
-            const startTotal = parseInt(startHour) * 60 + parseInt(startMin);
-            const endTotal = parseInt(endHour) * 60 + parseInt(endMin);
-            const duration = endTotal - startTotal;
-            
-            if (duration <= 0) {
-                showToast('⚠️', 'End time must be after start time');
-                return;
-            }
-            
-            const record = {
-                date: new Date().toISOString().split('T')[0],
-                startTime: `${startHour.padStart(2, '0')}:${startMin.padStart(2, '0')}`,
-                endTime: `${endHour.padStart(2, '0')}:${endMin.padStart(2, '0')}`,
-                duration: duration
-            };
-            
-            englishTimeRecords.push(record);
-            localStorage.setItem('teresa_english_time', JSON.stringify(englishTimeRecords));
-            
-            renderEnglishTimeRecords();
-            showToast('✅', 'Time recorded!');
-        }
-        
-        function renderEnglishTimeRecords() {
-            const container = document.getElementById('english-time-records');
-            if (englishTimeRecords.length === 0) {
-                container.innerHTML = '<p style="color: var(--text-muted);">No records yet</p>';
-                return;
-            }
-            
-            container.innerHTML = englishTimeRecords.slice(-5).reverse().map(r => {
-                const hours = Math.floor(r.duration / 60);
-                const mins = r.duration % 60;
-                const durationStr = hours > 0 ? `${hours}h ${mins}m` : `${mins} min`;
-                return `
-                    <div style="background: var(--bg-card); padding: 12px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-size: 0.9rem; color: var(--text-secondary);">${r.date}</div>
-                            <div style="font-weight: bold;">${r.startTime} - ${r.endTime}</div>
-                        </div>
-                        <div style="color: var(--success); font-weight: bold; font-size: 1.1rem;">${durationStr}</div>
-                    </div>
-                `;
-            }).join('');
-        }
         
         function loadData() {
             const saved = localStorage.getItem('teresa_homeschool_data');
@@ -2339,7 +2190,7 @@
         }
         
         function openBigRed() {
-            window.open('https://www.bigread.ai', '_blank');
+            showToast('📚', 'Big Red 阅读资源加载中...');
         }
         
         function startEnglishChat() {
