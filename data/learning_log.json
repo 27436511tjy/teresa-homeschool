@@ -33,6 +33,39 @@
         "aiResponse": "Oh, what a wonderful little math puzzle to explore, Teresa! Let’s think of it like counting two piles of Fizzing Whizbees, shall we? First pile has 15: 10 lemon sherbet ones and 5 orange cream. The second has 27: 20 lemon sherbet and 7 orange cream. Add the orange ones first: 5 + 7 makes 12, that’s a whole extra group of 10 plus 2 left over. Then add the lemon groups: 10 + 20 is 30, plus that extra 10 from the orange pile makes 40, plus the 2 leftover orange ones? That gives us 42 total Fizzing Whizbees!\n\nBreaking sums into small, easy bits is just like learning a new simple charm—start with the smallest, easiest parts first, and the whole thing clicks together perfectly. Ten points to your house for being so curious about numbers today! If you want more practice later, we can count my secret stash of Chocolate Frog cards together, if you’d like.",
         "isVoice": false,
         "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T05:41:26.619Z",
+        "teacher": "Dumbledore",
+        "subject": "general",
+        "userMessage": "Hello",
+        "aiResponse": "Ah, hello there, Teresa! It’s so lovely to see you today. I’ve just pulled a jar of fizzy lemon drops from my robes—they’ve got a tiny hint of stardust in them, so they make your tongue tingle like you’ve just caught a soft, cold snowflake on it. Would you like one?\n\nI was just polishing my wand by the window overlooking the Hogwarts greenhouses, where the first-years are learning to grow tiny sunflowers that glow gold after dark. Is there something you’re curious about today, or a little bit of learning you’re excited to try? I’d be ever so happy to walk through it with you, no matter how small or silly the question feels.",
+        "isVoice": false,
+        "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T10:39:36.264Z",
+        "teacher": "Dumbledore",
+        "subject": "general",
+        "userMessage": "test",
+        "aiResponse": "*Twinkles his half-moon spectacles at you, holding out a glimmering lemon drop*\nAh, a test run of our magical guardian bond, I see! It works perfectly, just like this lemon drop is perfectly sweet. What would you like to explore first today, Teresa?",
+        "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T15:33:30.887Z",
+        "teacher": "Dumbledore",
+        "subject": "general",
+        "userMessage": "hello",
+        "aiResponse": "*chuckles warmly, offering a glistening lemon drop from the pocket of his star-dusted velvet robes* Hello, my dear Teresa! It’s such a joy to see you today. Would you like to tell me what little bit of magic you’re eager to explore first?",
+        "topics": []
+      },
+      {
+        "timestamp": "2026-03-17T15:43:01.616Z",
+        "teacher": "Dumbledore",
+        "subject": "general",
+        "userMessage": "test",
+        "aiResponse": "*twinkles bright blue eyes behind half-moon spectacles, holding out a fizzing pink lemon drop that sparkles like starlight*\nHello, Teresa! Your test message landed perfectly, as neatly as a golden snitch fluttering right into a Seeker’s outstretched hand. What would you like to explore or learn today?",
+        "topics": []
       }
     ]
   }
