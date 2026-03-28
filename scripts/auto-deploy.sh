@@ -29,7 +29,7 @@ if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
     sleep 30
     
     # 验证网站
-    if curl -skI https://teresa-homeschool.top > /dev/null 2>&1; then
+    if curl -skI http://42.193.19.146:8888 > /dev/null 2>&1; then
         echo "[$(date '+%Y-%m-%d %H:%M:%S')] ✅ 部署成功!" >> $LOG_FILE
         
         # 发送飞书通知
@@ -38,7 +38,7 @@ if [ "$LOCAL_COMMIT" != "$REMOTE_COMMIT" ]; then
             -d '{
                 "msg_type": "text",
                 "content": {
-                    "text": "🎓 Teresa\\n\\nTeresa Homeschool 网站已自动更新部署完成\\n\\n访问: https://teresa-homeschool.top"
+                    "text": "🎓 Teresa\\n\\nTeresa Homeschool 网站已自动更新部署完成\\n\\n访问: http://42.193.19.146:8888"
                 }
             }' 2>/dev/null || echo "[$(date '+%Y-%m-%d %H:%M:%S')] 📱 飞书通知跳过 (未配置)" >> $LOG_FILE
     else

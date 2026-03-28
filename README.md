@@ -8,7 +8,7 @@
 ## 一、系统架构总览
 
 ```
-Teresa Homeschool (teresa-homeschool.top)
+Teresa Homeschool (42.193.19.146:8888)
 ├── 前端 (index.html) — 交互界面
 ├── 后端服务 (Node.js) — API + 生成逻辑
 ├── 内容生成器 (豆包API) — 数学/语文/PBL内容自动生成
@@ -117,5 +117,5 @@ Teresa Homeschool (teresa-homeschool.top)
 
 - 仓库目录：`~/teresa-homeschool/`
 - 远程：origin/main
-- 部署平台：Vercel
-- 网站地址：https://teresa-homeschool.top
+- 部署平台：腾讯云
+- 网站地址：http://42.193.19.146:8888

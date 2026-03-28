@@ -1,9 +1,9 @@
 #!/bin/bash
 # Teresa Homeschool 自动部署脚本
-# 监听 Git 变化，自动部署到 teresa-homeschool.top
+# 监听 Git 变化，自动部署到 42.193.19.146:8888
 
 REPO_DIR="$HOME/teresa-homeschool"
-WEBHOOK_URL="https://teresa-homeschool.top"
+WEBHOOK_URL="http://42.193.19.146:8888"
 PARENT_OPEN_ID="ou_4696b60c009c37025c8e747ca058048c"
 
 echo "=========================================="
