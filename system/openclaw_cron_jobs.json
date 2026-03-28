@@ -1,0 +1,583 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "87385b59-ca15-44d4-a7ea-95f2fb56f538",
+      "name": "巴菲特收盘-1630",
+      "description": "每日收盘：大盘总结+持仓诊断+明日展望（16:30）",
+      "enabled": true,
+      "createdAtMs": 1774105370209,
+      "updatedAtMs": 1774254773759,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 16 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特收盘报告。\n\n【今日收盘数据（用户提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘收盘参考】\n- 上证：3813（-3.63%）、深证：13345（-3.76%）、创业板：3235（-3.49%）\n- 科创50：1261（-4.31%）、沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）、铜：$528（-1.84%）、原油：$99.6（+1.44%）\n\n【格式】≤300字，纯中文：\n1. 收盘总结（大盘+持仓）\n2. 持仓诊断（止损/目标状态）\n3. 明日展望（≤3条操作建议）\n\n直接出结论，不准废话，不准说英文。港股节假日跳过。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "nextRunAtMs": 1774341000000,
+        "lastRunAtMs": 1774254600015,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 173744,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "bd859d4c-4701-4fcf-9f28-a117af7210fa",
+      "name": "巴菲特早报-730",
+      "enabled": true,
+      "createdAtMs": 1774107573018,
+      "updatedAtMs": 1774222442078,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 7 * * 1-5",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特早报。请先用Python拉取数据，再生成报告。\n\n【数据采集脚本】直接运行：\n```\ncd /tmp && python3 -c \"\nimport urllib.request, json\nindices=[('上证','1.000001'),('深证','0.399001'),('创业板','0.399006'),('科创50','1.000688'),('沪深300','1.000300')]\nstocks=[('腾讯','116.00700'),('阿里','116.09988'),('中芯','116.00981'),('紫金','1.601899')]\nfor n,s in indices+stocks:\n    try:\n        u=f'https://push2.eastmoney.com/api/qt/stock/get?secid={s}&fields=f43,f58,f170,f173,f174'\n        d=json.loads(urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':'Mozilla/5.0'}),timeout=5).read()).get('data',{})\n        if d:\n            curr=d['f43']/1000 if s.startswith('116') else d['f43']/100\n            prev=d['f174']/1000 if s.startswith('116') else d['f174']/100\n            chg=d['f170']/100\n            print(f'{n}: {curr:.2f} {chg:+.2f}%')\n    except: pass\nfor sym,lbl in [('hf_GC','黄金'),('hf_HG','铜'),('hf_CL','原油')]:\n    try:\n        r=urllib.request.urlopen(urllib.request.Request(f'https://hq.sinajs.cn/list={sym}',headers={'User-Agent':'Mozilla/5.0','Referer':'https://finance.sina.com.cn'}),timeout=5).read().decode('gbk').split('\"')[1].split(',')\n        c,pr=float(r[3]),float(r[7])\n        print(f'{lbl}: {c:.2f} {(c-pr)/pr*100:+.2f}%')\n    except: pass\n\"\n```\n\n【持仓数据】腾讯HK$542/阿里HK$178.7/中芯HK$78.2/紫金¥38.97\n【止损/目标】腾讯460/600、阿里110/160、中芯50/75、紫金28/40\n\n【输出格式】\n1. 宏观情绪（美股+期货，判断亚太开盘）\n2. 大盘概况（5指数现价+涨跌幅）\n3. 持仓状态（4票现价/成本/浮亏/距止损）\n4. 机会跟踪（长线/波段各≤3只）\n5. 操作建议（≤3条）\n\n全程中文，不准英文。直接出结论。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "nextRunAtMs": 1774305000000,
+        "lastRunAtMs": 1774222200007,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 242071,
+        "lastError": "Delivering to Feishu requires target <chatId|user:openId|chat:chatId>",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774312200000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-0930",
+      "name": "巴菲特盘中-9:30",
+      "description": "盘中投资方案 9:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 9 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774314000000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1000",
+      "name": "巴菲特盘中-10:00",
+      "description": "盘中投资方案 10:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774315800000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1030",
+      "name": "巴菲特盘中-10:30",
+      "description": "盘中投资方案 10:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 10 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774317600000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1100",
+      "name": "巴菲特盘中-11:00",
+      "description": "盘中投资方案 11:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 11 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774319400000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1130",
+      "name": "巴菲特盘中-11:30",
+      "description": "盘中投资方案 11:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 11 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774321200000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1200",
+      "name": "巴菲特盘中-12:00",
+      "description": "盘中投资方案 12:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 12 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774324800000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1300",
+      "name": "巴菲特盘中-13:00",
+      "description": "盘中投资方案 13:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 13 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774326600000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1330",
+      "name": "巴菲特盘中-13:30",
+      "description": "盘中投资方案 13:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 13 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774242000000,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "ok",
+        "consecutiveErrors": 0,
+        "nextRunAtMs": 1774328400000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null
+      },
+      "id": "plan-1400",
+      "name": "巴菲特盘中-14:00",
+      "description": "盘中投资方案 14:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 14 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774247460030,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "error",
+        "consecutiveErrors": 2,
+        "nextRunAtMs": 1774330200000,
+        "lastRunAtMs": 1774247400020,
+        "lastRunStatus": "error",
+        "lastDurationMs": 60010,
+        "lastErrorReason": "timeout",
+        "lastDeliveryStatus": "unknown",
+        "lastError": "cron: job execution timed out"
+      },
+      "id": "plan-1430",
+      "name": "巴菲特盘中-14:30",
+      "description": "盘中投资方案 14:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 13 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774249260028,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "error",
+        "consecutiveErrors": 2,
+        "nextRunAtMs": 1774332000000,
+        "lastRunAtMs": 1774249200015,
+        "lastRunStatus": "error",
+        "lastDurationMs": 60013,
+        "lastErrorReason": "timeout",
+        "lastDeliveryStatus": "unknown",
+        "lastError": "cron: job execution timed out"
+      },
+      "id": "plan-1500",
+      "name": "巴菲特盘中-15:00",
+      "description": "盘中投资方案 15:00",
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 14 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "enabled": true,
+      "createdAtMs": 1774242000000,
+      "updatedAtMs": 1774251240044,
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "巴菲特盘中投资方案。\n\n【今日收盘数据（用户最新提供）】\n- 账户总资产：¥1,217,691.77\n- 今日亏损：-¥47,456\n- 总仓位：94.79%\n- 腾讯控股：1000股，现价HK$498.4，成本HK$541，浮亏-7.88%，止损HK$460，距止损7.7%\n- 紫金矿业：10500股，现价¥30.58，成本¥38.97，浮亏-21.53%，止损¥28，距止损8.4%\n- 中芯国际：5000股，现价HK$54.15，成本HK$78.5，浮亏-31.02%，止损HK$50，距止损7.7%\n- 阿里巴巴：1500股，现价HK$119.7，成本HK$221.5，浮亏-45.96%，止损HK$110，距止损8.1%\n\n【大盘（收盘参考）】\n- 上证指数：3813（-3.63%）\n- 深证成指：13345（-3.76%）\n- 创业板指：3235（-3.49%）\n- 科创50：1261（-4.31%）\n- 沪深300：4418（-3.26%）\n- 黄金：$4345（-5.73%）\n- 铜：$528（-1.84%）\n- 原油：$99.6（+1.44%）\n\n【格式】≤200字，纯中文：\n1. 大盘（2指数+涨跌幅）\n2. 持仓（4票：现价/浮亏/距止损）\n3. 操作（≤2条）\n4. 风险（1句）\n\n直接出结论，不准废话，不准说英文。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "lastStatus": "error",
+        "consecutiveErrors": 2,
+        "nextRunAtMs": 1774333800000,
+        "lastRunAtMs": 1774251180036,
+        "lastRunStatus": "error",
+        "lastDurationMs": 60008,
+        "lastErrorReason": "timeout",
+        "lastDeliveryStatus": "unknown",
+        "lastError": "cron: job execution timed out"
+      },
+      "id": "plan-1530",
+      "name": "巴菲特盘中-15:30",
+      "description": "盘中投资方案 15:30",
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 14 * * 1-5",
+        "tz": "Asia/Shanghai"
+      }
+    },
+    {
+      "id": "teresa-daily-report",
+      "name": "Teresa Homeschool 日报",
+      "description": "每天21:00发送Teresa Homeschool日报到飞书",
+      "enabled": true,
+      "createdAtMs": 1774251000000,
+      "updatedAtMs": 1774251000000,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请执行以下命令发送Teresa Homeschool日报：\n\n```bash\n/usr/bin/python3 /Users/tongda/teresa-homeschool/scripts/send_reports.py daily\n```\n\n执行后确认发送结果。",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "nextRunAtMs": 1774353600000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "teresa-weekly-report",
+      "name": "Teresa Homeschool 周报",
+      "description": "每周六22:00发送Teresa Homeschool周报到飞书",
+      "enabled": true,
+      "createdAtMs": 1774251000000,
+      "updatedAtMs": 1774251000000,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 22 * * 6",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请执行以下命令发送Teresa Homeschool周报：\n\n```bash\n/usr/bin/python3 /Users/tongda/teresa-homeschool/scripts/send_reports.py weekly\n```",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "nextRunAtMs": 1774702800000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "teresa-monthly-report",
+      "name": "Teresa Homeschool 月报",
+      "description": "每月最后一天19:00发送Teresa Homeschool月报到飞书",
+      "enabled": true,
+      "createdAtMs": 1774251000000,
+      "updatedAtMs": 1774251000000,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 19 28-31 * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "请执行以下命令发送Teresa Homeschool月报：\n\n```bash\n/usr/bin/python3 /Users/tongda/teresa-homeschool/scripts/send_reports.py monthly\n```",
+        "model": "baidu-qianfan/ernie-5.0",
+        "timeoutSeconds": 90
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "feishu",
+        "to": "ou_4696b60c009c37025c8e747ca058048c"
+      },
+      "state": {
+        "nextRunAtMs": 1774954800000,
+        "lastRunAtMs": null,
+        "lastRunStatus": null,
+        "lastStatus": "ok",
+        "consecutiveErrors": 0
+      }
+    }
+  ]
+}

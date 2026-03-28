@@ -1113,7 +1113,7 @@
                             <div class="subject-time">40 min</div>
                         </div>
                         <h3 class="subject-title">English</h3>
-                        <p class="subject-desc">English Learning</p>
+                        <p class="subject-desc">Duolingo + Big Red Reading</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-reading" onclick="toggleTask(event, 'english', 'reading')"></span>
@@ -1137,7 +1137,7 @@
                             <div class="subject-time">40 min</div>
                         </div>
                         <h3 class="subject-title">Math</h3>
-                        <p class="subject-desc">Saxon Math + Kangaroo + AMC8</p>
+                        <p class="subject-desc">Baskerville + Kangaroo Math + AMC8</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-math-practice" onclick="toggleTask(event, 'math', 'practice')"></span>
@@ -1161,7 +1161,7 @@
                             <div class="subject-time">40分钟</div>
                         </div>
                         <h3 class="subject-title">语文</h3>
-                        <p class="subject-desc">Chinese Learning</p>
+                        <p class="subject-desc">大语文 · 历史 · 地理</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-chinese-history" onclick="toggleTask(event, 'chinese', 'history')"></span>
@@ -1181,7 +1181,7 @@
                             <div class="subject-time">Flexible</div>
                         </div>
                         <h3 class="subject-title">PBL Projects</h3>
-                        <p class="subject-desc">My Community & Our Changing World (18 Weeks)</p>
+                        <p class="subject-desc">Week 1-4: Self & Habits</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-pbl-project" onclick="toggleTask(event, 'pbl', 'project')"></span>
@@ -1425,17 +1425,17 @@
                 <header class="header">
                     <div class="greeting">
                         <h1>🦎 PBL Project Learning</h1>
-                        <p>My Community & Our Changing World | 18 Weeks</p>
+                        <p>Week 1: Animal Exploration 🐍</p>
                     </div>
                 </header>
                 
-                <!-- 18周导航 -->
-                <div class="pbl-projects" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w1-4')"><div class="pbl-emoji">🏙️</div><div class="pbl-title">Wks1-4</div><div class="pbl-desc">Community</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w5-7')"><div class="pbl-emoji">🐾</div><div class="pbl-title">Wks5-7</div><div class="pbl-desc">Animals</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w8-10')"><div class="pbl-emoji">🌱</div><div class="pbl-title">Wks8-10</div><div class="pbl-desc">Environment</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w11-14')"><div class="pbl-emoji">💡</div><div class="pbl-title">Wks11-14</div><div class="pbl-desc">Problem Solving</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w15-18')"><div class="pbl-emoji">🎤</div><div class="pbl-title">Wks15-18</div><div class="pbl-desc">Presentation</div></div>
+                <!-- 当前周主题 -->
+                <div class="pbl-projects">
+                    <div class="pbl-project-card active" onclick="selectPBLProject(this, 'animal')">
+                        <div class="pbl-emoji">🐍</div>
+                        <div class="pbl-title">Animal Exploration</div>
+                        <div class="pbl-desc">Observe, record, research animals</div>
+                    </div>
                 </div>
                 
                 <!-- 作品上传 -->
@@ -2263,17 +2263,10 @@
         
         // ==================== Stats Module ====================
         function loadStats() {
-            // 真实统计
-            var completed = doneTasks ? doneTasks.size : 0;
-            var wrongNotes = wrongMathNotes ? wrongMathNotes.length : 0;
-            var tennis = tennisLogs ? tennisLogs.length : 0;
-            var pbl = pblRecords ? pblRecords.length : 0;
-            
-            // 隐藏硬编码的统计框
-            var booksBox = document.querySelector('.stat-card:nth-child(1)');
-            var wordsBox = document.querySelector('.stat-card:nth-child(2)');
-            if (booksBox) booksBox.style.display = 'none';
-            if (wordsBox) wordsBox.style.display = 'none';
+            document.getElementById('stat-streak').textContent = doneTasks.size > 0 ? '3' : '0';
+            document.getElementById('stat-books').textContent = '12';
+            document.getElementById('stat-words').textContent = '45';
+            document.getElementById('stat-hours').textContent = Math.round(doneTasks.size * 1.5);
             
             const summary = document.getElementById('week-summary');
             summary.innerHTML = `

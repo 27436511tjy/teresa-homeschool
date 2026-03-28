@@ -1,0 +1,108 @@
+{
+  "date": "2026-03-19",
+  "student": {
+    "name": "Teresa",
+    "age": 8.5,
+    "grade": 3,
+    "level": "US Grade 3-4"
+  },
+  "generatedAt": "2026-03-19T04:47:01.036Z",
+  "basicMath": {
+    "title": "Saxon Math 3rd Grade Lesson 6: Fractions",
+    "introduction": "Fractions are numbers that tell us about parts of a whole thing, like a slice of pizza or a piece of a cookie. The top number (numerator) tells how many parts we have, and the bottom number (denominator) tells how many equal parts the whole is split into. Simple example: If you cut a whole apple into 4 equal slices, and you eat 1 slice, the fraction of the apple you ate is 1/4: the numerator 1 is the slice you ate, and the denominator 4 is the total number of equal slices.",
+    "practice_problems": [
+      {
+        "question": "Lila cuts a peanut butter sandwich into 2 equal halves, and gives 1 half to her little brother. What fraction of the sandwich does she give away?",
+        "answer": "1/2"
+      },
+      {
+        "question": "A soccer coach cuts a post-game orange into 8 equal wedges, and passes out 3 wedges to players. What fraction of the orange has been passed out?",
+        "answer": "3/8"
+      },
+      {
+        "question": "What is the denominator of the fraction 2/5?",
+        "answer": "5"
+      }
+    ],
+    "homework_problems": [
+      {
+        "question": "Jake bakes a square brownie and cuts it into 9 equal small squares. He eats 2 of the small brownie squares. What fraction of the whole brownie did Jake eat?",
+        "answer": "2/9"
+      },
+      {
+        "question": "A pack of 10 markers has 4 blue markers. What fraction of the markers in the pack are blue?",
+        "answer": "4/10"
+      },
+      {
+        "question": "A fraction has a numerator of 3 and a denominator of 7. Write this fraction.",
+        "answer": "3/7"
+      }
+    ],
+    "type": "lesson",
+    "lessonNum": 6,
+    "topic": "Fractions"
+  },
+  "thinkingMath": {
+    "type": "thinking",
+    "topic": "Logical Reasoning",
+    "kangaroo": {
+      "title": "Logical Reasoning",
+      "problems": [
+        {
+          "question": "Four animal friends are lining up to buy zoo ice cream: a rabbit, panda, penguin, and kitten. We know 3 clues: 1) The rabbit is not first or last in line. 2) The panda is standing right behind the rabbit. 3) The penguin is the only animal behind the panda. What is the order of the line from first to last?",
+          "hint": "Start by figuring out the last two positions first, since we know the penguin is behind the panda!",
+          "answer": "1. Kitten, 2. Rabbit, 3. Panda, 4. Penguin"
+        },
+        {
+          "question": "Lily, Tom, and Mia each have one unique favorite sticker: a dinosaur, a unicorn, and a rocket. We know: 1) Lily does not like dinosaurs. 2) The kid who likes unicorns is a boy. 3) Mia does not like rockets. Can you match each kid to their favorite sticker?",
+          "hint": "Tom is the only boy in the group, so you can find his favorite sticker first!",
+          "answer": "Lily: Rocket, Tom: Unicorn, Mia: Dinosaur"
+        },
+        {
+          "question": "There are 12 total fruits in a basket: only apples, bananas, and oranges. We know: 1) There are 2 more apples than bananas. 2) There are half as many oranges as bananas. How many of each fruit are there?",
+          "hint": "Try testing small whole numbers for oranges first, since there are fewer oranges than any other fruit!",
+          "answer": "6 apples, 4 bananas, 2 oranges"
+        }
+      ]
+    },
+    "amc": {
+      "title": "AMC8 Practice",
+      "problems": [
+        {
+          "question": "Lily has 7 strawberry lollipops and 9 grape lollipops. She gives 4 lollipops to her little brother. How many lollipops does Lily have left?",
+          "options": [
+            "A) 12",
+            "B) 10",
+            "C) 14",
+            "D) 16"
+          ],
+          "answer": "A"
+        },
+        {
+          "question": "A rectangular playground is 8 meters long and 5 meters wide. What is the total length of the edges (perimeter) of the playground?",
+          "options": [
+            "A) 13",
+            "B) 26",
+            "C) 40",
+            "D) 30"
+          ],
+          "answer": "B"
+        },
+        {
+          "question": "The school library puts 6 picture books on each small shelf. If there are 7 identical small shelves for picture books, how many picture books are there in total?",
+          "options": [
+            "A) 13",
+            "B) 36",
+            "C) 42",
+            "D) 49"
+          ],
+          "answer": "C"
+        }
+      ]
+    }
+  },
+  "progress": {
+    "saxonLesson": 6,
+    "思维Level": 3.5
+  }
+}

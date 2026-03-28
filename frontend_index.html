@@ -605,6 +605,11 @@
             background: linear-gradient(135deg, #8B5CF6, #A855F7);
         }
         
+        #ai-float-tutor {
+            bottom: 24px;
+            background: linear-gradient(135deg, #06B6D4, #14B8A6);
+        }
+        
         /* Modal */
         .modal-overlay {
             position: fixed;
@@ -1113,7 +1118,7 @@
                             <div class="subject-time">40 min</div>
                         </div>
                         <h3 class="subject-title">English</h3>
-                        <p class="subject-desc">English Learning</p>
+                        <p class="subject-desc">Duolingo + Big Red Reading</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-english-reading" onclick="toggleTask(event, 'english', 'reading')"></span>
@@ -1137,7 +1142,7 @@
                             <div class="subject-time">40 min</div>
                         </div>
                         <h3 class="subject-title">Math</h3>
-                        <p class="subject-desc">Saxon Math + Kangaroo + AMC8</p>
+                        <p class="subject-desc">Baskerville + Kangaroo Math + AMC8</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-math-practice" onclick="toggleTask(event, 'math', 'practice')"></span>
@@ -1161,7 +1166,7 @@
                             <div class="subject-time">40分钟</div>
                         </div>
                         <h3 class="subject-title">语文</h3>
-                        <p class="subject-desc">Chinese Learning</p>
+                        <p class="subject-desc">大语文 · 历史 · 地理</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-chinese-history" onclick="toggleTask(event, 'chinese', 'history')"></span>
@@ -1181,7 +1186,7 @@
                             <div class="subject-time">Flexible</div>
                         </div>
                         <h3 class="subject-title">PBL Projects</h3>
-                        <p class="subject-desc">My Community & Our Changing World (18 Weeks)</p>
+                        <p class="subject-desc">Week 1-4: Self & Habits</p>
                         <ul class="subject-tasks">
                             <li class="subject-task">
                                 <span class="task-check" id="task-pbl-project" onclick="toggleTask(event, 'pbl', 'project')"></span>
@@ -1250,27 +1255,23 @@
                 </div>
                 
                 <div class="bigred-section">
-                    <h3 class="section-title">📖 Big Read</h3>
+                    <h3 class="section-title">📖 Big Red Reading</h3>
                     <p style="color: var(--text-secondary); margin-bottom: 16px;">
-                        Read Big Read books and complete reading comprehension
+                        Read Big Red books and complete reading comprehension
                     </p>
-                    <button class="btn btn-primary" onclick="window.open('https://bigread.ai','_blank')">
+                    <button class="btn btn-primary" onclick="openBigRed()">
                         📚 Start Reading
                     </button>
                 </div>
                 
-                <!-- 英语时间记录 -->
                 <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
-                    <h3 class="section-title">⏱️ English Time Record</h3>
-                    <div style="display: flex; gap: 12px; margin: 16px 0; align-items: center; justify-content: center;">
-                        <select id="eng-start-h" style="padding: 8px; border-radius: 8px;"><option value="">HH</option></select>:
-                        <select id="eng-start-m" style="padding: 8px; border-radius: 8px;"><option value="">MM</option></select>
-                        <span style="color: var(--text-secondary);">→</span>
-                        <select id="eng-end-h" style="padding: 8px; border-radius: 8px;"><option value="">HH</option></select>:
-                        <select id="eng-end-m" style="padding: 8px; border-radius: 8px;"><option value="">MM</option></select>
-                    </div>
-                    <button class="btn btn-primary" onclick="saveEnglishTime()" style="width: 100%;">✅ Record</button>
-                    <div id="eng-time-result" style="margin-top: 12px; text-align: center;"></div>
+                    <h3 class="section-title">🗣️ Speaking Practice</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                        Start a simple English conversation with AI (5 minutes daily)
+                    </p>
+                    <button class="btn btn-primary" onclick="startEnglishChat()">
+                        💬 Start Conversation
+                    </button>
                 </div>
             </div>
             
@@ -1279,98 +1280,45 @@
                 <header class="header">
                     <div class="greeting">
                         <h1>🔢 Math Learning</h1>
-                        <p>Saxon Math + Kangaroo + AMC8</p>
+                        <p>Baskerville + Kangaroo Math + AMC8</p>
                     </div>
                 </header>
                 
-                <!-- Tab切换 -->
-                <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                    <button class="btn" id="math-tab-basics" onclick="showMathTab('basics')" style="flex: 1;">📐 Basics (Saxon)</button>
-                    <button class="btn btn-secondary" id="math-tab-thinking" onclick="showMathTab('thinking')" style="flex: 1;">🧠 Thinking</button>
-                </div>
-                
-                <!-- 基础数学 -->
-                <div id="math-basics-section">
-                    <div class="english-dashboard">
-                        <div class="stat-box"><div class="stat-value" id="basics-lesson">Lesson 1</div><div class="stat-label">Current Lesson</div></div>
-                        <div class="stat-box"><div class="stat-value" id="basics-time">0 min</div><div class="stat-label">Study Time</div></div>
+                <div class="english-dashboard">
+                    <div class="stat-box">
+                        <div class="stat-value" style="color: var(--math);" id="math-correct">0%</div>
+                        <div class="stat-label">Accuracy</div>
                     </div>
-                    
-                    <!-- 时间记录 -->
-                    <div style="margin: 16px 0; padding: 12px; background: var(--bg-tertiary); border-radius: 8px; display: flex; gap: 8px; align-items: center;">
-                        <select id="basics-start-h" style="padding: 6px;"><option value="">时</option></select>:
-                        <select id="basics-start-m" style="padding: 6px;"><option value="">分</option></select>
-                        <span>→</span>
-                        <select id="basics-end-h" style="padding: 6px;"><option value="">时</option></select>:
-                        <select id="basics-end-m" style="padding: 6px;"><option value="">分</option></select>
-                        <button class="btn btn-primary" onclick="recordBasicsTime()" style="padding: 6px 12px;">记录</button>
-                    </div>
-                    
-                    <div class="math-problem-card">
-                        <h3 class="section-title">📚 Today's Lesson</h3>
-                        <div id="basics-content"><p style="color: var(--text-muted);">Loading...</p></div>
-                        <button class="btn btn-secondary" onclick="loadBasics()" style="margin-top: 8px;">🔄 Load</button>
-                    </div>
-                    
-                    <div class="math-problem-card" style="margin-top: 12px;">
-                        <h3 class="section-title">📝 Practice</h3>
-                        <div id="basics-practice"></div>
-                        <button class="btn btn-primary" onclick="showPracticeAnswers('basics')" style="margin-top: 8px;">📋 Answers</button>
-                        <div id="basics-answers" style="display:none; margin-top:8px;"></div>
-                    </div>
-                    
-                    <div class="math-problem-card" style="margin-top: 12px;">
-                        <h3 class="section-title">📋 Quiz</h3>
-                        <div id="basics-quiz"></div>
-                        <button class="btn btn-primary" onclick="submitBasicsQuiz()" style="margin-top: 8px;">✅ Submit</button>
-                        <div id="basics-result"></div>
+                    <div class="stat-box">
+                        <div class="stat-value" style="color: var(--warning);" id="math-wrong">0</div>
+                        <div class="stat-label">Mistakes This Week</div>
                     </div>
                 </div>
                 
-                <!-- 思维数学 -->
-                <div id="math-thinking-section" style="display: none;">
-                    <div class="english-dashboard">
-                        <div class="stat-box"><div class="stat-value" id="thinking-level">Level 1</div><div class="stat-label">Level</div></div>
-                        <div class="stat-box"><div class="stat-value" id="thinking-type">Kangaroo</div><div class="stat-label">Type</div></div>
+                <div class="math-problem-card">
+                    <h3 class="section-title">📝 Daily Practice</h3>
+                    <div id="math-problem-container">
+                        <div class="problem-text" id="problem-text">
+                            Loading...
+                        </div>
+                        <div class="problem-options" id="problem-options">
+                        </div>
+                        <div class="math-feedback" id="math-feedback">
+                        </div>
                     </div>
-                    
-                    <!-- Type选择 -->
-                    <div style="margin: 12px 0;">
-                        <button class="btn btn-secondary" onclick="setThinkingType('kangaroo')" id="btn-kangaroo" style="margin-right:8px;">袋鼠</button>
-                        <button class="btn btn-secondary" onclick="setThinkingType('amc8')" id="btn-amc8">AMC8</button>
-                    </div>
-                    
-                    <!-- 时间记录 -->
-                    <div style="margin: 16px 0; padding: 12px; background: var(--bg-tertiary); border-radius: 8px; display: flex; gap: 8px; align-items: center;">
-                        <select id="thinking-start-h" style="padding: 6px;"><option value="">时</option></select>:
-                        <select id="thinking-start-m" style="padding: 6px;"><option value="">分</option></select>
-                        <span>→</span>
-                        <select id="thinking-end-h" style="padding: 6px;"><option value="">时</option></select>:
-                        <select id="thinking-end-m" style="padding: 6px;"><option value="">分</option></select>
-                        <button class="btn btn-primary" onclick="recordThinkingTime()" style="padding: 6px 12px;">记录</button>
-                    </div>
-                    
-                    <div class="math-problem-card">
-                        <h3 class="section-title">🧠 Today's Thinking</h3>
-                        <div id="thinking-content"><p style="color: var(--text-muted);">Loading...</p></div>
-                        <button class="btn btn-secondary" onclick="loadThinking()" style="margin-top: 8px;">🔄 Load</button>
-                    </div>
-                    
-                    <div class="math-problem-card" style="margin-top: 12px;">
-                        <h3 class="section-title">📝 Practice</h3>
-                        <div id="thinking-practice"></div>
-                        <button class="btn btn-primary" onclick="showPracticeAnswers('thinking')" style="margin-top: 8px;">📋 Answers</button>
-                        <div id="thinking-answers" style="display:none; margin-top:8px;"></div>
-                    </div>
-                    
-                    <div class="math-problem-card" style="margin-top: 12px;">
-                        <h3 class="section-title">📋 Quiz</h3>
-                        <div id="thinking-quiz"></div>
-                        <button class="btn btn-primary" onclick="submitThinkingQuiz()" style="margin-top: 8px;">✅ Submit</button>
-                        <div id="thinking-result"></div>
+                    <button class="btn btn-secondary" onclick="nextProblem()" style="margin-top: 16px;">
+                        ➡️ 下一题
+                    </button>
+                </div>
+                
+                <div style="margin-top: 24px;">
+                    <h3 class="section-title">📚 错题本</h3>
+                    <div id="wrong-notes-list">
+                        <p style="color: var(--text-muted);">暂无错题记录</p>
                     </div>
                 </div>
             </div>
+            
             <!-- Chinese Page -->
             <div id="page-chinese" class="page hidden">
                 <header class="header">
@@ -1405,10 +1353,6 @@
                         <button class="btn btn-primary" onclick="startChineseWriting()">
                             ✏️ 开始写作
                         </button>
-                        <div style="margin-top: 16px;">
-                            <label class="form-label">📷 上传写作照片（纸质作业拍照上传）</label>
-                            <input type="file" id="chinese-writing-photo" accept="image/*" capture="environment" style="width:100%;padding:8px;">
-                        </div>
                     </div>
                 </div>
                 
@@ -1425,39 +1369,45 @@
                 <header class="header">
                     <div class="greeting">
                         <h1>🦎 PBL Project Learning</h1>
-                        <p>My Community & Our Changing World | 18 Weeks</p>
+                        <p>Week 1-4: Self & Habits (Animal/Humanities/Art)</p>
                     </div>
                 </header>
                 
-                <!-- 18周导航 -->
-                <div class="pbl-projects" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w1-4')"><div class="pbl-emoji">🏙️</div><div class="pbl-title">Wks1-4</div><div class="pbl-desc">Community</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w5-7')"><div class="pbl-emoji">🐾</div><div class="pbl-title">Wks5-7</div><div class="pbl-desc">Animals</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w8-10')"><div class="pbl-emoji">🌱</div><div class="pbl-title">Wks8-10</div><div class="pbl-desc">Environment</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w11-14')"><div class="pbl-emoji">💡</div><div class="pbl-title">Wks11-14</div><div class="pbl-desc">Problem Solving</div></div>
-                    <div class="pbl-project-card" onclick="selectPBLProject(this,'w15-18')"><div class="pbl-emoji">🎤</div><div class="pbl-title">Wks15-18</div><div class="pbl-desc">Presentation</div></div>
+                <div class="pbl-projects">
+                    <div class="pbl-project-card active" onclick="selectPBLProject(this, 'animal')">
+                        <div class="pbl-emoji">🐍</div>
+                        <div class="pbl-title">Animal Exploration</div>
+                        <div class="pbl-desc">Observe, record, research animals</div>
+                    </div>
+                    
+                    <div class="pbl-project-card" onclick="selectPBLProject(this, 'humanities')">
+                        <div class="pbl-emoji">📚</div>
+                        <div class="pbl-title">Humanities & Social Studies</div>
+                        <div class="pbl-desc">Self-discovery, habit building</div>
+                    </div>
+                    
+                    <div class="pbl-project-card" onclick="selectPBLProject(this, 'art')">
+                        <div class="pbl-emoji">🎨</div>
+                        <div class="pbl-title">Art & Creativity</div>
+                        <div class="pbl-desc">Drawing, crafts, creative expression</div>
+                    </div>
+                    
+                    <div class="pbl-project-card" onclick="selectPBLProject(this, 'outdoor')">
+                        <div class="pbl-emoji">🌳</div>
+                        <div class="pbl-title">Outdoor Exploration</div>
+                        <div class="pbl-desc">Nature observation, outdoor activities</div>
+                    </div>
                 </div>
                 
-                <!-- 作品上传 -->
                 <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
                     <h3 class="section-title">📝 Project Log</h3>
                     <div class="form-group">
                         <label class="form-label">Today's Progress</label>
                         <textarea class="form-textarea" id="pbl-progress" placeholder="Record your project progress today..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label class="form-label">📷 Upload Photo/Video</label>
-                        <input type="file" id="pbl-media" accept="image/*,video/*" multiple style="width:100%;padding:8px;">
-                    </div>
                     <button class="btn btn-primary" onclick="savePBLProgress()">
-                        💾 Save
+                        💾 Save Log
                     </button>
-                </div>
-                
-                <!-- 作品展示 -->
-                <div style="margin-top: 24px; padding: 20px; background: var(--bg-tertiary); border-radius: var(--radius-lg);">
-                    <h3 class="section-title">🏆 My Works Gallery</h3>
-                    <div id="pbl-gallery" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;"></div>
                 </div>
             </div>
             
@@ -1583,6 +1533,7 @@
     
     <!-- AI Chat Floating Buttons -->
     <button class="ai-float-btn" id="ai-float-headmaster" onclick="toggleAIChat('headmaster')" title="Professor Dumbledore"><img src="https://img.icons8.com/color/96/000000/albus-dumbledore.png" width="40" height="40" alt="Dumbledore"></button>
+    <button class="ai-float-btn" id="ai-float-tutor" onclick="toggleAIChat('tutor')" title="Professor Hermione"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="40" height="40" alt="Hermione"></button>
     
     <!-- AI Headmaster Chat Panel (Dumbledore) -->
     <div class="ai-chat-panel" id="ai-chat-headmaster">
@@ -1614,6 +1565,38 @@
             <input type="text" id="chat-input-headmaster" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'headmaster')">
             <button class="voice-btn" id="speak-headmaster" onclick="toggleSpeak('headmaster')" title="Text to Speech">🔊</button>
             <button class="chat-send" onclick="sendChatMessage('headmaster')">➤</button>
+        </div>
+    </div>
+    
+    <!-- AI Tutor Chat Panel (Hermione) -->
+    <div class="ai-chat-panel" id="ai-chat-tutor">
+        <div class="chat-header">
+            <div class="chat-avatar"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="36" height="36" alt="Hermione"></div>
+            <div class="chat-title">
+                <h3>Prof. Hermione</h3>
+                <span>● Online</span>
+            </div>
+            <button class="chat-close" onclick="toggleAIChat('tutor')">×</button>
+        </div>
+        <div class="chat-messages" id="chat-messages-tutor">
+            <div class="chat-message ai">
+                <div class="msg-avatar"><img src="https://img.icons8.com/color/96/000000/user-female.png" width="28" height="28" alt="Hermione"></div>
+                <div class="msg-bubble">
+                    Hi Teresa! I'm Professor Hermione, your AI Subject Tutor 📚<br><br>
+                    I specialize in helping you with:<br>
+                    • English reading & vocabulary<br>
+                    • Math problems & logic thinking<br>
+                    • Science exploration<br>
+                    • Project-based learning<br><br>
+                    Ask me anything about your subjects!
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <button class="voice-btn" id="voice-tutor" onclick="toggleVoiceInput('tutor')" title="Voice Input">🎤</button>
+            <input type="text" id="chat-input-tutor" placeholder="Type a message..." onkeypress="handleChatEnter(event, 'tutor')">
+            <button class="voice-btn" id="speak-tutor" onclick="toggleSpeak('tutor')" title="Text to Speech">🔊</button>
+            <button class="chat-send" onclick="sendChatMessage('tutor')">➤</button>
         </div>
     </div>
     
@@ -1675,32 +1658,7 @@
             updateProgress();
             setCurrentDate();
             initMathProblem();
-            // 初始化英语时间选择器
-            for (let i=0; i<24; i++) {
-                document.getElementById('eng-start-h')?.add(new Option(i.toString().padStart(2,'0'), i));
-                document.getElementById('eng-end-h')?.add(new Option(i.toString().padStart(2,'0'), i));
-            }
-            for (let i=0; i<60; i+=5) {
-                document.getElementById('eng-start-m')?.add(new Option(i.toString().padStart(2,'0'), i));
-                document.getElementById('eng-end-m')?.add(new Option(i.toString().padStart(2,'0'), i));
-            }
         });
-        
-        function saveEnglishTime() {
-            const sh = document.getElementById('eng-start-h').value;
-            const sm = document.getElementById('eng-start-m').value;
-            const eh = document.getElementById('eng-end-h').value;
-            const em = document.getElementById('eng-end-m').value;
-            if (!sh||!sm||!eh||!em) return alert('Please select time');
-            const start = parseInt(sh)*60+parseInt(sm);
-            const end = parseInt(eh)*60+parseInt(em);
-            if (end<=start) return alert('End must be after start');
-            const mins = end-start;
-            const records = JSON.parse(localStorage.getItem('engRecords')||'[]');
-            records.push({date:new Date().toISOString().split('T')[0], start:sh+':'+sm, end:eh+':'+em, mins});
-            localStorage.setItem('engRecords', JSON.stringify(records));
-            document.getElementById('eng-time-result').innerHTML = '<p style="color:var(--success)">✅ Recorded '+mins+' mins</p>';
-        }
         
         function loadData() {
             const saved = localStorage.getItem('teresa_homeschool_data');
@@ -1798,6 +1756,8 @@
         function toggleAIChat(chatType) {
             if (chatType === 'headmaster') {
                 document.getElementById('ai-chat-headmaster').classList.toggle('open');
+            } else if (chatType === 'tutor') {
+                document.getElementById('ai-chat-tutor').classList.toggle('open');
             }
         }
         
@@ -1928,60 +1888,18 @@
             addChatMessage(message, 'user', chatType);
             input.value = '';
             
-            // 调用后端API
-            if (chatType === 'headmaster') {
-                fetch('/ai/dumbledore', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: message})
-                })
-                .then(r => r.body.getReader())
-                .then(reader => {
-                    const decoder = new TextDecoder();
-                    let response = '';
-                    function read() {
-                        reader.read().then(({done, value}) => {
-                            if (done) {
-                                if (response) addChatMessage(response, 'ai', chatType);
-                                return;
-                            }
-                            const chunk = decoder.decode(value);
-                            const lines = chunk.split('\n');
-                            lines.forEach(line => {
-                                if (line.startsWith('data: ')) {
-                                    try {
-                                        const data = JSON.parse(line.slice(6));
-                                        if (data.content) {
-                                            response += data.content;
-                                            // 逐步显示
-                                            const container = document.getElementById(`chat-messages-${chatType}`);
-                                            const lastMsg = container.lastElementChild;
-                                            if (lastMsg?.classList.contains('ai')) {
-                                                lastMsg.querySelector('.msg-bubble').innerHTML += data.content;
-                                            }
-                                        }
-                                    } catch(e) {}
-                                }
-                            });
-                            read();
-                        });
-                    }
-                    read();
-                })
-                .catch(e => addChatMessage('Error: ' + e.message, 'ai', chatType));
-            } else {
-                // 其他AI (如果有)
-                setTimeout(() => {
-                    const response = getAIResponse(message, chatType);
-                    addChatMessage(response, 'ai', chatType);
-                }, 500);
-            }
+            // Simulate AI response based on chat type
+            setTimeout(() => {
+                const response = getAIResponse(message, chatType);
+                addChatMessage(response, 'ai', chatType);
+            }, 500);
         }
         
         function addChatMessage(text, sender, chatType) {
             const container = document.getElementById(`chat-messages-${chatType}`);
             const dumbAvatar = '<img src="https://img.icons8.com/color/96/000000/albus-dumbledore.png" width="28" height="28" alt="Dumbledore">';
-            const avatar = dumbAvatar;
+            const hermAvatar = '<img src="https://img.icons8.com/color/96/000000/user-female.png" width="28" height="28" alt="Hermione">';
+            const avatar = chatType === 'headmaster' ? dumbAvatar : hermAvatar;
             const div = document.createElement('div');
             div.className = `chat-message ${sender}`;
             div.innerHTML = `
@@ -2014,6 +1932,27 @@
                 }
                 
                 return "I understand! Keep going, brave learner! 💪<br><br>Remember, it's not about being perfect—it's about progress. Every step forward counts!<br><br>Is there anything specific you'd like to discuss?";
+            }
+            
+            // Tutor (Hermione) - Subject-specific help
+            if (chatType === 'tutor') {
+                if (lower.includes('english') || lower.includes('vocabulary') || lower.includes('reading') || lower.includes('book')) {
+                    return "Great choice! Let's work on your English! 📖✨<br><br>For vocabulary, try making flashcards or using words in sentences.<br><br>For reading, try the PQRST method:<br>• Preview the text<br>• Question what you want to learn<br>• Read carefully<br>• Summarize what you learned<br>• Test yourself<br><br>What book are you reading now?";
+                }
+                
+                if (lower.includes('math') || lower.includes('数学') || lower.includes('problem') || lower.includes('计算')) {
+                    return "Let's tackle some Math! 🔢✨<br><br>For word problems, remember:<br>1. Read carefully<br>2. Identify what you know<br>3. Identify what you need to find<br>4. Choose the right operation<br>5. Solve and check<br><br>What specific topic are you working on? Addition, subtraction, multiplication, division, or maybe fractions?";
+                }
+                
+                if (lower.includes('science') || lower.includes('科学') || lower.includes('experiment')) {
+                    return "Science is so exciting! 🔬🌍<br><br>When doing experiments, remember the Scientific Method:<br>1. Ask a question<br>2. Do background research<br>3. Form a hypothesis<br>4. Test with an experiment<br>5. Analyze results<br>6. Conclusion!<br><br>What topic are you exploring?";
+                }
+                
+                if (lower.includes('homework') || lower.includes('作业') || lower.includes('practice')) {
+                    return "Practice makes perfect! 📝<br><br>For effective practice:<br>• Start with the hardest problems when you're fresh<br>• Check your answers and understand mistakes<br>• Review similar problems<br>• Teach what you learned to someone (or me!)<br><br>Which subject's homework do you need help with?";
+                }
+                
+                return "I'm here to help! 📚<br><br>Tell me what subject you'd like to work on:<br>• English - reading, writing, vocabulary<br>• Math - problems, concepts<br>• Science - experiments, concepts<br>• PBL - project ideas<br><br>What would you like to explore?";
             }
             
             return "I明白！继续加油！💪<br><br>如果有任何问题，随时问我哦～";
@@ -2123,63 +2062,21 @@
         
         function savePBLProgress() {
             const progress = document.getElementById('pbl-progress').value;
-            const mediaInput = document.getElementById('pbl-media');
-            
-            if (!progress && !mediaInput.files.length) {
-                showToast('⚠️', '请输入内容或上传文件');
+            if (!progress) {
+                showToast('⚠️', '请输入项目进展');
                 return;
             }
             
-            // 处理媒体文件 - 保存为Base64
-            const mediaPromises = Array.from(mediaInput.files).map(file => {
-                return new Promise(resolve => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve({type: file.type.startsWith('video')?'video':'image', data: reader.result});
-                    reader.readAsDataURL(file);
-                });
+            pblRecords.push({
+                type: currentPBLType,
+                progress,
+                date: new Date().toISOString()
             });
             
-            Promise.all(mediaPromises).then(mediaFiles => {
-                pblRecords.push({
-                    type: currentPBLType,
-                    progress,
-                    media: mediaFiles,
-                    date: new Date().toISOString()
-                });
-                
-                saveData();
-                document.getElementById('pbl-progress').value = '';
-                mediaInput.value = '';
-                showToast('💾', 'PBL记录已保存！');
-                loadPBLGallery();
-            });
+            saveData();
+            document.getElementById('pbl-progress').value = '';
+            showToast('💾', 'PBL记录已保存！');
         }
-        
-        function loadPBLGallery() {
-            const gallery = document.getElementById('pbl-gallery');
-            if (!gallery) return;
-            
-            let html = '';
-            pblRecords.forEach(r => {
-                if (r.media) {
-                    r.media.forEach(m => {
-                        if (m.type === 'image') {
-                            html += '<img src="' + m.data + '" style="width:100%;aspect-ratio:1;border-radius:8px;cursor:pointer;" onclick="viewMedia(this.src)">';
-                        } else {
-                            html += '<video src="' + m.data + '" style="width:100%;aspect-ratio:1;border-radius:8px;object-fit:cover;" controls></video>';
-                        }
-                    });
-                }
-            });
-            gallery.innerHTML = html || '<p style="color:var(--text-muted);grid-column:1/-1;">No works yet</p>';
-        }
-        
-        function viewMedia(src) { window.open(src, '_blank'); }
-        
-        // 页面加载时显示gallery
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(loadPBLGallery, 500);
-        });
         
         // ==================== Tennis Module ====================
         function saveTennisLog() {
@@ -2263,17 +2160,10 @@
         
         // ==================== Stats Module ====================
         function loadStats() {
-            // 真实统计
-            var completed = doneTasks ? doneTasks.size : 0;
-            var wrongNotes = wrongMathNotes ? wrongMathNotes.length : 0;
-            var tennis = tennisLogs ? tennisLogs.length : 0;
-            var pbl = pblRecords ? pblRecords.length : 0;
-            
-            // 隐藏硬编码的统计框
-            var booksBox = document.querySelector('.stat-card:nth-child(1)');
-            var wordsBox = document.querySelector('.stat-card:nth-child(2)');
-            if (booksBox) booksBox.style.display = 'none';
-            if (wordsBox) wordsBox.style.display = 'none';
+            document.getElementById('stat-streak').textContent = doneTasks.size > 0 ? '3' : '0';
+            document.getElementById('stat-books').textContent = '12';
+            document.getElementById('stat-words').textContent = '45';
+            document.getElementById('stat-hours').textContent = Math.round(doneTasks.size * 1.5);
             
             const summary = document.getElementById('week-summary');
             summary.innerHTML = `
@@ -2317,205 +2207,6 @@
             
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
-
-
-        // ==================== Math V2 Functions ====================
-        let basicsData = null;
-        let thinkingData = null;
-        
-        // 初始化时间选择器
-        function initTimeSelectors() {
-            const selectors = ['basics-start-h','basics-start-m','basics-end-h','basics-end-m','thinking-start-h','thinking-start-m','thinking-end-h','thinking-end-m'];
-            selectors.forEach(id => {
-                const el = document.getElementById(id);
-                if (!el) return;
-                const isHour = id.includes('-h');
-                if (isHour) {
-                    for (let i=0; i<24; i++) el.add(new Option(i.toString().padStart(2,'0'), i));
-                } else {
-                    for (let i=0; i<60; i+=5) el.add(new Option(i.toString().padStart(2,'0'), i));
-                }
-            });
-        }
-        
-        // Tab切换
-        function showMathTab(tab) {
-            document.getElementById('math-basics-section').style.display = tab === 'basics' ? 'block' : 'none';
-            document.getElementById('math-thinking-section').style.display = tab === 'thinking' ? 'block' : 'none';
-            document.getElementById('math-tab-basics').style.background = tab === 'basics' ? 'var(--primary)' : 'var(--bg-tertiary)';
-            document.getElementById('math-tab-thinking').style.background = tab === 'thinking' ? 'var(--primary)' : 'var(--bg-tertiary)';
-            if (tab === 'basics' && !basicsData) loadBasics();
-            if (tab === 'thinking' && !thinkingData) loadThinking();
-        }
-        
-        // 加载基础数学
-        async function loadBasics() {
-            try {
-                const res = await fetch('/api/math-v2/basics/daily');
-                const data = await res.json();
-                if (data.success) {
-                    basicsData = data.data;
-                    document.getElementById('basics-lesson').textContent = 'Lesson ' + (basicsData.lesson || 1);
-                    let html = '<h4>' + (basicsData.topic || 'Math') + '</h4>';
-                    if (basicsData.knowledgePoints) {
-                        html += '<ul style="margin:8px 0;">';
-                        basicsData.knowledgePoints.forEach(p => html += '<li>' + p + '</li>');
-                        html += '</ul>';
-                    }
-                    if (basicsData.examples) {
-                        html += '<h5>Examples:</h5>';
-                        basicsData.examples.forEach((ex, i) => {
-                            html += '<div style="margin:8px 0;padding:8px;background:var(--bg-card);border-radius:8px;"><strong>' + (i+1) + '.</strong> ' + ex.question + '<br><em>' + ex.solution + '</em></div>';
-                        });
-                    }
-                    document.getElementById('basics-content').innerHTML = html;
-                    
-                    let phtml = '';
-                    (basicsData.practice || []).forEach((q, i) => {
-                        phtml += '<div style="margin:8px 0;padding:8px;background:var(--bg-card);border-radius:8px;"><strong>' + (i+1) + '.</strong> ' + q.question + '</div>';
-                    });
-                    document.getElementById('basics-practice').innerHTML = phtml || '<p>No practice</p>';
-                    
-                    let qhtml = '';
-                    (basicsData.quiz || []).forEach((q, i) => {
-                        qhtml += '<div style="margin:8px 0;"><strong>' + (i+1) + '.</strong> ' + q.question + '<br><input id="bq' + i + '" placeholder="Answer" style="margin-top:4px;padding:8px;width:100%;"></div>';
-                    });
-                    document.getElementById('basics-quiz').innerHTML = qhtml || '<p>No quiz</p>';
-                }
-            } catch(e) { console.error(e); document.getElementById('basics-content').innerHTML = '<p>Error loading</p>'; }
-        }
-        
-        function showPracticeAnswers(type) {
-            const data = type === 'basics' ? basicsData : thinkingData;
-            const divId = type + '-answers';
-            if (!data || !data.practice) return;
-            let html = '<h5>Answers:</h5>';
-            data.practice.forEach((q, i) => {
-                html += '<div style="margin:4px 0;padding:4px;background:var(--success);color:white;border-radius:4px;">' + (i+1) + '. ' + q.answer + '</div>';
-            });
-            document.getElementById(divId).innerHTML = html;
-            document.getElementById(divId).style.display = 'block';
-        }
-        
-        function submitBasicsQuiz() {
-            if (!basicsData || !basicsData.quiz) return;
-            let html = '<h5>Results:</h5>';
-            let correct = 0;
-            basicsData.quiz.forEach((q, i) => {
-                const ans = document.getElementById('bq' + i).value.trim().toLowerCase();
-                const correctAns = q.answer.toLowerCase();
-                const ok = ans === correctAns;
-                if (ok) correct++;
-                html += '<div style="margin:4px 0;padding:8px;background:' + (ok ? 'var(--success)' : 'var(--error)') + ';color:white;border-radius:6px;">' + (i+1) + '. ' + (ok ? '✓' : '✗ ' + q.answer);
-                if (!ok && q.explanation) html += '<br><small>' + q.explanation + '</small>';
-                html += '</div>';
-            });
-            html += '<p>Score: ' + correct + '/' + basicsData.quiz.length + '</p>';
-            document.getElementById('basics-result').innerHTML = html;
-        }
-        
-        function recordBasicsTime() {
-            const sh = document.getElementById('basics-start-h').value;
-            const sm = document.getElementById('basics-start-m').value;
-            const eh = document.getElementById('basics-end-h').value;
-            const em = document.getElementById('basics-end-m').value;
-            if (!sh||!sm||!eh||!em) return alert('请选择时间');
-            const start = parseInt(sh)*60+parseInt(sm);
-            const end = parseInt(eh)*60+parseInt(em);
-            if (end<=start) return alert('结束时间必须晚于开始时间');
-            const mins = end - start;
-            fetch('/api/math-v2/record', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({type: 'basics', duration: mins, lesson: basicsData?.lesson})
-            }).then(r => r.json()).then(d => {
-                document.getElementById('basics-time').textContent = mins + ' min';
-                alert('记录成功: ' + mins + '分钟');
-            });
-        }
-        
-        function setThinkingType(type) {
-            document.getElementById('btn-kangaroo').className = 'btn ' + (type==='kangaroo'?'btn-primary':'btn-secondary');
-            document.getElementById('btn-amc8').className = 'btn ' + (type==='amc8'?'btn-primary':'btn-secondary');
-            document.getElementById('thinking-type').textContent = type==='kangaroo'?'Kangaroo':'AMC8';
-            loadThinking();
-        }
-        
-        async function loadThinking() {
-            try {
-                const res = await fetch('/api/math-v2/thinking/daily');
-                const data = await res.json();
-                if (data.success) {
-                    thinkingData = data.data;
-                    document.getElementById('thinking-level').textContent = 'Level ' + (thinkingData.level || 1);
-                    let html = '<h4>' + (thinkingData.topic || 'Thinking Math') + '</h4>';
-                    if (thinkingData.knowledgePoints) {
-                        html += '<ul style="margin:8px 0;">';
-                        thinkingData.knowledgePoints.forEach(p => html += '<li>' + p + '</li>');
-                        html += '</ul>';
-                    }
-                    if (thinkingData.examples) {
-                        html += '<h5>Examples:</h5>';
-                        thinkingData.examples.forEach((ex, i) => {
-                            html += '<div style="margin:8px 0;padding:8px;background:var(--bg-card);border-radius:8px;"><strong>' + (i+1) + '.</strong> ' + ex.question + '<br><em>' + ex.solution + '</em></div>';
-                        });
-                    }
-                    document.getElementById('thinking-content').innerHTML = html;
-                    
-                    let phtml = '';
-                    (thinkingData.practice || []).forEach((q, i) => {
-                        phtml += '<div style="margin:8px 0;padding:8px;background:var(--bg-card);border-radius:8px;"><strong>' + (i+1) + '.</strong> ' + q.question + '</div>';
-                    });
-                    document.getElementById('thinking-practice').innerHTML = phtml || '<p>No practice</p>';
-                    
-                    let qhtml = '';
-                    (thinkingData.quiz || []).forEach((q, i) => {
-                        qhtml += '<div style="margin:8px 0;"><strong>' + (i+1) + '.</strong> ' + q.question + '<br><input id="tq' + i + '" placeholder="Answer" style="margin-top:4px;padding:8px;width:100%;"></div>';
-                    });
-                    document.getElementById('thinking-quiz').innerHTML = qhtml || '<p>No quiz</p>';
-                }
-            } catch(e) { console.error(e); document.getElementById('thinking-content').innerHTML = '<p>Error loading</p>'; }
-        }
-        
-        function submitThinkingQuiz() {
-            if (!thinkingData || !thinkingData.quiz) return;
-            let html = '<h5>Results:</h5>';
-            let correct = 0;
-            thinkingData.quiz.forEach((q, i) => {
-                const ans = document.getElementById('tq' + i).value.trim().toLowerCase();
-                const correctAns = q.answer.toLowerCase();
-                const ok = ans === correctAns;
-                if (ok) correct++;
-                html += '<div style="margin:4px 0;padding:8px;background:' + (ok ? 'var(--success)' : 'var(--error)') + ';color:white;border-radius:6px;">' + (i+1) + '. ' + (ok ? '✓' : '✗ ' + q.answer);
-                if (!ok && q.explanation) html += '<br><small>' + q.explanation + '</small>';
-                html += '</div>';
-            });
-            html += '<p>Score: ' + correct + '/' + thinkingData.quiz.length + '</p>';
-            document.getElementById('thinking-result').innerHTML = html;
-        }
-        
-        function recordThinkingTime() {
-            const sh = document.getElementById('thinking-start-h').value;
-            const sm = document.getElementById('thinking-start-m').value;
-            const eh = document.getElementById('thinking-end-h').value;
-            const em = document.getElementById('thinking-end-m').value;
-            if (!sh||!sm||!eh||!em) return alert('请选择时间');
-            const start = parseInt(sh)*60+parseInt(sm);
-            const end = parseInt(eh)*60+parseInt(em);
-            if (end<=start) return alert('结束时间必须晚于开始时间');
-            const mins = end - start;
-            fetch('/api/math-v2/record', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({type: 'thinking', duration: mins, level: thinkingData?.level})
-            }).then(r => r.json()).then(d => {
-                alert('记录成功: ' + mins + '分钟');
-            });
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            initTimeSelectors();
-        });
-
     </script>
-</body></html>
+</body>
+</html>

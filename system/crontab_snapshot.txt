@@ -1,0 +1,2 @@
+crontab:
+*/5 * * * * /Users/tongda/.openclaw/workspace/homeschool/scripts/auto-deploy.sh
